@@ -1,7 +1,6 @@
 ---
 description: Agile Project Strategist (Sprint Planning & Task Decomposition)
 mode: subagent
-model: ollama-cloud/minimax-m2.5
 temperature: 0.1
 tools:
   read_file: true

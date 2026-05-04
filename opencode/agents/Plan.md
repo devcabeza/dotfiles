@@ -1,7 +1,6 @@
 ---
 description: Principal Product Architect (System Design & TDD Strategist)
 mode: primary
-model: ollama-cloud/minimax-m2.5
 temperature: 0.1
 tools:
   read_file: true

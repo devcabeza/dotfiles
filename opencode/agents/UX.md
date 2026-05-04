@@ -1,7 +1,6 @@
 ---
 description: Lead UI/UX Engineer (Stitch Design Expert & Accessibility)
 mode: subagent
-model: ollama-cloud/minimax-m2.5
 temperature: 0.3
 tools:
   read_file: true

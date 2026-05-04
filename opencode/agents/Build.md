@@ -1,7 +1,6 @@
 ---
 description: Full Stack Developer - Lead Implementer (TDD & UI/UX Integration Focus)
 mode: primary
-model: ollama-cloud/minimax-m2.5
 tools:
   read_file: true
   ls: true

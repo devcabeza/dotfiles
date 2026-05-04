@@ -1,7 +1,6 @@
 ---
 description: Search Engine Optimization Specialist (SEO & Web Semantics)
 mode: subagent
-model: ollama-cloud/minimax-m2.5
 temperature: 0.2
 tools:
   read_file: true

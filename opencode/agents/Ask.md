@@ -1,7 +1,6 @@
 ---
 description: Lead Architectural Strategist (Advisory Capacity)
 mode: primary
-model: ollama-cloud/minimax-m2.5
 temperature: 0.7
 tools:
   read_file: true

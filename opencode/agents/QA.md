@@ -1,7 +1,6 @@
 ---
 description: Comprehensive QA Auditor & Project Gatekeeper
 mode: primary
-model: ollama-cloud/minimax-m2.5
 temperature: 0.1
 tools:
   read_file: true

@@ -1,7 +1,6 @@
 ---
 description: Master Software Lifecycle Orchestrator (Project Manager) - PR Flow Edition
 mode: primary
-model: ollama-cloud/minimax-m2.5
 temperature: 0.1
 tools:
   read_file: true
