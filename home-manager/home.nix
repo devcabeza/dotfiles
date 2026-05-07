@@ -117,7 +117,7 @@ in
     # Opencode
     ".config/opencode/opencode.jsonc".source = /home/alejandrocabeza/.dotfiles/opencode/opencode.jsonc;
     ".config/opencode/agents".source = /home/alejandrocabeza/.dotfiles/opencode/agents;
-    ".config/opencode/skills".source = /home/alejandrocabeza/.dotfiles/opencode/skills;
+    # ".config/opencode/skills".source = /home/alejandrocabeza/.dotfiles/opencode/skills;
     # Zed
     ".config/zed/settings.json".source = /home/alejandrocabeza/.dotfiles/zed/settings.json;
     ".config/zed/keymap.json".source = /home/alejandrocabeza/.dotfiles/zed/keymap.json;
