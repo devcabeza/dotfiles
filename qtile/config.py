@@ -36,7 +36,7 @@ import subprocess
 
 mod = "mod4"
 alt = "mod1"  # Use mod1 for Alt key, or mod4 for Super/Windows key
-terminal = 'kitty'
+terminal = 'ghostty'
 
 keys = [
     # A list of available commands that can be bound to keys can be found

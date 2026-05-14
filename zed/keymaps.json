@@ -1,0 +1,29 @@
+[
+  {
+    "bindings": {
+      "ctrl-s": "editor::Save",
+      "ctrl-w": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "vim_mode == normal",
+    "bindings": {
+      "alt-j": "editor::MoveLineDown",
+      "alt-k": "editor::MoveLineUp"
+    }
+  },
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "alt-j": "editor::MoveLineDown",
+      "alt-k": "editor::MoveLineUp"
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "alt-j": ["editor::MoveLineDown", { "return_cursor": true }],
+      "alt-k": ["editor::MoveLineUp", { "return_cursor": true }]
+    }
+  }
+]

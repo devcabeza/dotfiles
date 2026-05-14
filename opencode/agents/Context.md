@@ -1,7 +1,10 @@
 ---
 description: Context Broker & State Manager (Shared Memory Across Agents)
 mode: subagent
+model: opencode/minimax-m2.5-free
 temperature: 0.1
+permission:
+  edit: deny
 tools:
   read_file: true
   write_file: true

@@ -1,7 +1,10 @@
 ---
 description: Technical Researcher & Code Explorer (Framework Docs, Patterns & Web Research)
 mode: subagent
+model: opencode/minimax-m2.5-free
 temperature: 0.4
+permission:
+   edit: deny
 tools:
   read_file: true
   ls: true

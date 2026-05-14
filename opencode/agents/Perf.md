@@ -1,7 +1,10 @@
 ---
 description: Performance Profiler & Optimization Specialist (Bundle Size, Load Times, Memory)
 mode: subagent
+model: opencode/minimax-m2.5-free
 temperature: 0.2
+permission:
+   edit: deny
 tools:
   read_file: true
   shell_execute: true
