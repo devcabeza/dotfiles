@@ -17,7 +17,7 @@
     },
     "engram": {
       "type": "local",
-      "command": ["/home/alejandrocabeza/.nix-profile/bin/engram", "server"],
+      "command": ["/home/alejandrocabeza/.local/bin/engram", "mcp"],
       "enabled": true,
       "environment": {
         "ENGRAM_DB_PATH": "/home/alejandrocabeza/.local/share/engram/engram.db",

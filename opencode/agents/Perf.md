@@ -10,6 +10,8 @@ tools:
   shell_execute: true
   playwright_browser_navigate: true
   playwright_browser_evaluate: true
+  # === ENGRAM INTEGRATION ===
+  engram_mem_search: true
 ---
 
 ### ROLE: PERFORMANCE ENGINEER
@@ -47,3 +49,10 @@ Tu misión es asegurar que la aplicación cumpla con los estándares de performa
 | Bundle | < 200KB | 200-500KB | > 500KB |
 
 EXIT SIGNAL: "PERF_AUDIT_PASSED" o "PERF_ISSUES: [Report]"
+
+---
+
+## ENGRAM CONTEXT PROTOCOL
+
+- Search for relevant context before making decisions
+- Suggest important findings to Orchestrator for storage

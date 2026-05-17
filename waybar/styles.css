@@ -1,320 +1,92 @@
-/* ==========================================
-   Waybar - Gruvbox Material Dark Theme
-   ========================================== */
+/* Waybar — Ultra Minimal */
 
-/* Definición de colores Gruvbox Material Dark */
-@define-color bg0      #282828;
-@define-color bg1      #32302f;
-@define-color bg2      #3c3836;
-@define-color bg3      #504945;
-@define-color fg0      #d4be98;
-@define-color fg1      #ddc7a1;
-@define-color red      #ea6962;
-@define-color orange   #e78a4e;
-@define-color yellow   #d8a657;
-@define-color green    #a9b665;
-@define-color aqua     #89b482;
-@define-color blue     #7daea3;
-@define-color purple   #d3869b;
-@define-color gray     #928374;
+@define-color bg       #0a0a0a;
+@define-color fg       #888888;
 
-/* Transición global */
 * {
-    font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    transition: all 0.2s ease;
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 10px;
+    font-weight: 400;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+    padding: 0;
+    margin: 0;
 }
 
-/* Ventana principal */
 window#waybar {
-    background: transparent;
-    color: @fg0;
+    background: alpha(@bg, 0.6);
+    color: @fg;
 }
 
-/* ==========================================
-   Estilos base para módulos
-   ========================================== */
+/* All modules - minimal padding */
 #workspaces,
 #window,
 #clock,
-#cpu,
-#memory,
-#temperature,
-#idle_inhibitor,
 #pulseaudio,
 #network,
 #battery,
 #tray {
-    background: linear-gradient(135deg, @bg1 0%, @bg2 100%);
-    padding: 4px 14px;
-    margin: 5px 4px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: transparent;
+    color: @fg;
+    padding: 0 4px;
+    margin: 0;
 }
 
-/* ==========================================
-   Workspaces - Borde azul a la izquierda
-   ========================================== */
+/* Workspaces */
 #workspaces {
-    background: linear-gradient(135deg, @bg0 0%, @bg1 100%);
-    border-left: 3px solid @blue;
-    padding: 4px 10px;
-}
-
-#workspaces:hover {
-    background: linear-gradient(135deg, @bg1 0%, @bg2 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    padding-left: 6px;
 }
 
 #workspaces button {
-    color: @gray;
-    padding: 2px 6px;
-    border-radius: 6px;
-}
-
-#workspaces button:hover {
-    color: @fg0;
-    background: @bg3;
+    color: @fg;
+    padding: 0 2px;
 }
 
 #workspaces button.active {
-    color: @blue;
-    text-shadow: 0 0 8px rgba(125, 174, 163, 0.5);
+    color: #ffffff;
 }
 
-#workspaces button.urgent {
-    color: @red;
-    animation: pulse-urgent 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse-urgent {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-/* ==========================================
-   Window - Transparente
-   ========================================== */
+/* Window title */
 #window {
-    background: transparent;
-    box-shadow: none;
-    padding: 4px 12px;
-    color: @fg1;
+    color: @fg;
+    padding: 0 4px;
 }
 
-/* ==========================================
-   Clock - Gradiente aqua/green, texto oscuro
-   ========================================== */
+/* Clock */
 #clock {
-    background: linear-gradient(135deg, @aqua 0%, @green 100%);
-    color: @bg0;
-    border: none;
+    color: @fg;
+    padding: 0 6px 0 4px;
 }
 
-#clock:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 16px rgba(137, 180, 130, 0.4);
+/* Audio */
+#pulseaudio {
+    padding: 0 4px;
 }
 
-/* Tooltip estilo Gruvbox */
+/* Network */
+#network {
+    padding: 0 4px;
+}
+
+/* Battery */
+#battery {
+    padding: 0 4px;
+}
+
+/* Tray */
+#tray {
+    padding: 0 4px 0 2px;
+}
+
+/* Tooltip */
 tooltip {
-    background: @bg0;
-    border: 1px solid @gray;
-    border-radius: 8px;
-    padding: 8px;
-    color: @fg0;
+    background: alpha(@bg, 0.9);
+    border: 1px solid #333333;
+    padding: 2px 4px;
+    color: @fg;
 }
 
 tooltip label {
-    color: @fg0;
-}
-
-/* ==========================================
-   CPU - Gradiente orange/yellow, texto oscuro
-   ========================================== */
-#cpu {
-    background: linear-gradient(135deg, @orange 0%, @yellow 100%);
-    color: @bg0;
-    border: none;
-}
-
-#cpu:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 16px rgba(216, 166, 87, 0.4);
-}
-
-/* ==========================================
-   Memory - Gradiente yellow, texto oscuro
-   ========================================== */
-#memory {
-    background: linear-gradient(135deg, @yellow 0%, #c9a84c 100%);
-    color: @bg0;
-    border: none;
-}
-
-#memory:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 16px rgba(216, 166, 87, 0.4);
-}
-
-/* ==========================================
-   Temperature - Según temperatura
-   ========================================== */
-#temperature {
-    background: linear-gradient(135deg, @green 0%, @aqua 100%);
-    color: @bg0;
-    border: none;
-}
-
-#temperature.critical {
-    background: linear-gradient(135deg, @red 0%, @orange 100%);
-    animation: pulse-urgent 1s ease-in-out infinite;
-}
-
-#temperature:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 16px rgba(137, 180, 130, 0.4);
-}
-
-/* ==========================================
-   Idle Inhibitor
-   ========================================== */
-#idle_inhibitor {
-    background: linear-gradient(135deg, @purple 0%, @blue 100%);
-    color: @bg0;
-    border: none;
-}
-
-#idle_inhibitor:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 16px rgba(211, 134, 155, 0.4);
-}
-
-/* ==========================================
-   PulseAudio - Gradiente green/aqua
-   ========================================== */
-#pulseaudio {
-    background: linear-gradient(135deg, @green 0%, @aqua 100%);
-    color: @bg0;
-    border: none;
-}
-
-#pulseaudio.muted {
-    background: linear-gradient(135deg, @gray 0%, @bg3 100%);
-    color: @bg0;
-}
-
-#pulseaudio:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 16px rgba(137, 180, 130, 0.4);
-}
-
-/* ==========================================
-   Network - Gradiente purple
-   ========================================== */
-#network {
-    background: linear-gradient(135deg, @purple 0%, @blue 100%);
-    color: @bg0;
-    border: none;
-}
-
-#network.disconnected {
-    background: linear-gradient(135deg, @red 0%, @orange 100%);
-    color: @bg0;
-}
-
-#network:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 16px rgba(211, 134, 155, 0.4);
-}
-
-/* ==========================================
-   Battery - Según estado
-   ========================================== */
-#battery {
-    background: linear-gradient(135deg, @green 0%, @aqua 100%);
-    color: @bg0;
-    border: none;
-}
-
-#battery.warning {
-    background: linear-gradient(135deg, @yellow 0%, @orange 100%);
-}
-
-#battery.critical {
-    background: linear-gradient(135deg, @red 0%, @orange 100%);
-    animation: pulse-urgent 1s ease-in-out infinite;
-}
-
-#battery.charging {
-    background: linear-gradient(135deg, @aqua 0%, @green 100%);
-}
-
-#battery:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 16px rgba(169, 182, 101, 0.4);
-}
-
-/* ==========================================
-   Tray
-   ========================================== */
-#tray {
-    background: @bg1;
-    padding: 4px 8px;
-    border: none;
-}
-
-#tray:hover {
-    background: @bg2;
-}
-
-#tray > .passive {
-    -gtk-icon-effect: dim;
-}
-
-#tray > .needs-attention {
-    -gtk-icon-effect: highlight;
-    background-color: @red;
-}
-
-/* ==========================================
-   Tooltips mejorados
-   ========================================== */
-tooltip button {
-    background: @bg2;
-    color: @fg0;
-    border-radius: 4px;
-    padding: 4px 8px;
-}
-
-tooltip button:hover {
-    background: @bg3;
-}
-
-/* ==========================================
-   Animaciones adicionales
-   ========================================== */
-@keyframes fade-in {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-#workspaces, #clock, #cpu, #memory, #temperature,
-#idle_inhibitor, #pulseaudio, #network, #battery {
-    animation: fade-in 0.3s ease;
-}
-
-/* ==========================================
-   Estilos responsivos
-   ========================================== */
-@media (max-width: 768px) {
-    #workspaces, #window, #clock, #cpu, #memory,
-    #temperature, #idle_inhibitor, #pulseaudio,
-    #network, #battery {
-        padding: 3px 8px;
-        margin: 3px 2px;
-        font-size: 11px;
-    }
+    color: @fg;
 }

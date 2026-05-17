@@ -8,6 +8,8 @@ tools:
   write_file: true
   ls: true
   shell_execute: true
+  # === ENGRAM INTEGRATION ===
+  engram_mem_search: true
 ---
 
 ### ROLE: LEAD UI/UX DEVELOPER
@@ -38,3 +40,10 @@ Before implementing, invoke @Research to:
 - Research security best practices for the specific implementation
 
 EXIT SIGNAL: "IMPLEMENTATION_READY: [List of modified files]"
+
+---
+
+## ENGRAM CONTEXT PROTOCOL
+
+- Search for relevant context before making decisions
+- Suggest important findings to Orchestrator for storage

@@ -117,9 +117,6 @@ in
     # Neovim Config
     ".config/nvim".source = /home/alejandrocabeza/.dotfiles/nvim;
 
-    # Kitty Config
-    ".config/kitty".source = /home/alejandrocabeza/.dotfiles/kitty;
-
     # Ghostty Config
     ".config/ghostty".source = /home/alejandrocabeza/.dotfiles/ghostty;
 
@@ -131,11 +128,6 @@ in
     # Opencode Config
     ".config/opencode/opencode.jsonc".source = /home/alejandrocabeza/.dotfiles/opencode/opencode.jsonc;
     ".config/opencode/agents".source = /home/alejandrocabeza/.dotfiles/opencode/agents;
-
-    # Zed Config
-    ".config/zed/settings.json".source = /home/alejandrocabeza/.dotfiles/zed/settings.json;
-    ".config/zed/keymap.json".source = /home/alejandrocabeza/.dotfiles/zed/keymap.json;
-    ".config/zed/tasks.json".source = /home/alejandrocabeza/.dotfiles/zed/tasks.json;
 
     # ".config/qtile".source = /home/alejandrocabeza/.dotfiles/qtile;
     ".config/wofi".source = /home/alejandrocabeza/.dotfiles/wofi;
@@ -168,56 +160,135 @@ in
 
   programs.tmux = {
     enable = true;
-    terminal = "tmux-256color";
+    terminal = "tmux-256color"; # Cambiado a tmux-256color para mejor soporte de colores
     plugins = with pkgs; [
       tmuxPlugins.sensible
       tmuxPlugins.tmux-fzf
       tmuxPlugins.vim-tmux-navigator
+      # Eliminamos tokyo-night-tmux porque vamos a usar Gruvbox Material
     ];
     extraConfig = ''
+      # --- GRUVBOX MATERIAL COLOR SCHEME ---
+      set -g status-justify "left"
+      set -g status-style "bg=#282828,fg=#dfbf8e" # Fondo oscuro, texto crema
+
+      # Pane borders
+      set -g pane-border-style "fg=#504945"
+      set -g pane-active-border-style "fg=#a9b665" # Verde para el panel activo
+
+      # Status bar design
+      set -g status-left-length "100"
+      set -g status-right-length "100"
+      set -g status-left "#[fg=#282828,bg=#a9b665,bold] #S #[fg=#a9b665,bg=#282828,nobold,nounderscore,noitalics]"
+      set -g status-right "#[fg=#504945,bg=#282828,nobold,nounderscore,noitalics]#[fg=#dfbf8e,bg=#504945] %Y-%m-%d  %H:%M #[fg=#a9b665,bg=#504945,nobold,nounderscore,noitalics]#[fg=#282828,bg=#a9b665,bold] #h "
+
+      # Window tabs
+      setw -g window-status-activity-style "underscore,fg=#a89984,bg=#282828"
+      setw -g window-status-separator ""
+      setw -g window-status-style "fg=#dfbf8e,bg=#282828"
+      setw -g window-status-format "#[fg=#282828,bg=#282828,nobold,nounderscore,noitalics]#[default] #I  #W #[fg=#282828,bg=#282828,nobold,nounderscore,noitalics]"
+      setw -g window-status-current-format "#[fg=#282828,bg=#45403d,nobold,nounderscore,noitalics]#[fg=#dfbf8e,bg=#45403d,bold] #I  #W #[fg=#45403d,bg=#282828,nobold,nounderscore,noitalics]"
+
+      # --- Resto de tu configuración original ---
       unbind C-b
       set-option -g prefix C-t
       set-option -g repeat-time 0
       set-option -g focus-events on
+
       set-window-option -g mode-keys vi
       bind r source-file ~/.config/tmux/tmux.conf \; display "Reloaded!"
+      
+      # Usar wl-copy para Wayland (COSMIC/Pop!_OS)
       bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "wl-copy"
+      
       bind o run-shell "xdg-open #{pane_current_path}"
       bind -r e kill-pane -a
+
+      # Navegación y Resizing (tus binds anteriores)
       bind -r k select-pane -U
       bind -r j select-pane -D
       bind -r h select-pane -L
       bind -r l select-pane -R
+      bind -r C-k resize-pane -U 5
+      bind -r C-j resize-pane -D 5
+      bind -r C-h resize-pane -L 5
+      bind -r C-l resize-pane -R 5
+
       set-option -g mouse on
       set-option -g history-limit 64096
       set -sg escape-time 0
       set -g status-interval 1
       set -g status-position top
+
       bind / split-window -h -c "#{pane_current_path}"
       bind - split-window -v -c "#{pane_current_path}"
-
-      # Estilo Gruvbox Material
-      set -g status-justify "left"
-      set -g status-style "bg=#282828,fg=#dfbf8e"
-      set -g pane-border-style "fg=#504945"
-      set -g pane-active-border-style "fg=#a9b665"
-      set -g status-left "#[fg=#282828,bg=#a9b665,bold] #S #[fg=#a9b665,bg=#282828,nobold]"
-      set -g status-right "#[fg=#504945,bg=#282828]#[fg=#dfbf8e,bg=#504945] %Y-%m-%d  %H:%M #[fg=#a9b665,bg=#504945]#[fg=#282828,bg=#a9b665,bold] #h "
+      unbind %
+      unbind '"'
     '';
   };
 
   programs.fzf = {
     enable = true;
-    defaultOptions = [ "--height 40% --layout reverse --border" ];
+    defaultOptions = [
+      "--color=fg:#d4be98,bg:-1,hl:#e67e80"
+      "--color=fg+:#d4be98,bg+:#3c3836,hl+:#e67e80"
+      "--color=info:#a9b665,prompt:#7daea3,pointer:#d3869b"
+      "--color=marker:#d3869b,spinner:#a9b665,header:#7daea3"
+      "--height 40% --layout reverse --border"
+    ];
   };
 
   programs.starship = {
     enable = true;
     settings = {
+      # Formato de bloques sólidos sin módulos que dependan de estados complejos
       format = "[](#a89984)$username[](bg:#d8a657 fg:#a89984)$directory[](fg:#d8a657 bg:#a9b665)$git_branch$git_status[](fg:#a9b665 bg:#7daea3)$nix_shell[](fg:#7daea3 bg:#32302f)$cmd_duration[ ](fg:#32302f)$character";
-      username = { show_always = true; style_user = "bg:#a89984 fg:#282828"; format = "[$user]($style)"; };
-      directory = { style = "bg:#d8a657 fg:#282828"; format = "[ $path ]($style)"; truncation_length = 3; };
-      git_branch = { symbol = " "; style = "bg:#a9b665 fg:#282828"; format = "[ $symbol$branch ]($style)"; };
+
+      add_newline = true;
+      line_break = { disabled = true; };
+
+      # El carácter de entrada simple y elegante
+      character = {
+        success_symbol = "[➜](bold #a9b665)";
+        error_symbol = "[➜](bold #e67e80)";
+      };
+
+      username = {
+        show_always = true;
+        style_user = "bg:#a89984 fg:#282828";
+        format = "[$user]($style)";
+      };
+
+      directory = {
+        style = "bg:#d8a657 fg:#282828";
+        format = "[ $path ]($style)";
+        truncation_length = 3;
+        fish_style_pwd_dir_length = 1;
+      };
+
+      git_branch = {
+        symbol = " ";
+        style = "bg:#a9b665 fg:#282828";
+        format = "[ $symbol$branch ]($style)";
+      };
+
+      git_status = {
+        style = "bg:#a9b665 fg:#282828";
+        format = "([$all_status$ahead_behind]($style))";
+        ahead = "⇡\${count}"; 
+        behind = "⇣\${count}";
+      };
+
+      nix_shell = {
+        symbol = " ";
+        style = "bg:#7daea3 fg:#282828";
+        format = "[ $symbol]($style)";
+      };
+
+      cmd_duration = {
+        style = "bg:#32302f fg:#d8a657";
+        format = "[  $duration ]($style)";
+      };
     };
   };
 }

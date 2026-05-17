@@ -1,11 +1,13 @@
 mode=drun
-width=800
-height=400
+width=550
+height=350
 location=center
-prompt=Search...
+prompt=
 allow_images=true
-image_size=32
+image_size=24
 always_run=true
 show_all=false
 hide_scroll=true
 key_exit=Escape
+layer=overlay
+gtk-dark=true

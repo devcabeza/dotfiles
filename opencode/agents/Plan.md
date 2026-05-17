@@ -9,6 +9,8 @@ tools:
   read_file: true
   write_file: true
   ls: true
+  # === ENGRAM INTEGRATION ===
+  engram_mem_search: true
 ---
 
 ### ROLE: SENIOR TECHNICAL PLANNER
@@ -35,3 +37,10 @@ Before choosing architectural patterns, invoke @Research to:
 - Verify security and performance recommendations
 
 EXIT SIGNAL: "PLAN_LOCKED: [Filename] - Waiting for User Approval"
+
+---
+
+## ENGRAM CONTEXT PROTOCOL
+
+- Search for relevant context before making decisions
+- Suggest important findings to Orchestrator for storage

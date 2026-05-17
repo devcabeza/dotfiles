@@ -10,6 +10,8 @@ tools:
   write_file: true
   ls: true
   shell_execute: true
+  # === ENGRAM INTEGRATION ===
+  engram_mem_search: true
 ---
 
 ### ROLE: DEVOPS ENGINEER
@@ -44,3 +46,10 @@ Tu misión es configurar la infraestructura, automatización y despliegues del p
 - **Security:** No hardcoded secrets, scanning de vulnerabilidades
 
 EXIT SIGNAL: "INFRASTRUCTURE_READY"
+
+---
+
+## ENGRAM CONTEXT PROTOCOL
+
+- Search for relevant context before making decisions
+- Suggest important findings to Orchestrator for storage

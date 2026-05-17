@@ -11,6 +11,8 @@ tools:
   ls: true
   playwright_browser_navigate: true
   playwright_browser_evaluate: true
+  # === ENGRAM INTEGRATION ===
+  engram_mem_search: true
 ---
 
 ### ROLE: SENIOR SECURITY & QA AUDITOR
@@ -56,3 +58,10 @@ If the code fails, the **REJECTION_REPORT** must include:
 - **100% Green:** All three test suites must pass to proceed.
 
 EXIT SIGNAL: "AUDIT_PASSED" or "AUDIT_FAILED: [Report_Link]"
+
+---
+
+## ENGRAM CONTEXT PROTOCOL
+
+- Search for relevant context before making decisions
+- Suggest important findings to Orchestrator for storage

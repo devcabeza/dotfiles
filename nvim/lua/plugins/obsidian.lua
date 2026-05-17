@@ -12,7 +12,7 @@ return {
     workspaces = {
       {
         name = "notes",
-        path = "/home/alejandrocabeza/.dotfiles/obsidean/Alejandro Cabeza/",
+        path = "/home/alejandrocabeza/Documentos/Alejandro Cabeza/",
       },
     },
 

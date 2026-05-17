@@ -10,6 +10,8 @@ tools:
   ls: true
   grep: true
   shell_execute: true
+  # === ENGRAM INTEGRATION ===
+  engram_mem_search: true
 ---
 
 ### ROLE: SENIOR CODE REVIEWER
@@ -48,3 +50,10 @@ El reporte debe incluir:
 - **BLOCK:** Si hay violaciones arquitectónicas graves (debe volver a @Build)
 
 EXIT SIGNAL: "REVIEW_PASSED" o "REVIEW_FAILED: [Issues]"
+
+---
+
+## ENGRAM CONTEXT PROTOCOL
+
+- Search for relevant context before making decisions
+- Suggest important findings to Orchestrator for storage

@@ -1,17 +1,17 @@
 # Sistema de Agentes OpenCode
 
-> Flujo de desarrollo autónomo impulsado por IA con Spec-Driven Development
+> Flujo de desarrollo autónomo impulsado por IA con Spec-Driven Development y TDD First
 
 ---
 
 ## Visión General
 
-Este sistema es un **flujo de trabajo automatizado** que transforma una especificación del proyecto en código funcional, documentación y configuración de infraestructura.
+Este sistema es un **flujo de trabajo automatizado** que transforma una especificación del proyecto en código funcional, documentación y configuración de infraestructura, siguiendo el ciclo TDD completo.
 
 ```
-[ESPECIFICACIÓN] → [PLAN] → [BUILD] → [QA] → [DEPLOY]
-      ↑                                                 ↓
-      └──────────────── [DOCS] ←───────────────────────┘
+[ESPECIFICACIÓN] → [PLAN] → [RESEARCH] → [🔴 TEST] → [🟢 BUILD] → [🔵 REFACTOR] → [QA] → [DEPLOY]
+                                                                    ↑                         ↓
+                                                                    └──────────────── [DOCS] ←┘
 ```
 
 ### Principios Fundamentales
@@ -19,55 +19,113 @@ Este sistema es un **flujo de trabajo automatizado** que transforma una especifi
 | Principio | Descripción |
 |-----------|-------------|
 | **Spec como Fuente de Verdad** | Los agentes acceden a la skill `spec-driven-development` para conocer el contexto del proyecto |
+| **TDD First (Estricto)** | 🔴 RED → 🟢 GREEN → 🔵 REFACTOR en cada feature |
 | **Human-in-the-loop** | Tú defines la visión; los agentes ejecutan |
 | **Branch-per-Change** | Nunca se opera en `main`; cada feature tiene su rama |
-| **TDD Mandate** | Tests primero, luego código |
 | **Quality Gate** | @QA valida todo antes de avanzar |
 
 ---
 
-## Flujo de Trabajo (6 Fases)
+## 🎯 Ciclo TDD Implementado
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        🎯 TDD CYCLE                                        │
+│                                                                             │
+│   🔴 RED PHASE              🟢 GREEN PHASE           🔵 REFACTOR PHASE    │
+│   ┌─────────────┐          ┌─────────────┐         ┌─────────────┐     │
+│   │ @Tester     │ ───────► │ @Build      │ ───────► │ @CodeReview │     │
+│   │             │          │             │          │             │     │
+│   │ • Crea todos│          │ • Implementa│          │ • Aplica    │     │
+│   │   los tests │          │   código    │          │   SOLID     │     │
+│   │ • Tests     │          │ • Tests     │          │ • Clean     │     │
+│   │   FALLAN    │          │   PASAN     │          │   Code      │     │
+│   │ (expected)  │          │             │          │ • Tests     │     │
+│   └─────────────┘          └─────────────┘         │   siguen    │     │
+│                                                      │   pasando   │     │
+│                                                      └─────────────┘     │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Flujo de Trabajo (10 Fases)
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────┐
-│ PHASE 1: PLANNING                                                   │
-│ @Plan coordina con @UX, @SEO y @Research                            │
-│ Output: Plan técnico + UX Spec + Sprint Manifest                    │
-└────────────────────────────────┬─────────────────────────────────────┘
+│ PHASE 0: CONTEXT INITIALIZATION                                         │
+│ @Orch busca contexto anterior en Engram + analiza proyecto              │
+│ Output: Contexto cargado                                                │
+└────────────────────────────────┬─────────────────────────────────────────┘
                                  │
                                  ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│ PHASE 2: SPRINT DECOMPOSITION                                       │
-│ @Agile descompone el plan en sprints ejecutables                    │
-│ Output: Sprint Manifest con tareas atómicas                         │
-└────────────────────────────────┬─────────────────────────────────────┘
+│ PHASE 1: SPECIFICATION (USER APPROVAL GATE)                            │
+│ @Spec define la feature                                                 │
+│ Output: .opencode/plans/[feature].spec.md                               │
+└────────────────────────────────┬─────────────────────────────────────────┘
                                  │
                                  ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│ PHASE 3: IMPLEMENTATION                                             │
-│ @Build ejecuta sprints con enfoque TDD                               │
-│ Output: Código + Tests + Design Tokens                                │
-└────────────────────────────────┬─────────────────────────────────────┘
+│ PHASE 2: PLANNING (USER APPROVAL GATE)                                 │
+│ @Plan crea plan técnico + ERD + TDD Strategy                           │
+│ Output: .opencode/plans/[feature]-plan.md                               │
+└────────────────────────────────┬─────────────────────────────────────────┘
                                  │
                                  ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│ PHASE 4: QUALITY GATE                                                │
-│ @QA audita funcionalidad, seguridad y fidelidad visual                │
-│ Output: APPROVED o REJECTED                                           │
-└────────────────────────────────┬─────────────────────────────────────┘
+│ PHASE 3: RESEARCH                                                       │
+│ @Research explora codebase + patterns                                  │
+│ Output: Hallazgos documentados                                          │
+└────────────────────────────────┬─────────────────────────────────────────┘
                                  │
                                  ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│ PHASE 5: CONTAINERIZATION                                           │
-│ @Devops prepara Docker + CI/CD para build aprobado                    │
-│ Output: Dockerfile + docker-compose + workflows                       │
-└────────────────────────────────┬─────────────────────────────────────┘
+│ 🔴 PHASE 4: TEST CREATION (TDD - RED PHASE)                            │
+│ @Tester crea TODOS los tests (unit + integration + edge cases)         │
+│ Output: Tests en /tests/ - Estado: RED (todos fallan como esperado)    │
+└────────────────────────────────┬─────────────────────────────────────────┘
                                  │
                                  ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│ PHASE 6: CONTEXT SYNC                                                │
-│ @Docs actualiza AGENTS.md y genera PR body                            │
-│ Output: Documentación actualizada + Pull Request                      │
+│ 🟢 PHASE 5: IMPLEMENTATION (TDD - GREEN PHASE)                         │
+│ @Build implementa código para que los tests PASEN                       │
+│ Output: Código + Tests pasando (Green)                                  │
+└────────────────────────────────┬─────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│ 🔵 PHASE 6: CODE QUALITY (TDD - REFACTOR PHASE)                        │
+│ @CodeReview mejora código (SOLID + Clean Code) manteniendo tests       │
+│ Output: Código refactorizado + Tests siguen pasando                    │
+└────────────────────────────────┬─────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│ PHASE 7: TESTING & SECURITY                                            │
+│ @QA valida funcionalidad + @Security escanea vulnerabilidades          │
+│ Output: APPROVED o REJECTED                                             │
+└────────────────────────────────┬─────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│ PHASE 8: PERFORMANCE                                                    │
+│ @Perf verifica Core Web Vitals                                          │
+│ Output: APPROVED o REJECTED                                             │
+└────────────────────────────────┬─────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│ PHASE 9: INFRASTRUCTURE (CONDITIONAL)                                  │
+│ @DevOps prepara Docker + CI/CD si es necesario                         │
+│ Output: Dockerfile + docker-compose + workflows                         │
+└────────────────────────────────┬─────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│ PHASE 10: DOCUMENTATION                                                 │
+│ @Docs actualiza AGENTS.md + genera PR body                              │
+│ Output: Documentación actualizada + Pull Request                        │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -76,15 +134,28 @@ Este sistema es un **flujo de trabajo automatizado** que transforma una especifi
 ## Agentes del Sistema
 
 ### @Orch (Orchestrator)
-**Rol:** Master PM - Controla el flujo completo
+**Rol:** Master PM - Controla el flujo completo con TDD
 
 - Detecta el tipo de request y crea la rama correcta
-- Orquesta la secuencia de agentes
-- Reporta estado: `[STAGE: PHASE_NAME] [BRANCH: branch-name]`
+- Orquesta la secuencia de agentes (10 fases)
+- Reporta estado: `[PHASE: X/10] [TDD: 🔴 RED|🟢 GREEN|🔵 REFACTOR]`
 - **Nunca opera en main**
 
 ```
-Exit Signal: "PHASE_COMPLETE: [Phase_Number]"
+Exit Signal: "PIPELINE_COMPLETE: [Feature_Name]"
+```
+
+---
+
+### @Spec (Specification Strategist)
+**Rol:** Project Specification Lead
+
+- Define la feature según visión del usuario
+- Genera spec en `.opencode/plans/[feature].spec.md`
+- Incluye: visión, requisitos, criterios de aceptación
+
+```
+Exit Signal: "SPEC_DEFINED: [feature]"
 ```
 
 ---
@@ -95,10 +166,10 @@ Exit Signal: "PHASE_COMPLETE: [Phase_Number]"
 - **Stack Discovery:** Audita el repo para detectar frameworks y dependencias
 - **Architectural Routing:** Determina si necesita UI (invoca @UX) o es headless
 - **Technical Intelligence:** Invoca @Research para APIs y best practices
-- **TDD Strategy:** Define casos de prueba por fase
+- **TDD Strategy:** Define estrategia de tests por fase
 
 ```
-Subagents: @Research, @UX, @Agile
+Subagents: @Research, @UX
 Exit Signal: "PLAN_ESTABLISHED: [Plan_Filename]"
 ```
 
@@ -110,57 +181,85 @@ Exit Signal: "PLAN_ESTABLISHED: [Plan_Filename]"
 - **Stitch First:** Genera diseños visuales en Stitch antes del código
 - **Design Tokens Export:** Extrae colores, spacing, border-radius como JSON
 - **Component Mapping:** Identifica componentes existentes vs nuevos
-- **SEO Input:** Recibe estructura semántica de @SEO como input (no validación)
 
 ```
-Tools: stitch_list_projects, stitch_generate_screen_from_text, 
-       stitch_create_design_system, stitch_apply_design_system
-Subagents: @SEO
+Tools: stitch_* (Stitch MCP)
 Exit Signal: "UX_SPEC_ESTABLISHED: [UX_Filename]"
 ```
 
 ---
 
-### @SEO (Search Engine Optimization)
-**Rol:** Senior SEO Strategist
+### @Research (Intelligence)
+**Rol:** Senior Technical Researcher
 
-- **Keyword Research:** Identifica términos clave para posicionamiento
-- **Metadata Strategy:** Define títulos SEO, meta-descripciones, OpenGraph
-- **Semantic Structure:** Provee estructura de tags (H1-H6, article, section, nav) como INPUT para @UX
-- **Performance Audit:** Define límites de peso para imágenes y lazy loading
+- **Environment Fingerprinting:** Detecta versiones exactas en package.json, go.mod, etc.
+- **Targeted Web Discovery:** Busca en documentación oficial
+- **Verification:** Cruza datos encontrados con versión local detectada
 
 ```
-Exit Signal: "SEO_STRATEGY_READY: [Key focus areas]"
+Tools: read_file, ls, websearch
+Exit Signal: "RESEARCH_COMPLETE: [Summary of findings]"
 ```
 
 ---
 
-### @Agile (Sprint Manager)
-**Rol:** Senior Agile Coach
+### @Tester (Test Engineer) - NUEVO!
+**Rol:** TDD Specialist - Red Phase
 
-- **Plan Decomposition:** Lee el plan maestro y lo divide en sprints
-- **Atomic Tasks:** Cada tarea es lo suficientemente pequeña para completarse en un paso
-- **Sprint Manifest:** Crea archivo en `.opencode/sprints/[Feature]_current_sprint.md`
-- **Dependency Mapping:** Asegura bases antes de lógica compleja
+- **Crea TODOS los tests** antes de cualquier implementación
+- **Unit Tests:** Cada función/método
+- **Integration Tests:** Flujos entre módulos
+- **Edge Cases:** Boundary conditions, error handling
+- **Tests DEBEN fallar** (Red state esperado)
 
 ```
-Exit Signal: "SPRINT_READY: [Sprint_Filename]"
+Context: spec + plan + research
+Exit Signal: "TESTS_CREATED: [N] tests - State: RED (all failing as expected)"
 ```
+
+**CRITICAL:** Este agente NO escribe código de implementación, solo tests.
 
 ---
 
 ### @Build (Developer)
-**Rol:** Senior Implementation Engineer
+**Rol:** Senior Implementation Engineer - Green Phase
 
-- **Pre-Flight Audit:** Compara tailwind.config.js con Design Tokens de @UX
-- **Test-First (TDD):** Escribe tests antes de código
-- **Implementation:** Código limpio siguiendo SOLID
-- **No Arbitrary Values:** Prohibido usar clases Tailwind hardcodeadas
+- **Recibe tests de @Tester** (ya creados en Red Phase)
+- **Implementa código mínimo** para que los tests pasen
+- **TDD Workflow:**
+  - Lee los tests creados
+  - Implementa código para pasar tests
+  - Ejecuta tests → Deben PASAR (Green)
+- **No arbitrary values:** Prohibido usar clases hardcodeadas
 
 ```
-Tools: read_file, ls, write_file, edit_file, bash
-Subagents: @Research
-Exit Signal: "CONSTRUCTION_COMPLETED: Ready for QA review."
+Context: spec + plan + tests from @Tester
+Exit Signal: "IMPLEMENTATION_COMPLETE: Tests passing - TDD Green Phase Done"
+```
+
+---
+
+### @CodeReview (Code Quality) - ENFOCADO EN TDD REFACTOR
+**Rol:** Senior Code Quality Engineer - Refactor Phase
+
+- **Análisis SOLID** (estricto):
+  - **SRP:** Single Responsibility - una responsabilidad por función/clase
+  - **OCP:** Open/Closed - abierto para extensión, cerrado para modificación
+  - **LSP:** Liskov Substitution - subclases substituibles
+  - **ISP:** Interface Segregation - interfaces pequeñas
+  - **DIP:** Dependency Inversion - depender de abstracciones
+
+- **Clean Code:**
+  - Nombres descriptivos
+  - Funciones pequeñas (20-30 líneas max)
+  - DRY - No código duplicado
+  - Mínimos comentarios (solo "por qué", no "qué")
+
+- **TDD Validation:** Tests deben SEGUIR PASANDO después del refactor
+
+```
+Context: code + tests
+Exit Signal: "CODE_REVIEW_COMPLETE: APPROVED/REJECTED - [N] improvements"
 ```
 
 ---
@@ -169,14 +268,13 @@ Exit Signal: "CONSTRUCTION_COMPLETED: Ready for QA review."
 **Rol:** Senior QA & Security Engineer
 
 - **Functional Validation:** 100% de éxito en tests
-- **Visual Linting:** Verifica que no haya valores Tailwind fuera del Design System
+- **Visual Linting:** Verifica que no haya valores fuera del Design System
 - **Semantic Linting:** Valida estructura de tags contra estrategia SEO
 - **Static Analysis:** Ejecuta tsc, linting, type checking
 - **Security Audit:** Invoca @Security para vulnerabilidades
 
 ```
-Tools: read_file, ls, bash, edit_file, write_file
-Subagents: @Security, @Build
+Subagents: @Security
 Exit Signal: "PHASE_APPROVED" o "PHASE_REJECTED: [Reason]"
 ```
 
@@ -187,8 +285,7 @@ Exit Signal: "PHASE_APPROVED" o "PHASE_REJECTED: [Reason]"
 
 - **SAST:** Escanea OWASP Top 10 (Injection, XSS, Broken Auth)
 - **Supply Chain Audit:** Ejecuta npm audit, pip-audit para CVEs
-- **Secret Detection:** Busca API keys hardcodeadas (excluye *.test.* y .env.example)
-- **Logic Audit:** Analiza autorización y exposición de datos
+- **Secret Detection:** Busca API keys hardcodeadas
 
 ```
 Exit Signal: "SECURITY_SCAN_COMPLETE: [PASS/FAIL] - [X] vulnerabilities found."
@@ -202,7 +299,6 @@ Exit Signal: "SECURITY_SCAN_COMPLETE: [PASS/FAIL] - [X] vulnerabilities found."
 - **Environment Audit:** Lee package.json, planes para entender el stack
 - **Containerization:** Escribe Dockerfile multi-stage y docker-compose
 - **Pipeline Generation:** Crea workflows CI/CD en .github/workflows/
-- **Deployment Scripts:** Genera scripts en .opencode/infra/
 
 ```
 Exit Signal: "INFRA_READY: [Deployment Strategy Name]"
@@ -210,17 +306,15 @@ Exit Signal: "INFRA_READY: [Deployment Strategy Name]"
 
 ---
 
-### @Research (Intelligence)
-**Rol:** Senior Technical Researcher
+### @Perf (Performance)
+**Rol:** Performance Profiler & Optimization Specialist
 
-- **Environment Fingerprinting:** Detecta versiones exactas en package.json, go.mod, etc.
-- **Targeted Web Discovery:** Busca en documentación oficial (site:docs.stripe.com)
-- **Verification:** Cruza datos encontrados con versión local detectada
-- **NO FLUFF:** Salida estrictamente técnica
+- **Core Web Vitals:** LCP, FID, CLS
+- **Bundle Size:** Verifica tamaño del bundle
+- **Memory:** Analiza uso de memoria
 
 ```
-Tools: read_file, ls, google:search
-Exit Signal: "RESEARCH_COMPLETE: [Summary of findings]"
+Exit Signal: "PERFORMANCE_CHECK_COMPLETE: [PASS/FAIL]"
 ```
 
 ---
@@ -251,43 +345,58 @@ Exit Signal: "STRATEGY_ADVISED: [Resumen de la recomendación]"
 
 ---
 
-## Integración con Spec-Driven Development
+## Ejemplo de Uso
 
-### Estructura Esperada por Proyecto
-
+### Feature Request
 ```
-proyecto/
-└── .agents/skills/spec-driven-development/
-    └── SKILL.md  (especificación centralizada)
-        ├── Visión del producto
-        ├── Stack tecnológico
-        ├── Módulos/Pantallas UI
-        ├── Convenciones de código
-        ├── Contratos de API
-        └── Schema de base de datos
+Usuario: "Quiero agregar autenticación social con Google"
 ```
 
-### Cómo Usan la Spec los Agentes
+### Flujo Ejecutado (TDD)
+```
+1. Orch → Crea rama: feature/social-login
+2. Spec → Define la feature
+3. Plan → Crea plan técnico + TDD Strategy
+4. Research → Explora codebase
 
-| Agente | Uso de Spec |
-|--------|-------------|
-| @Plan | Diseña considerando la visión del producto |
-| @UX | Diseña UI según módulos y design tokens definidos |
-| @Build | Implementa siguiendo convenciones del proyecto |
-| @QA | Valida contra contratos y requisitos |
-| @Devops | Containeriza según el stack detectado |
+5. 🔴 Tester → Crea TODOS los tests (unit + integration + edge cases)
+          → Tests FALLAN (Red state - esperado)
+   
+6. 🟢 Build → Implementa código para que tests pasen
+          → Tests PASAN (Green state)
+   
+7. 🔵 CodeReview → Aplica SOLID + Clean Code
+                → Tests siguen PASANDO (Refactor done)
+
+8. QA → Valida tests + seguridad + visuales
+9. Perf → Verifica performance
+10. DevOps → Containeriza (si necesita)
+11. Docs → Actualiza AGENTS.md + PR
+```
 
 ---
 
-## Mejoras Recientes (v1.1)
+## Calidad de Código (TDD Refactor)
 
-| Fecha | Mejora |
-|-------|--------|
-| 2026-04-30 | Eliminadas referencias a modelos externos (Gemini/Claude) |
-| 2026-04-30 | Corregida dependencia UX→SEO (SEO como input, no validación) |
-| 2026-04-30 | Agregadas Phase 2 (Agile) y Phase 5 (Devops) completas |
-| 2026-04-30 | QA ahora tiene write_file enabled |
-| 2026-04-30 | Rol de @Ask clarificado como Principal Advisor |
+### Principios SOLID Aplicados por @CodeReview
+
+| Principio | Descripción | Aplicación en Refactor |
+|-----------|-------------|----------------------|
+| **SRP** | Una responsabilidad | Extraer funciones con múltiples propósitos |
+| **OCP** | Abierto para extensión | Usar abstracciones en lugar de hardcode |
+| **LSP** | Subclases substituibles | Ajustar jerarquía si es necesario |
+| **ISP** | Interfaces pequeñas | Separar interfaces grandes |
+| **DIP** | Depender de abstracciones | Inject dependencies |
+
+### Clean Code Aplicado por @CodeReview
+
+| Regla | Descripción |
+|-------|-------------|
+| **Nombres claros** | Variables, funciones, clases con nombres descriptivos |
+| **Funciones pequeñas** | Máximo 20-30 líneas, un propósito |
+| **DRY** | No código duplicado |
+| **Comentarios mínimos** | Solo "por qué", no "qué" |
+| **Formateo consistente** | Mismos patrones del proyecto |
 
 ---
 
@@ -296,31 +405,8 @@ proyecto/
 Cada agente reporta su estado en formato:
 
 ```
-[STAGE: PHASE_NAME] [BRANCH: branch-name] [AGENT: current-agent]
-```
-
----
-
-## Ejemplo de Uso
-
-### Feature Request
-```
-Usuario: "Quiero agregar autenticación social con Google"
-```
-
-### Flujo Ejecutado
-```
-1. Orch → Crea rama: feature/social-login
-2. Plan → Lee spec, invoca UX (sí requiere UI)
-3. UX → Genera diseño en Stitch + invoca SEO
-4. SEO → Prove estructura semántica
-5. Plan → Crea plan técnico + TDD strategy
-6. Agile → Descompone en Sprint 1, 2, 3
-7. Build → Ejecuta Sprint 1 (tests + código)
-8. QA → Valida tests + seguridad + visuales
-   ├─► APPROVED → Devops containeriza
-   └─► REJECTED → Build arregla
-9. Docs → Actualiza AGENTS.md + PR
+[PHASE: X/10] [CURRENT: Phase_X] [STATUS: in_progress|waiting_approval|complete]
+[TDD: 🔴 RED|🟢 GREEN|🔵 REFACTOR|N/A]
 ```
 
 ---
@@ -331,5 +417,5 @@ Este sistema es parte de la configuración personal de `@alejandrocabeza`. Para 
 
 ---
 
-**Última actualización:** 2026-04-30
-**Versión:** 1.1
+**Última actualización:** 2026-05-17
+**Versión:** 2.0 (TDD First)

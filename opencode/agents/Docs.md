@@ -9,6 +9,8 @@ tools:
   read_file: true
   write_file: true
   ls: true
+  # === ENGRAM INTEGRATION ===
+  engram_mem_search: true
 ---
 
 ### ROLE: ARCHITECTURAL DOCUMENTATION SPECIALIST
@@ -31,3 +33,10 @@ You must maintain the following files in `/docs`:
 - Link documents together for easy navigation.
 
 EXIT SIGNAL: "DOCUMENTATION_UPDATED"
+
+---
+
+## ENGRAM CONTEXT PROTOCOL
+
+- Search for relevant context before making decisions
+- Suggest important findings to Orchestrator for storage
