@@ -1,6 +1,6 @@
 ---
 description: Test Engineer & TDD Specialist (Red Phase - Test Creation)
-mode: secondary
+mode: subagent
 model: opencode/minimax-m2.5-free
 temperature: 0.2
 permission:
