@@ -47,8 +47,9 @@ hl.bind(m.mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 -- ============================
 -- WiFi, Bluetooth, Notifications
 -- ============================
-hl.bind(m.mainMod .. " + N", hl.dsp.exec_cmd(m.wifiMenu))
-hl.bind(m.mainMod .. " + B", hl.dsp.exec_cmd(m.bluetoothToggle))
+hl.bind(m.mainMod .. " + N", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/wifi_menu.sh"))
+hl.bind(m.mainMod .. " + B", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/bluetooth_menu.sh"))
+hl.bind(m.mainMod .. " + P", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/wallpaper_picker.sh"))
 hl.bind("Print",             hl.dsp.exec_cmd("dunstctl history-pop"),     { locked = true })
 hl.bind("Scroll_Lock",       hl.dsp.exec_cmd("dunstctl close"),           { locked = true })
 hl.bind(m.mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("dunstctl history"))

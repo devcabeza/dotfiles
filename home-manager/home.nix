@@ -99,6 +99,13 @@ in
     pkgs.dunst
     pkgs.blueman
     pkgs.networkmanagerapplet
+    pkgs.wofi
+
+    # Tools
+    pkgs.brightnessctl
+    pkgs.grim
+    pkgs.slurp
+    pkgs.alacritty
 
     # Wallpaper daemon (Wayland)
     pkgs.swww
@@ -119,6 +126,9 @@ in
 
     # Ghostty Config
     ".config/ghostty".source = /home/alejandrocabeza/.dotfiles/ghostty;
+
+    # Alacritty Config
+    ".config/alacritty".source = /home/alejandrocabeza/.dotfiles/alacritty;
 
     # Fish Config
     ".config/fish/conf.d".source = /home/alejandrocabeza/.dotfiles/fish/conf.d;

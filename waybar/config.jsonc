@@ -1,84 +1,111 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 24,
-    "spacing": 0,
+    "height": 32,
+    "spacing": 6,
     "exclusive": true,
-    "margin-top": 0,
-    "margin-left": 0,
-    "margin-right": 0,
+    "margin-top": 8,
+    "margin-left": 12,
+    "margin-right": 12,
     "margin-bottom": 0,
 
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": [],
-    "modules-right": ["pulseaudio", "network", "battery", "clock", "tray"],
+    "modules-center": ["clock"],
+    "modules-right": ["pulseaudio", "network", "bluetooth", "battery", "tray"],
 
     "hyprland/workspaces": {
         "format": "{icon}",
         "on-click": "activate",
         "format-icons": {
-            "1": "1",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "active": "●",
-            "default": "○"
+            "1": "󰎯",
+            "2": "󰎲",
+            "3": "󰎳",
+            "4": "󰎴",
+            "5": "󰎵",
+            "6": "󰎶",
+            "7": "󰎷",
+            "8": "󰎸",
+            "9": "󰎹",
+            "active": "󰎯",
+            "default": "󰊠"
         },
         "persistent-workspaces": {
             "*": 4
-        }
+        },
+        "all-outputs": false
     },
 
     "hyprland/window": {
-        "format": "{}",
-        "max-length": 40,
+        "format": "󰣆  {}",
+        "max-length": 50,
         "separate-outputs": true,
         "rewrite": {
-            "(.*) — Mozilla Firefox": "$1",
-            "(.*) — GNOME Terminal": "$1"
+            "(.*) — Mozilla Firefox": "󰈹  $1",
+            "(.*) — GNOME Terminal": "󰻾  $1"
         }
     },
 
     "clock": {
-        "format": "{:%H:%M}",
+        "format": "󰥔  {:%H:%M}",
+        "format-alt": "󰥔  {:%A, %d %B — %H:%M}",
         "tooltip-format": "<tt>{calendar}</tt>",
         "actions": {
+            "on-click": "mode",
             "on-click-right": "mode"
-        }
+        },
+        "interval": 1
     },
 
     "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-muted": "M",
+        "format": "{icon}  {volume}%",
+        "format-muted": "󰝟  Muted",
         "format-icons": {
-            "default": ["Vol"]
+            "headphone": "󰋋 ",
+            "hands-free": "󰋋 ",
+            "headset": "󰋋 ",
+            "phone": " ",
+            "portable": " ",
+            "car": " ",
+            "default": ["󰕿 ", "󰖀 ", "󰕾 "]
         },
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "on-click-right": "pavucontrol",
+        "scroll-step": 5,
         "tooltip": false
     },
 
     "network": {
-        "format-wifi": "Wi {signalStrength}%",
-        "format-ethernet": "Eth",
-        "format-disconnected": "X",
+        "format-wifi": "󰤨  {signalStrength}%",
+        "format-ethernet": "󰈀  Ethernet",
+        "format-disconnected": "󰤮  Offline",
+        "on-click": "/home/alejandrocabeza/.dotfiles/scripts/wifi_menu.sh",
+        "tooltip": false
+    },
+
+    "bluetooth": {
+        "format": "󰂯",
+        "format-connected": "󰂱  {device_alias}",
+        "format-connected-battery": "󰂱  {device_alias} {device_battery_percentage}%",
+        "on-click": "/home/alejandrocabeza/.dotfiles/scripts/bluetooth_menu.sh",
         "tooltip": false
     },
 
     "battery": {
         "states": {
+            "good": 95,
             "warning": 20,
             "critical": 10
         },
-        "format": "{icon} {capacity}%",
-        "format-charging": "⚡ {capacity}%",
-        "format-icons": ["bat"],
+        "format": "{icon}  {capacity}%",
+        "format-charging": "󰂄  {capacity}%",
+        "format-full": "󰁹  Full",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "on-click": "/home/alejandrocabeza/.dotfiles/scripts/wallpaper_picker.sh",
         "tooltip": false
     },
 
     "tray": {
-        "icon-size": 10,
-        "spacing": 2
+        "icon-size": 14,
+        "spacing": 4
     }
 }

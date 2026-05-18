@@ -1,13 +1,14 @@
 mode=drun
 width=550
-height=350
+height=400
 location=center
-prompt=
+prompt=Buscar...
 allow_images=true
-image_size=24
+image_size=28
 always_run=true
 show_all=false
 hide_scroll=true
 key_exit=Escape
 layer=overlay
 gtk-dark=true
+insensitive=true
