@@ -1,49 +1,60 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Ensure Nix profile is in PATH (needed when launched from Hyprland)
+export PATH="$HOME/.nix-profile/bin:$PATH"
 
-# Function to get bluetooth status
-get_status() {
-    if bluetoothctl show | grep -q "Powered: yes"; then
-        echo "on"
+set -euo pipefail
+
+APP_ID="org.omarchy.bluetui"
+TUI="bluetui"
+TERMINAL="${BLUETOOTH_MENU_TERMINAL:-alacritty}"
+LOG_DIR="${XDG_CACHE_HOME:-$HOME/.cache}"
+LOG_FILE="$LOG_DIR/bluetooth_menu.log"
+
+mkdir -p "$LOG_DIR"
+: >"$LOG_FILE" 2>/dev/null || LOG_FILE="/tmp/bluetooth_menu.log"
+
+notify_error() {
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send -u normal "Bluetooth" "$1"
     else
-        echo "off"
+        printf 'Bluetooth: %s\n' "$1" >&2
     fi
 }
 
-# Main menu options
-options="Toggle Power\nScan for Devices\nConnect to Paired Device\nDisconnect Device"
+if ! command -v "$TUI" >/dev/null 2>&1; then
+    notify_error "Instala bluetui para usar el panel Bluetooth.\n\n  nix profile install nixpkgs#bluetui"
+    exit 1
+fi
 
-chosen=$(echo -e "$options" | wofi --dmenu --prompt "Bluetooth Manager: " --cache-file /dev/null)
+if ! command -v "$TERMINAL" >/dev/null 2>&1; then
+    notify_error "No encontré la terminal '$TERMINAL'."
+    exit 1
+fi
 
-case $chosen in
-    "Toggle Power")
-        status=$(get_status)
-        if [ "$status" == "on" ]; then
-            bluetoothctl power off
-        else
-            bluetoothctl power on
+rfkill unblock bluetooth >/dev/null 2>&1 || true
+
+# Check if bluetui is already running and focus it
+if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ] && command -v hyprctl >/dev/null 2>&1 && command -v jq >/dev/null 2>&1; then
+    clients_json="$(hyprctl clients -j 2>>"$LOG_FILE" || true)"
+
+    if printf '%s' "$clients_json" | jq -e type >/dev/null 2>&1; then
+        window_address=$(
+            printf '%s' "$clients_json" |
+            jq -r --arg app_id "$APP_ID" '
+                .[]
+                | select(.class == $app_id or .initialClass == $app_id)
+                | .address
+            ' |
+            head -n1
+        )
+
+        if [ -n "$window_address" ]; then
+            hyprctl dispatch focuswindow "address:$window_address" >/dev/null
+            exit 0
         fi
-        ;;
-    "Scan for Devices")
-        notify-send "Bluetooth" "Scanning for 15 seconds..."
-        bluetoothctl scan on &
-        sleep 15
-        bluetoothctl scan off
-        notify-send "Bluetooth" "Scan complete."
-        ;;
-    "Connect to Paired Device")
-        devices=$(bluetoothctl devices | awk '{print $3 " (" $2 ")" }')
-        device_chosen=$(echo -e "$devices" | wofi --dmenu --prompt "Select Device: " --cache-file /dev/null)
-        if [ -n "$device_chosen" ]; then
-            mac=$(echo "$device_chosen" | grep -oE '([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}')
-            bluetoothctl connect "$mac"
-        fi
-        ;;
-    "Disconnect Device")
-        connected=$(bluetoothctl info | grep "Device" | awk '{print $2}')
-        if [ -n "$connected" ]; then
-            bluetoothctl disconnect "$connected"
-        else
-            notify-send "Bluetooth" "No device connected."
-        fi
-        ;;
-esac
+    fi
+fi
+
+# Launch bluetui in terminal
+"$TERMINAL" --class "$APP_ID" -e "$TUI" >>"$LOG_FILE" 2>&1 &
+disown

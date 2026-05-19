@@ -1,5 +1,5 @@
 -- Todos los keybinds
--- Usa las variables definidas en modules/06-variables.lua
+-- Usa hl.bind() con hl.dsp.exec_cmd() y rutas absolutas
 
 local m = _G.hypr
 
@@ -45,7 +45,7 @@ hl.bind(m.mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(m.mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- ============================
--- WiFi, Bluetooth, Notifications
+-- WiFi, Bluetooth, Notificaciones
 -- ============================
 hl.bind(m.mainMod .. " + N", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/wifi_menu.sh"))
 hl.bind(m.mainMod .. " + B", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/bluetooth_menu.sh"))
@@ -57,7 +57,7 @@ hl.bind(m.mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("dunstctl history"))
 -- ============================
 -- Screenshots
 -- ============================
-hl.bind(m.mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(m.screenshotScript))
+hl.bind(m.mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/screenshot.sh"))
 
 -- ============================
 -- Multimedia (Audio)
@@ -90,8 +90,8 @@ hl.bind(m.mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 -- ============================
 -- Atajos adicionales
 -- ============================
-hl.bind(m.mainMod .. " + slash",    hl.dsp.exec_cmd(m.keybindsMenu))
-hl.bind(m.mainMod .. " + SHIFT + P", hl.dsp.exec_cmd(m.packageManager))
+hl.bind(m.mainMod .. " + slash",    hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/keybinds_menu.sh"))
+hl.bind(m.mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/package_manager.sh"))
 
 -- ============================
 -- Scratchpad

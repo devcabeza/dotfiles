@@ -7,7 +7,4 @@ _G.hypr = {
     menu = "wofi --show drun",
     filemanager = "nautilus",
     terminal = "alacritty",
-    screenshotScript = "~/.dotfiles/scripts/screenshot.sh",
-    keybindsMenu = "~/.dotfiles/scripts/keybinds_menu.sh",
-    packageManager = "~/.dotfiles/scripts/package_manager.sh",
 }

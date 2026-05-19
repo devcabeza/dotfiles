@@ -11,7 +11,7 @@
 
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "network", "bluetooth", "battery", "tray"],
+    "modules-right": ["pulseaudio", "cpu", "network", "bluetooth", "battery", "tray"],
 
     "hyprland/workspaces": {
         "format": "{icon}",
@@ -71,6 +71,13 @@
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "on-click-right": "pavucontrol",
         "scroll-step": 5,
+        "tooltip": false
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": "󰍛",
+        "on-click": "/home/alejandrocabeza/.dotfiles/scripts/btop_menu.sh",
         "tooltip": false
     },
 

@@ -3,9 +3,11 @@
 
 local modules = {
     "lua.variables",
+    "lua.helpers",
     "lua.monitors",
     "lua.input",
     "lua.general",
+    "lua.windowrules",
     "lua.animations",
     "lua.autostart",
     "lua.binds",

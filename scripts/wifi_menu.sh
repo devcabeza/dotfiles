@@ -1,20 +1,60 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Ensure Nix profile is in PATH (needed when launched from Hyprland)
+export PATH="$HOME/.nix-profile/bin:$PATH"
 
-# Get a list of available wifi networks
-wifi_list=$(nmcli --fields "SECURITY,SSID" device wifi list | sed 1d | sed 's/^  //' | awk -F'  +' '{if (NR!=1) {print $2}}' | sort -u)
+set -euo pipefail
 
-# Use wofi to select a network
-chosen_network=$(echo -e "$wifi_list" | wofi --dmenu --prompt "Select WiFi Network: " --cache-file /dev/null)
+APP_ID="org.omarchy.wifi"
+TUI="nmtui"
+TERMINAL="${WIFI_MENU_TERMINAL:-alacritty}"
+LOG_DIR="${XDG_CACHE_HOME:-$HOME/.cache}"
+LOG_FILE="$LOG_DIR/wifi_menu.log"
 
-if [ -n "$chosen_network" ]; then
-    # Check if network is already known/saved
-    if nmcli connection show | grep -q "$chosen_network"; then
-        nmcli device wifi connect "$chosen_network"
+mkdir -p "$LOG_DIR"
+: >"$LOG_FILE" 2>/dev/null || LOG_FILE="/tmp/wifi_menu.log"
+
+notify_error() {
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send -u normal "WiFi" "$1"
     else
-        # If new, ask for password using wofi
-        password=$(wofi --dmenu --prompt "Password for $chosen_network: " --password --cache-file /dev/null)
-        if [ -n "$password" ]; then
-            nmcli device wifi connect "$chosen_network" password "$password"
+        printf 'WiFi: %s\n' "$1" >&2
+    fi
+}
+
+if ! command -v "$TUI" >/dev/null 2>&1; then
+    notify_error "No encontré nmtui. Asegurate de tener NetworkManager instalado."
+    exit 1
+fi
+
+if ! command -v "$TERMINAL" >/dev/null 2>&1; then
+    notify_error "No encontré la terminal '$TERMINAL'."
+    exit 1
+fi
+
+rfkill unblock wifi >/dev/null 2>&1 || true
+
+# Check if nmtui is already running and focus it
+if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ] && command -v hyprctl >/dev/null 2>&1 && command -v jq >/dev/null 2>&1; then
+    clients_json="$(hyprctl clients -j 2>>"$LOG_FILE" || true)"
+
+    if printf '%s' "$clients_json" | jq -e type >/dev/null 2>&1; then
+        window_address=$(
+            printf '%s' "$clients_json" |
+            jq -r --arg app_id "$APP_ID" '
+                .[]
+                | select(.class == $app_id or .initialClass == $app_id)
+                | .address
+            ' |
+            head -n1
+        )
+
+        if [ -n "$window_address" ]; then
+            hyprctl dispatch focuswindow "address:$window_address" >/dev/null
+            exit 0
         fi
     fi
 fi
+
+# Launch nmtui in terminal
+"$TERMINAL" --class "$APP_ID" -e "$TUI" >>"$LOG_FILE" 2>&1 &
+disown

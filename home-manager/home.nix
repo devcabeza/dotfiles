@@ -94,10 +94,14 @@ in
     pkgs.libcdada
     pkgs.nerd-fonts.hack
     pkgs.nerd-fonts.symbols-only
+    pkgs.bluetui
 
     # WiFi, Bluetooth, Notifications
     pkgs.dunst
     pkgs.blueman
+    pkgs.impala
+    pkgs.iwd
+    pkgs.jq
     pkgs.networkmanagerapplet
     pkgs.wofi
 
@@ -105,10 +109,9 @@ in
     pkgs.brightnessctl
     pkgs.grim
     pkgs.slurp
-    pkgs.alacritty
 
     # Wallpaper daemon (Wayland)
-    pkgs.swww
+    pkgs.swaybg
     pkgs.librsvg
   ];
 
