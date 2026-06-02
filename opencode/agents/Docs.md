@@ -1,7 +1,6 @@
 ---
 description: Technical Writer & Architect Documenter (Project Traceability)
 mode: subagent
-model: opencode/minimax-m2.5-free
 temperature: 0.2
 permission:
   edit: allow

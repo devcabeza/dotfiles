@@ -6,8 +6,6 @@ return { -- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter-textobjects",
 	},
 	lazy = false,
-	-- PERFORMANCE: Cargar solo lenguajes principales al inicio
-	-- Los demás se cargan bajo demanda
 	cmd = {
 		"TSInstall",
 		"TSInstallSync",
@@ -16,8 +14,6 @@ return { -- Highlight, edit, and navigate code
 		"TSBufDisable",
 	},
 	opts = {
-		-- PERFORMANCE: Solo instalar lenguajes principales al inicio
-		-- Los demás se cargan cuando se abre un archivo de ese tipo
 		ensure_installed = require("nixCatsUtils").lazyAdd({
 			"bash",
 			"lua",
@@ -81,7 +77,7 @@ return { -- Highlight, edit, and navigate code
 			},
 			filetype = "blade",
 		}
--- Configuración de Prisma parser
+		-- Configuración de Prisma parser
 		parser_config.prisma = {
 			install_info = {
 				url = "git@github.com:victorhqc/tree-sitter-prisma",

@@ -16,7 +16,7 @@ size = 12
 
 [terminal.shell]
 program = "bash"
-args = ["-c", "tmux attach || tmux new-session"]
+args = ["-c", "zellij attach -c"]
 
 [colors.primary]
 background = "#282828"

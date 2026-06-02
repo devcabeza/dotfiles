@@ -1,21 +1,21 @@
 require("nixCatsUtils").setup({
-  non_nix_value = true,
+	non_nix_value = true,
 })
 
-require('config')
+require("config")
 
 local function getlockfilepath()
-  if require("nixCatsUtils").isNixCats and type(require("nixCats").settings.unwrappedCfgPath) == "string" then
-    return require("nixCats").settings.unwrappedCfgPath .. "/lazy-lock.json"
-  else
-    return vim.fn.stdpath("config") .. "/lazy-lock.json"
-  end
+	if require("nixCatsUtils").isNixCats and type(require("nixCats").settings.unwrappedCfgPath) == "string" then
+		return require("nixCats").settings.unwrappedCfgPath .. "/lazy-lock.json"
+	else
+		return vim.fn.stdpath("config") .. "/lazy-lock.json"
+	end
 end
 
 local lazyOptions = {
-  lockfile = getlockfilepath(),
+	lockfile = getlockfilepath(),
 }
 
 require("nixCatsUtils.lazyCat").setup(nixCats.pawsible({ "allPlugins", "start", "lazy.nvim" }), {
-  { import = "plugins" },
+	{ import = "plugins" },
 }, lazyOptions)

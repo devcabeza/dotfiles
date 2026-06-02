@@ -27,6 +27,7 @@ alias tree='exa --tree --level=2 --icons'
 alias vim='nvim'
 alias g='git'
 alias cat='bat'
+alias zed='zeditor'
 
 # Cursores (Warp los ignora porque usa los suyos propios)
 set fish_cursor_default block
@@ -51,3 +52,4 @@ fish_add_path $ANDROID_HOME/platform-tools
 
 # Bun global commands
 fish_add_path "/home/alejandrocabeza/.bun/bin"
+

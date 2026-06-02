@@ -7,7 +7,6 @@ return {
 	},
 	{
 		"saghen/blink.cmp",
-		-- PERFORMANCE: Lazy load para mejorar startup
 		lazy = false,
 		dependencies = {
 			"rafamadriz/friendly-snippets",
@@ -25,8 +24,6 @@ return {
 		},
 
 		version = "*",
-		---@module 'blink.cmp'
-		---@type blink.cmp.Config
 		opts = {
 			keymap = {
 				preset = "default",
@@ -50,14 +47,8 @@ return {
 			-- PERFORMANCE: Configuración de fuentes optimizada
 			sources = {
 				-- PERFORMANCE: Usar función más simple
-                default = { "lsp", "path", "snippets", "copilot" },
+				default = { "lsp", "path", "snippets", "copilot" },
 				providers = {
-					laravel = {
-						name = "laravel",
-						module = "blink.compat.source",
-						score_offset = 95,
-					},
-					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 					copilot = {
 						name = "copilot",
 						module = "blink-cmp-copilot",

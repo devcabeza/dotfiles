@@ -7,13 +7,13 @@ return {
 			sql = { "sqlfluff" },
 			lua = { "luacheck" },
 			php = { "tlint" },
-            typescript = { "biome", "eslint_d" },
-            typescriptreact = { "biome", "eslint_d" },
-            javascript = { "biome", "eslint_d" },
-            javascriptreact = { "biome", "eslint_d" },
-            vue = { "biome", "eslint_d" },
-            svelte = { "biome", "eslint_d" },
-            astro = { "biome", "eslint_d" },
+			typescript = { "biome", "eslint_d" },
+			typescriptreact = { "biome", "eslint_d" },
+			javascript = { "biome", "eslint_d" },
+			javascriptreact = { "biome", "eslint_d" },
+			vue = { "biome", "eslint_d" },
+			svelte = { "biome", "eslint_d" },
+			astro = { "biome", "eslint_d" },
 			dockerfile = { "hadolint" },
 			json = { "jsonlint", "biome" },
 		},
@@ -31,7 +31,14 @@ return {
 					if vim.fn.executable("eslint_d") == 0 then
 						return false
 					end
-					local patterns = {".eslintrc", ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml"}
+					local patterns = {
+						".eslintrc",
+						".eslintrc.js",
+						".eslintrc.cjs",
+						".eslintrc.json",
+						".eslintrc.yml",
+						".eslintrc.yaml",
+					}
 					for _, p in ipairs(patterns) do
 						if vim.loop.fs_stat(ctx.dirname .. "/" .. p) then
 							return true
@@ -96,8 +103,17 @@ return {
 				local linter = lint.linters[name]
 				if not linter then
 					require("snacks").notify("Linter " .. name .. " not found", "error", "Linting")
+					return false
 				end
-				return linter and not (type(linter) == "table" and linter.condition and not linter.condition(ctx))
+				if type(linter) == "table" then
+					if linter.cmd and vim.fn.executable(linter.cmd) == 0 then
+						return false
+					end
+					if linter.condition and not linter.condition(ctx) then
+						return false
+					end
+				end
+				return true
 			end, names)
 			if #names > 0 then
 				lint.try_lint(names)

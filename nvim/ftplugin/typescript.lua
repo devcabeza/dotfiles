@@ -10,13 +10,6 @@ if vim.bo.filetype == "typescriptreact" or vim.bo.filetype == "typescript.tsx" t
 	vim.opt_local.filetype = "typescriptreact"
 end
 
--- Configurar formato de archivo al guardar
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*.{ts,tsx,mts,cts}",
-	callback = function()
-		vim.lsp.buf.format({ async = false })
-	end,
-})
 
 -- ============================================
 -- Utilidades TypeScript (usando LSP nativo)

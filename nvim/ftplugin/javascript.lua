@@ -12,13 +12,6 @@ vim.b.completion_chain_complete = {
 	},
 }
 
--- Configurar formato de archivo al guardar
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*.{js,jsx,mjs,cjs}",
-	callback = function()
-		vim.lsp.buf.format({ async = false })
-	end,
-})
 
 -- ============================================
 -- Utilidades JavaScript (usando LSP nativo)

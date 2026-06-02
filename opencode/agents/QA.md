@@ -1,7 +1,6 @@
 ---
 description: Quality, Security & SEO Auditor (Comprehensive Project Validation)
 mode: subagent
-model: opencode/minimax-m2.5-free
 temperature: 0.1
 permission:
    edit: deny

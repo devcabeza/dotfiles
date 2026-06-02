@@ -7,7 +7,7 @@ local m = _G.hypr
 -- Aplicaciones básicas
 -- ============================
 hl.bind(m.mainMod .. " + F",        hl.dsp.exec_cmd(m.filemanager))
-hl.bind(m.altMod .. " + SPACE",     hl.dsp.exec_cmd(m.menu))
+hl.bind(m.altMod .. " + SPACE",     hl.dsp.exec_cmd("/home/alejandrocabeza/.nix-profile/bin/walker"))
 hl.bind(m.mainMod .. " + RETURN",   hl.dsp.exec_cmd(m.terminal))
 hl.bind(m.mainMod .. " + SHIFT + Q", hl.dsp.exit())
 hl.bind(m.mainMod .. " + W",        hl.dsp.window.close())

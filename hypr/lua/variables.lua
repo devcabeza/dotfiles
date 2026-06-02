@@ -4,7 +4,7 @@
 _G.hypr = {
     mainMod = "SUPER",
     altMod = "ALT",
-    menu = "wofi --show drun",
+    menu = "$HOME/.nix-profile/bin/walker",
     filemanager = "nautilus",
     terminal = "alacritty",
 }

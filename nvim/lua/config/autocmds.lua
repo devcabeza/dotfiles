@@ -81,15 +81,17 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- PERFORMANCE: Auto Save con debounce - menos frecuente
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-	desc = "Auto-save inactive buffers",
+-- PERFORMANCE: Auto Save con debounce (5 segundos de inactividad tras cambiar texto)
+local autosave_timer = vim.uv.new_timer()
+vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+	desc = "Auto-save inactive buffers with debounce",
 	group = vim.api.nvim_create_augroup("auto-save-inactive-buffers", { clear = true }),
-	-- Solo ejecutar cada 5 segundos (en vez de más frecuente)
 	callback = function()
-		if vim.bo.modified and not vim.bo.readonly and vim.bo.buftype == "" then
-			vim.cmd("silent! write")
-		end
+		autosave_timer:start(5000, 0, vim.schedule_wrap(function()
+			if vim.api.nvim_buf_is_valid(0) and vim.bo.modified and not vim.bo.readonly and vim.bo.buftype == "" then
+				vim.cmd("silent! write")
+			end
+		end))
 	end,
 })
 

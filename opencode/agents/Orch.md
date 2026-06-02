@@ -1,7 +1,6 @@
 ---
 description: Orchestrator & Project Lead (Governance, Discovery & Pipeline Management)
 mode: primary
-model: opencode/minimax-m2.5-free
 temperature: 0.1
 permission:
   edit: deny

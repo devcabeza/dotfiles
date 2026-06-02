@@ -28,15 +28,14 @@ return { -- Autoformat
 		formatters_by_ft = {
 			lua = { "stylua" },
 			blade = { "blade-formatter" },
-			json = { "biome", "jq" },
 			php = function(bufnr)
 				local fname = vim.uri_from_bufnr(bufnr)
 				if fname:match("views") then
 					return { "blade-formatter" }
 				end
-			if vim.fn.filereadable(vim.fn.getcwd() .. "/mago.toml") == 1 then
-				return { "mango_format" }
-			end
+				if vim.fn.filereadable(vim.fn.getcwd() .. "/mago.toml") == 1 then
+					return { "mango_format" }
+				end
 				return { "pint" }
 			end,
 			-- JavaScript/TypeScript - biome primero (más rápido), luego prettier

@@ -4,22 +4,6 @@ return {
 		url = "git@github.com:neovim/nvim-lspconfig.git",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			{
-				"williamboman/mason.nvim",
-				url = "git@github.com:williamboman/mason.nvim.git",
-				config = true,
-				enabled = require("nixCatsUtils").lazyAdd(true, false), -- Enable only if NOT using NixCats
-			},
-			{
-				"williamboman/mason-lspconfig.nvim",
-				url = "git@github.com:williamboman/mason-lspconfig.nvim.git",
-				enabled = require("nixCatsUtils").lazyAdd(true, false),
-			},
-			{
-				"WhoIsSethDaniel/mason-tool-installer.nvim",
-				url = "git@github.com:WhoIsSethDaniel/mason-tool-installer.nvim.git",
-				enabled = require("nixCatsUtils").lazyAdd(true, false),
-			},
 			{ "j-hui/fidget.nvim", url = "git@github.com:j-hui/fidget.nvim.git" },
 			{ "folke/neodev.nvim", url = "git@github.com:folke/neodev.nvim.git" },
 			{ "saghen/blink.cmp", url = "git@github.com:saghen/blink.cmp.git" },
@@ -28,33 +12,7 @@ return {
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities.textDocument.publishDiagnostics.annotations = false
 			capabilities.textDocument.publishDiagnostics.tagSupport = false
-			vim.lsp.protocol.CompletionItemKind = {
-				"Text",
-				"Method",
-				"Function",
-				"Constructor",
-				"Field",
-				"Variable",
-				"Class",
-				"Interface",
-				"Module",
-				"Property",
-				"Unit",
-				"Value",
-				"Enum",
-				"Keyword",
-				"Snippet",
-				"Color",
-				"File",
-				"Reference",
-				"Folder",
-				"EnumMember",
-				"Constant",
-				"Struct",
-				"Event",
-				"Operator",
-				"TypeParameter",
-			}
+
 			local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = true })
 
 			vim.api.nvim_create_autocmd("LspDetach", {
@@ -105,80 +63,31 @@ return {
 					end
 				end,
 			})
-			local diagnostics = require("setup.lsp.diagnostics")
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			local servers = require("setup.lsp.servers")
 
-			-- Check if we are running inside NixCats
-			if require("nixCatsUtils").isNixCats then
-				-- In NixCats, we assume dependencies are managed by Nix.
-				-- We directly setup servers without Mason.
-				for server_name, server_config in pairs(servers) do
+			-- Nix-only setup (clean)
+			for server_name, server_config in pairs(servers) do
+				if type(server_config) == "function" then
+					server_config = server_config()
+				end
+
+				if server_config then
 					server_config.capabilities =
 						vim.tbl_deep_extend("force", server_config.capabilities or {}, capabilities)
-					-- Check if lspconfig has the server before setting it up to avoid errors with custom servers or missing binaries
-					-- Also handle 'volar' case if lspconfig doesn't have it directly exposed under that key (it should be 'volar' though)
-					local lspconfig = require("lspconfig")
-					-- Use pcall to safely access lspconfig[server_name] as it might error if server definition is missing/broken
-					local ok, config = pcall(function()
-						return lspconfig[server_name]
-					end)
-					if ok and config then
-						config.setup(server_config)
+					if vim.lsp.config then
+						vim.lsp.config(server_name, server_config)
+						vim.lsp.enable(server_name)
+					else
+						local lspconfig = require("lspconfig")
+						local ok, config = pcall(function()
+							return lspconfig[server_name]
+						end)
+						if ok and config then
+							config.setup(server_config)
+						end
 					end
 				end
-			else
-				-- Outside NixCats, use Mason to manage dependencies
-				require("mason").setup()
-
-				-- Filter out servers that Mason fails to install or are problematic
-				-- IMPORTANT: deno is NOT a valid server for mason-lspconfig, only for lspconfig directly
-				local servers_to_install = vim.tbl_keys(servers or {})
-				servers_to_install = vim.tbl_filter(function(name)
-					-- Exclude servers that are not available in mason-lspconfig
-					return name ~= "sqls" 
-						and name ~= "volar" 
-						and name ~= "deno"  -- deno has its own LSP, not in mason-lspconfig
-						and name ~= "phpactor" -- phpactor is managed separately
-				end, servers_to_install)
-
-				-- Configure mason-lspconfig to automatically install and setup servers.
-				require("mason-lspconfig").setup({
-					ensure_installed = servers_to_install,
-					handlers = {
-						function(server_name)
-							local server = servers[server_name] or {}
-							server.capabilities = vim.tbl_deep_extend("force", server.capabilities or {}, capabilities)
-							-- Add safety check for server existence in lspconfig
-							local lspconfig = require("lspconfig")
-							-- Use pcall to safely access lspconfig[server_name]
-							local ok, config = pcall(function()
-								return lspconfig[server_name]
-							end)
-							if ok and config then
-								config.setup(server)
-							end
-						end,
-					},
-				})
-
-				-- Manually setup excluded servers if they happen to be installed or needed
-
-				require("mason-tool-installer").setup({
-					ensure_installed = {
-						"stylua",
-						"blade-formatter",
-						"prettier",
-						"eslint_d",
-						"shfmt",
-						"jq",
-						"tlint",
-						"pint",
-						"luacheck",
-						"sqlfluff",
-						"php-debug-adapter",
-					},
-				})
 			end
 		end,
 	},

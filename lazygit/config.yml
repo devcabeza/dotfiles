@@ -1,0 +1,19 @@
+gui:
+  mouseEvents: false
+  showCommandLog: true
+  showFileIcons: true
+  showListFooter: true
+  theme:
+    activeBorderColor:
+      - '#50fa7b'
+    inactiveBorderColor:
+      - '#6272a4'
+    searchingActiveBorderColor:
+      - '#ff5555'
+git:
+  autoFetch: true
+  skipHookPrefix: WIP
+  ignoreWhitespaceInDiffView: true
+os:
+  editPreset: 'nvim'
+  edit: "nvim --server $NVIM --remote-tab {{filename}}"

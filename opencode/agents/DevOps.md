@@ -1,7 +1,6 @@
 ---
 description: DevOps & Infrastructure Engineer (Docker, CI/CD, Deployments & Environment)
 mode: subagent
-model: opencode/minimax-m2.5-free
 temperature: 0.2
 permission:
   edit: ask

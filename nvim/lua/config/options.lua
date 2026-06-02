@@ -26,7 +26,6 @@ vim.g.showcmd = false -- Don't show command (lualine handles this)
 vim.g.cmdheight = 0 -- No command line height (use built-in)
 
 -- Faster redraws
-vim.opt.updatetime = 300 -- Faster cursor hold (was 250)
 vim.opt.redrawtime = 1500 -- Allow longer redraw for syntax
 vim.opt.ttimeoutlen = 50 -- Faster timeout for key sequences
 

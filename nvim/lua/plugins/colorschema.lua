@@ -23,8 +23,8 @@ return {
 		name = "gruvbox-material",
 		lazy = false,
 		priority = 1000,
-		init = function ()
-			vim.cmd('colorscheme gruvbox-material')
-		end
+		init = function()
+			vim.cmd("colorscheme gruvbox-material")
+		end,
 	},
 }

@@ -213,7 +213,7 @@ return {
 		},
 	},
 	-- Deno - Para proyectos Deno
-	deno = {
+	denols = {
 		cmd = { "deno", "lsp" },
 		filetypes = {
 			"javascript",
@@ -400,7 +400,7 @@ return {
 		single_file_support = true,
 	},
 	phpactor = function()
-		if require("nixCatsUtils").enabledForCategory("symfony") then
+		if require("nixCatsUtils").enableForCategory("symfony") then
 			return {
 				cmd = { "phpactor", "language-server" },
 				root_markers = { "composer.json" },

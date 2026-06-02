@@ -2,17 +2,16 @@ return {
 	"stevearc/oil.nvim",
 	event = "VimEnter",
 	opts = {
-		-- Key mappings for oil.nvim actions
 		keymaps = {
-			["g?"] = "actions.show_help", -- Show help
-			["<CR>"] = "actions.select", -- Select entry
-			["<C-M-s>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" }, -- Open entry in vertical split
+			["g?"] = "actions.show_help",
+			["<CR>"] = "actions.select",
+			["<C-M-s>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
 			["<C-d>"] = {
 				"actions.select",
 				opts = { horizontal = true },
 				desc = "Open the entry in a horizontal split",
-			}, -- Open entry in horizontal split
-			["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" }, -- Open entry in new tab
+			},
+			["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
 			["<C-p>"] = "actions.preview", -- Preview entry
 			["q"] = "actions.close", -- Close oil.nvim
 			["<C-r>"] = "actions.refresh", -- Refresh oil.nvim
@@ -33,8 +32,8 @@ return {
 			show_hidden = true,
 		},
 		keymaps_help = {
-			border = 'rounded',
-		}
+			border = "rounded",
+		},
 	},
 	keys = {
 		{ "-", "<cmd>Oil --float<cr>", desc = "Open oil.nvim in float mode" },

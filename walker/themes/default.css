@@ -1,0 +1,143 @@
+/* Gruvbox Material Theme for Walker */
+/* Paleta exacta del sistema (waybar, tmux, starship, etc.) */
+
+* {
+  all: unset;
+}
+
+.normal-icons {
+  -gtk-icon-size: 16px;
+}
+
+.large-icons {
+  -gtk-icon-size: 32px;
+}
+
+/* Window */
+.window {
+  background: alpha(#282828, 0.95);
+  border-radius: 16px;
+  border: 1px solid #504945;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.box-wrapper {
+  padding: 16px;
+}
+
+/* Search bar */
+.entry {
+  background: #32302f;
+  border-radius: 10px;
+  border: 1px solid #504945;
+  padding: 12px;
+}
+
+.input {
+  color: #ebdbb2;
+  caret-color: #a9b665;
+  font-size: 16px;
+  font-family: "Hack Nerd Font Mono", monospace;
+  padding: 4px 8px;
+}
+
+.input placeholder {
+  color: #7c6f64;
+  opacity: 0.6;
+}
+
+/* List */
+.list {
+  color: #ebdbb2;
+}
+
+.list-item {
+  padding: 0;
+  margin: 0;
+}
+
+.item-box {
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+child:hover .item-box,
+child:selected .item-box {
+  background: alpha(#a9b665, 0.15);
+}
+
+.item-text {
+  color: #ebdbb2;
+  font-size: 14px;
+  font-family: "Hack Nerd Font Mono", monospace;
+}
+
+child:hover .item-text,
+child:selected .item-text {
+  color: #ea6962;
+}
+
+.item-subtext {
+  color: #928374;
+  font-size: 12px;
+  opacity: 0.6;
+  font-family: "Hack Nerd Font Mono", monospace;
+}
+
+.item-image {
+  margin-right: 10px;
+}
+
+.item-quick-activation {
+  color: #7daea3;
+  font-size: 11px;
+  font-family: "Hack Nerd Font Mono", monospace;
+}
+
+/* Keybind hints */
+.keybind-hints {
+  color: #a89984;
+  opacity: 0.5;
+  font-size: 12px;
+  font-family: "Hack Nerd Font Mono", monospace;
+  padding: 8px;
+}
+
+/* Preview */
+.preview {
+  background: #32302f;
+  border: 1px solid alpha(#7daea3, 0.2);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* Calculator */
+.calc .item-text {
+  color: #d8a657;
+  font-family: "Hack Nerd Font Mono", monospace;
+}
+
+/* Symbols */
+.symbols .item-image {
+  font-size: 24px;
+}
+
+/* Category labels */
+.category-label {
+  color: #7daea3;
+  font-size: 11px;
+  font-family: "Hack Nerd Font Mono", monospace;
+  padding: 8px;
+  background: #32302f;
+  border-radius: 6px;
+}
+
+/* Scrollbar */
+scrollbar {
+  opacity: 0;
+}
+
+/* Error */
+.error {
+  color: #ea6962;
+}

@@ -14,13 +14,6 @@ vim.cmd([[
   autocmd FileType javascriptreact,javascript.jsx let b:match_words = '<>:(),'
 ]])
 
--- Formatear al guardar
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*.{js,jsx,mjs,cjs}",
-	callback = function()
-		vim.lsp.buf.format({ async = false })
-	end,
-})
 
 -- Snippets para React
 vim.cmd([[

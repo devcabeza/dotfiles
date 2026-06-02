@@ -14,13 +14,6 @@ vim.cmd([[
   autocmd FileType typescriptreact,typescript.tsx let b:match_words = '<>:(),'
 ]])
 
--- Formatear al guardar
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*.{ts,tsx,mts,cts}",
-	callback = function()
-		vim.lsp.buf.format({ async = false })
-	end,
-})
 
 -- Snippets para TypeScript React
 vim.cmd([[

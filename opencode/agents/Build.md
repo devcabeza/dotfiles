@@ -1,7 +1,6 @@
 ---
 description: Full-Stack Developer (Secure Code & Semantic SEO Implementation)
 mode: all
-model: opencode/minimax-m2.5-free
 temperature: 0.3
 tools:
   read_file: true

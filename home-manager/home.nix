@@ -86,6 +86,11 @@ in
     pkgs.postgresql
     pkgs.delta
     pkgs.luarocks-nix
+    pkgs.luaPackages.luacheck
+    pkgs.stylua
+    pkgs.biome
+    pkgs.prettierd
+    pkgs.blade-formatter
     pkgs.oh-my-fish
     pkgs.libgcc
     pkgs.bun
@@ -103,7 +108,7 @@ in
     pkgs.iwd
     pkgs.jq
     pkgs.networkmanagerapplet
-    pkgs.wofi
+    pkgs.walker
 
     # Tools
     pkgs.brightnessctl
@@ -148,6 +153,15 @@ in
     # Hyprland
     ".config/hypr".source = /home/alejandrocabeza/.dotfiles/hypr;
     ".config/waybar".source = /home/alejandrocabeza/.dotfiles/waybar;
+
+    # Tmux Config (link only tmux.conf, not the whole directory — plugins/ needs to be writable for tpm)
+    ".config/tmux/tmux.conf".source = /home/alejandrocabeza/.dotfiles/tmux/tmux.conf;
+
+    # Zellij
+    ".config/zellij".source = /home/alejandrocabeza/.dotfiles/zellij;
+
+    #lazygit
+    ".config/lazygit".source = /home/alejandrocabeza/.dotfiles/lazygit;
   };
 
   # --- Variables de entorno ---
@@ -164,81 +178,19 @@ in
     createEngramDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
       $DRY_RUN_CMD mkdir -p $VERBOSE_ARG /home/alejandrocabeza/.local/share/engram
     '';
+
+    installTpm = lib.hm.dag.entryAfter ["linkGeneration"] ''
+      mkdir -p "$HOME/.config/tmux/plugins"
+      if [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
+        $DRY_RUN_CMD /usr/bin/git clone https://github.com/tmux-plugins/tpm "$HOME/.config/tmux/plugins/tpm"
+      fi
+    '';
   };
 
   # --- Programas ---
   programs.home-manager.enable = true;
   programs.neovim.enable = true;
   programs.ripgrep = { enable = true; arguments = [ "--smart-case" ]; };
-
-  programs.tmux = {
-    enable = true;
-    terminal = "tmux-256color"; # Cambiado a tmux-256color para mejor soporte de colores
-    plugins = with pkgs; [
-      tmuxPlugins.sensible
-      tmuxPlugins.tmux-fzf
-      tmuxPlugins.vim-tmux-navigator
-      # Eliminamos tokyo-night-tmux porque vamos a usar Gruvbox Material
-    ];
-    extraConfig = ''
-      # --- GRUVBOX MATERIAL COLOR SCHEME ---
-      set -g status-justify "left"
-      set -g status-style "bg=#282828,fg=#dfbf8e" # Fondo oscuro, texto crema
-
-      # Pane borders
-      set -g pane-border-style "fg=#504945"
-      set -g pane-active-border-style "fg=#a9b665" # Verde para el panel activo
-
-      # Status bar design
-      set -g status-left-length "100"
-      set -g status-right-length "100"
-      set -g status-left "#[fg=#282828,bg=#a9b665,bold] #S #[fg=#a9b665,bg=#282828,nobold,nounderscore,noitalics]"
-      set -g status-right "#[fg=#504945,bg=#282828,nobold,nounderscore,noitalics]#[fg=#dfbf8e,bg=#504945] %Y-%m-%d  %H:%M #[fg=#a9b665,bg=#504945,nobold,nounderscore,noitalics]#[fg=#282828,bg=#a9b665,bold] #h "
-
-      # Window tabs
-      setw -g window-status-activity-style "underscore,fg=#a89984,bg=#282828"
-      setw -g window-status-separator ""
-      setw -g window-status-style "fg=#dfbf8e,bg=#282828"
-      setw -g window-status-format "#[fg=#282828,bg=#282828,nobold,nounderscore,noitalics]#[default] #I  #W #[fg=#282828,bg=#282828,nobold,nounderscore,noitalics]"
-      setw -g window-status-current-format "#[fg=#282828,bg=#45403d,nobold,nounderscore,noitalics]#[fg=#dfbf8e,bg=#45403d,bold] #I  #W #[fg=#45403d,bg=#282828,nobold,nounderscore,noitalics]"
-
-      # --- Resto de tu configuración original ---
-      unbind C-b
-      set-option -g prefix C-t
-      set-option -g repeat-time 0
-      set-option -g focus-events on
-
-      set-window-option -g mode-keys vi
-      bind r source-file ~/.config/tmux/tmux.conf \; display "Reloaded!"
-      
-      # Usar wl-copy para Wayland (COSMIC/Pop!_OS)
-      bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "wl-copy"
-      
-      bind o run-shell "xdg-open #{pane_current_path}"
-      bind -r e kill-pane -a
-
-      # Navegación y Resizing (tus binds anteriores)
-      bind -r k select-pane -U
-      bind -r j select-pane -D
-      bind -r h select-pane -L
-      bind -r l select-pane -R
-      bind -r C-k resize-pane -U 5
-      bind -r C-j resize-pane -D 5
-      bind -r C-h resize-pane -L 5
-      bind -r C-l resize-pane -R 5
-
-      set-option -g mouse on
-      set-option -g history-limit 64096
-      set -sg escape-time 0
-      set -g status-interval 1
-      set -g status-position top
-
-      bind / split-window -h -c "#{pane_current_path}"
-      bind - split-window -v -c "#{pane_current_path}"
-      unbind %
-      unbind '"'
-    '';
-  };
 
   programs.fzf = {
     enable = true;
