@@ -118,6 +118,16 @@ in
     # Wallpaper daemon (Wayland)
     pkgs.swaybg
     pkgs.librsvg
+
+    # Ranger & Previews
+    pkgs.ranger
+    pkgs.ueberzugpp
+    pkgs.poppler_utils
+    pkgs.xlsx2csv
+    pkgs.glow
+    pkgs.ffmpegthumbnailer
+    pkgs.exiftool
+    pkgs.odt2txt
   ];
 
   fonts.fontconfig.enable = true;
@@ -162,6 +172,10 @@ in
 
     #lazygit
     ".config/lazygit".source = /home/alejandrocabeza/.dotfiles/lazygit;
+
+    # Ranger Config
+    ".config/ranger/rc.conf".source = /home/alejandrocabeza/.dotfiles/ranger/rc.conf;
+    ".config/ranger/scope.sh".source = /home/alejandrocabeza/.dotfiles/ranger/scope.sh;
   };
 
   # --- Variables de entorno ---
