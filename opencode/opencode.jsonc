@@ -4,18 +4,18 @@
   "autoupdate": false,
   "default_agent": "ask",
   "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "{{CONTEXT7_API_KEY}}"
+      },
+      "enabled": true
+    },
     "playwright": {
       "type": "local",
       "command": ["npx", "@playwright/mcp@latest"],
       "enabled": true
-    },
-    "stitch": {
-      "type": "remote",
-      "url": "https://stitch.googleapis.com/mcp",
-      "enabled": true,
-      "headers": {
-        "X-Goog-Api-Key": "${STITCH_API_KEY}"
-      }
     },
     "engram": {
       "type": "local",

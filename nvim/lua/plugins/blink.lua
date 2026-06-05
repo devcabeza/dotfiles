@@ -81,7 +81,8 @@ return {
 		opts_extend = { "sources.default" },
 		config = function(_, opts)
 			if require("nixCatsUtils").isNixCats then
-				opts.fuzzy = { prebuilt_binaries = { download = false } }
+				opts.fuzzy = opts.fuzzy or {}
+				opts.fuzzy.prebuilt_binaries = { download = false }
 			end
 
 			require("blink-cmp").setup(opts)

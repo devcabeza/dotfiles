@@ -8,6 +8,8 @@ local m = _G.hypr
 -- ============================
 hl.bind(m.mainMod .. " + F",        hl.dsp.exec_cmd(m.filemanager))
 hl.bind(m.altMod .. " + SPACE",     hl.dsp.exec_cmd("/home/alejandrocabeza/.nix-profile/bin/walker"))
+hl.bind(m.altMod .. " + I",         hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/handy_voice_setup.sh normal"))
+hl.bind(m.altMod .. " + SHIFT + I", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/handy_voice_setup.sh ai"))
 hl.bind(m.mainMod .. " + RETURN",   hl.dsp.exec_cmd(m.terminal))
 hl.bind(m.mainMod .. " + SHIFT + Q", hl.dsp.exit())
 hl.bind(m.mainMod .. " + W",        hl.dsp.window.close())
@@ -26,8 +28,7 @@ hl.bind(m.mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
 -- Workspaces (1-4)
 -- ============================
 for i = 1, 4 do
-    hl.bind(m.mainMod .. " + " .. i,             hl.dsp.focus({ workspace = i }))
-    hl.bind(m.mainMod .. " + SHIFT + " .. i,     hl.dsp.window.move({ workspace = i }))
+    hl.bind(m.mainMod .. " + " .. i,             hl.dsp.focus({ workspace = i })) hl.bind(m.mainMod .. " + SHIFT + " .. i,     hl.dsp.window.move({ workspace = i }))
 end
 
 -- ============================
@@ -84,7 +85,7 @@ hl.bind(m.mainMod .. " + SHIFT + J", hl.dsp.window.swap({ direction = "down" }))
 -- ============================
 -- Sistema y Sesión
 -- ============================
-hl.bind(m.mainMod .. " + Escape",    hl.dsp.exec_cmd("hyprlock"))
+hl.bind(m.mainMod .. " + Escape",    hl.dsp.exec_cmd("sudo /home/alejandrocabeza/.dotfiles/scripts/sysmenu.sh"))
 hl.bind(m.mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 
 -- ============================
@@ -92,9 +93,12 @@ hl.bind(m.mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 -- ============================
 hl.bind(m.mainMod .. " + slash",    hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/keybinds_menu.sh"))
 hl.bind(m.mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/package_manager.sh"))
+hl.bind(m.mainMod .. " + C",         hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/voice_control.sh start"))
+hl.bind(m.mainMod .. " + C",         hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/voice_control.sh stop"), { release = true })
 
 -- ============================
 -- Scratchpad
 -- ============================
 hl.bind(m.mainMod .. " + SHIFT + minus", hl.dsp.window.move({ workspace = "special:magic" }))
 hl.bind(m.mainMod .. " + minus",         hl.dsp.workspace.toggle_special("magic"))
+

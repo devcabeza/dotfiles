@@ -15,8 +15,8 @@ bold_italic = { family = "Hack Nerd Font Mono", style = "Bold Italic" }
 size = 12
 
 [terminal.shell]
-program = "bash"
-args = ["-c", "zellij attach -c"]
+program = "tmux"
+args = ["new-session", "-A", "-s", "Main"]
 
 [colors.primary]
 background = "#282828"
@@ -58,11 +58,6 @@ text = "#282828"
 
 [cursor]
 style = { shape = "Block", blinking = "On" }
-
-[[keyboard.bindings]]
-key = "L"
-mods = "Control"
-action = "None"
 
 [[keyboard.bindings]]
 key = "C"

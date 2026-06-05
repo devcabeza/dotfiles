@@ -135,54 +135,55 @@ in
   # --- Gestión de archivos (Dotfiles) ---
   home.file = {
     # Core Config
-    ".gitconfig".source = /home/alejandrocabeza/.dotfiles/.gitconfig;
-    "utils".source = /home/alejandrocabeza/.dotfiles/utils;
-    ".bashrc".source = /home/alejandrocabeza/.dotfiles/.bashrc;
+    ".gitconfig".source = ../.gitconfig;
+    "utils".source = ../utils;
+    ".bashrc".source = ../.bashrc;
 
     # Neovim Config
-    ".config/nvim".source = /home/alejandrocabeza/.dotfiles/nvim;
+    ".config/nvim".source = ../nvim;
 
     # Ghostty Config
-    ".config/ghostty".source = /home/alejandrocabeza/.dotfiles/ghostty;
+    ".config/ghostty".source = ../ghostty;
 
     # Alacritty Config
-    ".config/alacritty".source = /home/alejandrocabeza/.dotfiles/alacritty;
+    ".config/alacritty".source = ../alacritty;
 
     # Fish Config
-    ".config/fish/conf.d".source = /home/alejandrocabeza/.dotfiles/fish/conf.d;
-    ".config/fish/config.fish".source = /home/alejandrocabeza/.dotfiles/fish/config.fish;
-    ".config/fish/functions".source = /home/alejandrocabeza/.dotfiles/fish/functions;
+    ".config/fish/conf.d".source = ../fish/conf.d;
+    ".config/fish/config.fish".source = ../fish/config.fish;
+    ".config/fish/functions".source = ../fish/functions;
     
     # Opencode Config
-    ".config/opencode/opencode.jsonc".source = /home/alejandrocabeza/.dotfiles/opencode/opencode.jsonc;
-    ".config/opencode/agents".source = /home/alejandrocabeza/.dotfiles/opencode/agents;
+    ".config/opencode/opencode.jsonc".source = ../opencode/opencode.jsonc;
+    ".config/opencode/agents".source = ../opencode/agents;
+    ".config/opencode/skills".source = ../opencode/skills;
 
-    # ".config/qtile".source = /home/alejandrocabeza/.dotfiles/qtile;
-    ".config/wofi".source = /home/alejandrocabeza/.dotfiles/wofi;
+    # ".config/qtile".source = ../qtile;
+    ".config/wofi".source = ../wofi;
 
     # Hyprland
-    ".config/hypr".source = /home/alejandrocabeza/.dotfiles/hypr;
-    ".config/waybar".source = /home/alejandrocabeza/.dotfiles/waybar;
+    ".config/hypr".source = ../hypr;
+    ".config/waybar".source = ../waybar;
 
     # Tmux Config (link only tmux.conf, not the whole directory — plugins/ needs to be writable for tpm)
-    ".config/tmux/tmux.conf".source = /home/alejandrocabeza/.dotfiles/tmux/tmux.conf;
+    ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
 
     # Zellij
-    ".config/zellij".source = /home/alejandrocabeza/.dotfiles/zellij;
+    # ".config/zellij".source = ../zellij;
 
     #lazygit
-    ".config/lazygit".source = /home/alejandrocabeza/.dotfiles/lazygit;
+    ".config/lazygit".source = ../lazygit;
 
     # Ranger Config
-    ".config/ranger/rc.conf".source = /home/alejandrocabeza/.dotfiles/ranger/rc.conf;
-    ".config/ranger/scope.sh".source = /home/alejandrocabeza/.dotfiles/ranger/scope.sh;
+    ".config/ranger/rc.conf".source = ../ranger/rc.conf;
+    ".config/ranger/scope.sh".source = ../ranger/scope.sh;
   };
+
 
   # --- Variables de entorno ---
   home.sessionVariables = {
     EDITOR = "nvim";
     COMPOSER_HOME = "${config.home.homeDirectory}/.composer";
-    GEMINI_API_KEY = "AIzaSyBHPwwVIzVjMTPsafksZrY1AIZKQpTeJwc";
     XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
     ENGRAM_DB_PATH = "/home/alejandrocabeza/.local/share/engram/engram.db";
   };

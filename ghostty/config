@@ -13,9 +13,8 @@ window-padding-balance = true
 window-width = 120
 window-height = 35
 
-command = zellij attach -c
+command = tmux new-session -A -s Main
 
 wait-after-command = false
 
 keybind = alt+c=clear_screen
-keybind = ctrl+l=unbind

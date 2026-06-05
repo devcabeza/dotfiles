@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Ensure Nix and local bin directories are in the PATH
+export PATH="/home/alejandrocabeza/.nix-profile/bin:/home/alejandrocabeza/.local/bin:$PATH"
+
 # Wallpaper carousel — rota wallpapers cada 30 min con swaybg
 
 WALLPAPER_DIR="/home/alejandrocabeza/.dotfiles/wallpapers"

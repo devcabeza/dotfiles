@@ -27,7 +27,6 @@ alias tree='exa --tree --level=2 --icons'
 alias vim='nvim'
 alias g='git'
 alias cat='bat'
-alias zed='zeditor'
 
 # Cursores (Warp los ignora porque usa los suyos propios)
 set fish_cursor_default block

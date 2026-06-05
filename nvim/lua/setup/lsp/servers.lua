@@ -33,7 +33,7 @@ return {
 		init_options = {
 			hostInfo = "neovim",
 		},
-		command = { "typescript-language-server", "--stdio" },
+		cmd = { "typescript-language-server", "--stdio" },
 		filetypes = {
 			"javascript",
 			"javascriptreact",
@@ -180,7 +180,7 @@ return {
 	},
 	-- Biome - Linter y formatter moderno todo-en-uno
 	biome = {
-		cmd = { "biome", "lsp", "proxy" },
+		cmd = { "biome", "lsp-proxy" },
 		filetypes = {
 			"javascript",
 			"javascriptreact",

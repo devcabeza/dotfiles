@@ -27,14 +27,20 @@ map("n", "dw", 'vb"_d', { desc = "Delete Word Backwards" })
 -- =============================================================================
 
 -- Split windows
-map("n", "ss", ":split<Return>", { desc = "Split Window Below", remap = true })
-map("n", "sv", ":vsplit<Return>", { desc = "Split Window Right", remap = true })
+map("n", "ss", "<cmd>split<cr>", { desc = "Split Window Below" })
+map("n", "sv", "<cmd>vsplit<cr>", { desc = "Split Window Right" })
+
+-- Move between windows (sh, sj, sk, sl)
+map("n", "sh", "<cmd>wincmd h<cr>", { desc = "Go to left window" })
+map("n", "sj", "<cmd>wincmd j<cr>", { desc = "Go to lower window" })
+map("n", "sk", "<cmd>wincmd k<cr>", { desc = "Go to upper window" })
+map("n", "sl", "<cmd>wincmd l<cr>", { desc = "Go to right window" })
 
 -- Move between windows (Ctrl + hjkl)
-map("n", "<C-h>", "<C-w>h", { desc = "Go to left window", remap = true })
-map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window", remap = true })
-map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window", remap = true })
-map("n", "<C-l>", "<C-w>l", { desc = "Go to right window", remap = true })
+map("n", "<C-h>", "<cmd>wincmd h<cr>", { desc = "Go to left window" })
+map("n", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go to lower window" })
+map("n", "<C-k>", "<cmd>wincmd k<cr>", { desc = "Go to upper window" })
+map("n", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to right window" })
 
 -- Resize windows (Ctrl + Arrow Keys)
 map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })

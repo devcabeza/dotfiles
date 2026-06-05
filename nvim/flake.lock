@@ -120,134 +120,6 @@
         "type": "github"
       }
     },
-    "plugins-debugmaster.nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1752666818,
-        "narHash": "sha256-pdgS0z8KdLsl7VexbPaRPtYc2lebzAgTtM3B52IaCpQ=",
-        "owner": "miroshQa",
-        "repo": "debugmaster.nvim",
-        "rev": "3d144b98c2c23f39123fbf5f10fdff7d6480a0e6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "miroshQa",
-        "repo": "debugmaster.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-git-worktree.nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1739627460,
-        "narHash": "sha256-fnqJqQTNei+8Gk4vZ2hjRj8iHBXTZT15xp9FvhGB+BQ=",
-        "owner": "polarmutex",
-        "repo": "git-worktree.nvim",
-        "rev": "3ad8c17a3d178ac19be925284389c14114638ebb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "polarmutex",
-        "repo": "git-worktree.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-laravel.nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1765289569,
-        "narHash": "sha256-ovBP4u8GYXpXVIellNT18oxxc4oJDA8V1l97lFWBEac=",
-        "owner": "adalessa",
-        "repo": "laravel.nvim",
-        "rev": "f9fbfe5763a72a1b74cbc8c8503cd7921f216f1d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "adalessa",
-        "repo": "laravel.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-marker-groups.nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1756996822,
-        "narHash": "sha256-Zb0hNij65m9KB+xCwaPSP7VnnTooKjLGI/uD9lfhcTY=",
-        "owner": "jameswolensky",
-        "repo": "marker-groups.nvim",
-        "rev": "4b2507b2dfdeafba83b534c2b8e46ddc551ac686",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jameswolensky",
-        "repo": "marker-groups.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-neotest-pest": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1754573996,
-        "narHash": "sha256-S1GzSJwIHQfwozSBEJ0TX5k9UVfctdquk3m30kE7AHk=",
-        "owner": "V13Axel",
-        "repo": "neotest-pest",
-        "rev": "1429445746f28a4ce887289ea6e442430629e306",
-        "type": "github"
-      },
-      "original": {
-        "owner": "V13Axel",
-        "repo": "neotest-pest",
-        "type": "github"
-      }
-    },
-    "plugins-neotest-vitest": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1766446106,
-        "narHash": "sha256-XpiZ95MhjIS99dBrNFfq8SfggdIeEFfOSu3THgmX3+s=",
-        "owner": "marilari88",
-        "repo": "neotest-vitest",
-        "rev": "f01addc6f07b79ef1be5f4297eafbee9e0959018",
-        "type": "github"
-      },
-      "original": {
-        "owner": "marilari88",
-        "repo": "neotest-vitest",
-        "type": "github"
-      }
-    },
-    "plugins-nvim-dap-reactnative": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1676965503,
-        "narHash": "sha256-OT9tZjLV1FLWo885kwqK2EYkQV60R78jAPg0eWSL60c=",
-        "owner": "sultanahamer",
-        "repo": "nvim-dap-reactnative",
-        "rev": "d3d58779e2f7efe45a1463b4cd4b1d37aed72cef",
-        "type": "github"
-      },
-      "original": {
-        "owner": "sultanahamer",
-        "repo": "nvim-dap-reactnative",
-        "type": "github"
-      }
-    },
-    "plugins-nvim-dap-vscode-js": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1678071992,
-        "narHash": "sha256-8dlzaI94I8ppzLRNIfjVd92kYgqr07D1akDj4VdKQto=",
-        "owner": "mxsdev",
-        "repo": "nvim-dap-vscode-js",
-        "rev": "03bd29672d7fab5e515fc8469b7d07cc5994bbf6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mxsdev",
-        "repo": "nvim-dap-vscode-js",
-        "type": "github"
-      }
-    },
     "plugins-obsidian-nvim": {
       "flake": false,
       "locked": {
@@ -261,54 +133,6 @@
       "original": {
         "owner": "obsidian-nvim",
         "repo": "obsidian.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-opencode.nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1769808555,
-        "narHash": "sha256-Iqse3A0JRQq6ybl4rt5Ktbt3voSComnHW/kcOkfOz/8=",
-        "owner": "sudo-tee",
-        "repo": "opencode.nvim",
-        "rev": "2dba73d61d2c0f00f67eba51ba4110d94dd97e75",
-        "type": "github"
-      },
-      "original": {
-        "owner": "sudo-tee",
-        "repo": "opencode.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-template-string-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1767328055,
-        "narHash": "sha256-b2eAKh5cS/uDuma8wCoMr+Ash+D67SwgRyjESAC3hHI=",
-        "owner": "axelvc",
-        "repo": "template-string.nvim",
-        "rev": "d3a26d3c449a97c44891a31736a101b60b64cf2b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "axelvc",
-        "repo": "template-string.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-toggleterm.nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1741512039,
-        "narHash": "sha256-fytbX+L12TK45YKFU9K+iFJcDrwboKabihc2LtX29J4=",
-        "owner": "akinsho",
-        "repo": "toggleterm.nvim",
-        "rev": "9a88eae817ef395952e08650b3283726786fb5fb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "akinsho",
-        "repo": "toggleterm.nvim",
         "type": "github"
       }
     },
@@ -334,18 +158,7 @@
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs_2",
-        "plugins-debugmaster.nvim": "plugins-debugmaster.nvim",
-        "plugins-git-worktree.nvim": "plugins-git-worktree.nvim",
-        "plugins-laravel.nvim": "plugins-laravel.nvim",
-        "plugins-marker-groups.nvim": "plugins-marker-groups.nvim",
-        "plugins-neotest-pest": "plugins-neotest-pest",
-        "plugins-neotest-vitest": "plugins-neotest-vitest",
-        "plugins-nvim-dap-reactnative": "plugins-nvim-dap-reactnative",
-        "plugins-nvim-dap-vscode-js": "plugins-nvim-dap-vscode-js",
         "plugins-obsidian-nvim": "plugins-obsidian-nvim",
-        "plugins-opencode.nvim": "plugins-opencode.nvim",
-        "plugins-template-string-nvim": "plugins-template-string-nvim",
-        "plugins-toggleterm.nvim": "plugins-toggleterm.nvim",
         "plugins-universal-clipboard.nvim": "plugins-universal-clipboard.nvim"
       }
     }

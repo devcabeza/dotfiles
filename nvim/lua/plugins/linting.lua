@@ -7,23 +7,17 @@ return {
 			sql = { "sqlfluff" },
 			lua = { "luacheck" },
 			php = { "tlint" },
-			typescript = { "biome", "eslint_d" },
-			typescriptreact = { "biome", "eslint_d" },
-			javascript = { "biome", "eslint_d" },
-			javascriptreact = { "biome", "eslint_d" },
-			vue = { "biome", "eslint_d" },
-			svelte = { "biome", "eslint_d" },
-			astro = { "biome", "eslint_d" },
+			typescript = { "biomejs", "eslint_d" },
+			typescriptreact = { "biomejs", "eslint_d" },
+			javascript = { "biomejs", "eslint_d" },
+			javascriptreact = { "biomejs", "eslint_d" },
+			vue = { "biomejs", "eslint_d" },
+			svelte = { "biomejs", "eslint_d" },
+			astro = { "biomejs", "eslint_d" },
 			dockerfile = { "hadolint" },
-			json = { "jsonlint", "biome" },
+			json = { "jsonlint", "biomejs" },
 		},
 		linters = {
-			biome = {
-				cmd = "biome",
-				name = "biome",
-				args = { "lint", "--stdin-file-path", "$TEXT" },
-				stdin = true,
-			},
 			eslint_d = {
 				-- Extend builtin eslint_d linter with a condition so it's used when biome is not configured
 				name = "eslint_d",
@@ -105,9 +99,18 @@ return {
 					require("snacks").notify("Linter " .. name .. " not found", "error", "Linting")
 					return false
 				end
+				if type(linter) == "function" then
+					linter = linter()
+				end
 				if type(linter) == "table" then
-					if linter.cmd and vim.fn.executable(linter.cmd) == 0 then
-						return false
+					local cmd = linter.cmd
+					if type(cmd) == "function" then
+						cmd = cmd()
+					end
+					if cmd and type(cmd) == "string" then
+						if vim.fn.executable(cmd) == 0 then
+							return false
+						end
 					end
 					if linter.condition and not linter.condition(ctx) then
 						return false
