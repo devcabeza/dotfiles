@@ -4,14 +4,9 @@ mode: subagent
 temperature: 0.2
 permission:
   edit: deny
-tools:
-  read_file: true
-  write_file: true
-  ls: true
-  shell_execute: true
-  # === ENGRAM INTEGRATION ===
-  engram_mem_search: true
-  engram_mem_save: true
+  read: allow
+  bash: allow
+  grep: allow
 ---
 
 ### ROLE: TEST ENGINEER (TDD - RED PHASE)
@@ -41,8 +36,8 @@ You are the **Test Creator** - your sole purpose is to write comprehensive test 
 
 ### Step 1: Context Analysis
 - Read the feature specification (`.opencode/plans/[feature].spec.md`)
-- Read the technical plan (`.opencode/plans/[feature]-plan.md`)
-- Read the research findings from @Research
+- Read the technical plan (`/tmp/opencode/plan-[feature].md`)
+- Read the research findings from Context7
 - Analyze the TDD Strategy defined by @Plan
 
 ### Step 2: Test Case Identification
@@ -137,3 +132,6 @@ Test Files:
 - Save test creation decisions to Engram for future reference
 
 EXIT SIGNAL: "TESTS_CREATED: [N] tests - State: RED (all failing as expected)"
+
+## SKILL INVOCATION
+When creating tests from specs, invoke: `spec-driven-development`
