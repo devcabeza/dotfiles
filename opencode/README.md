@@ -1,10 +1,10 @@
 # 🤖 Sistema de Agentes OpenCode
 
-> **Flujo de desarrollo autónomo impulsado por IA** con Spec-Driven Development (SDD) y TDD First —严strict pipeline que transforma una idea en código de producción con calidad garantizada.
+> **Flujo de desarrollo autónomo impulsado por IA** con Spec-Driven Development (SDD) y TDD First — pipeline estricto que transforma una idea en código de producción con calidad garantizada.
 
 [![Pipeline Status](https://img.shields.io/badge/pipeline-TDD%20First-green)](#ciclo-tdd)
-[![Phases](https://img.shields.io/badge/phases-10-blue)](#flujo-de-trabajo)
-[![Agents](https://img.shields.io/badge/agents-14-purple)](#agentes-del-sistema)
+[![Phases](https://img.shields.io/badge/phases-7-blue)](#flujo-de-trabajo)
+[![Agents](https://img.shields.io/badge/agents-10-purple)](#agentes-del-sistema)
 
 ---
 
@@ -13,7 +13,7 @@
 - [Visión General](#visión-general)
 - [Principios Fundamentales](#principios-fundamentales)
 - [Ciclo TDD](#-ciclo-tdd-implementado)
-- [Flujo de Trabajo (10 Fases)](#flujo-de-trabajo-10-fases)
+- [Flujo de Trabajo (7 Fases)](#flujo-de-trabajo-7-fases)
 - [Agentes del Sistema](#agentes-del-sistema)
   - [Agentes Principales (Pipeline)](#agentes-principales-pipeline)
   - [Agentes de Soporte](#agentes-de-soporte)
@@ -34,7 +34,7 @@
 ### ¿Qué hace?
 
 ```
-Tu idea → Spec → Plan → Research → Tests → Código → Refactor → QA → Deploy → Docs
+Tu idea → Spec → Plan → Tests → Código → Refactor → QA → Docs
 ```
 
 El sistema garantiza que cada feature se desarrolle siguiendo el ciclo **TDD (Test-Driven Development)** de forma estricta, con **Quality Gates** que impiden avanzar sin cumplir los criterios de calidad.
@@ -45,12 +45,12 @@ El sistema garantiza que cada feature se desarrolle siguiendo el ciclo **TDD (Te
 |----------------|-------------|
 | **Spec-Driven Development** | Todo comienza con una especificación clara aprobada por el usuario |
 | **TDD First (Estricto)** | 🔴 Tests primero → 🟢 Código que pasa → 🔵 Refactor limpio |
-| **14 Agentes Especializados** | Cada agente tiene un rol específico y responsabilidades claras |
+| **10 Agentes Especializados** | Cada agente tiene un rol específico y responsabilidades claras |
 | **Human-in-the-loop** | Tú apruebas specs, planes y decisiones críticas |
 | **Engram Memory** | Memoria persistente entre sesiones para preservar contexto |
 | **Quality Gates** | Validación en cada fase antes de avanzar |
 | **Branch-per-Change** | Nunca se opera en `main`; cada feature tiene su rama |
-| **Documentación Automática** | @Docs genera documentación y PR body al finalizar |
+| **Documentación Automática** | @Docs genera documentación al finalizar |
 
 ---
 
@@ -111,18 +111,11 @@ El **Test-Driven Development** es el corazón del sistema. Cada feature sigue es
 
 ---
 
-## Flujo de Trabajo (10 Fases)
+## Flujo de Trabajo (7 Fases)
 
-Cada feature sigue estas 10 fases en orden estricto. **Ninguna fase se salta** sin aprobación.
+Cada feature sigue estas 7 fases en orden estricto. **Ninguna fase se salta** sin aprobación.
 
 ```
-┌──────────────────────────────────────────────────────────────────────────┐
-│ PHASE 0: CONTEXT INITIALIZATION                                         │
-│ @Orch busca contexto anterior en Engram + analiza proyecto              │
-│ Output: Contexto cargado                                                │
-└────────────────────────────────┬─────────────────────────────────────────┘
-                                 │
-                                 ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
 │ PHASE 1: SPECIFICATION (🔒 USER APPROVAL GATE)                         │
 │ @Spec define la feature según visión del usuario                        │
@@ -134,20 +127,13 @@ Cada feature sigue estas 10 fases en orden estricto. **Ninguna fase se salta** s
 ┌──────────────────────────────────────────────────────────────────────────┐
 │ PHASE 2: PLANNING (🔒 USER APPROVAL GATE)                              │
 │ @Plan crea plan técnico + ERD + TDD Strategy                           │
-│ Output: .opencode/plans/[feature]-plan.md                               │
+│ Output: /tmp/opencode/plan-[feature].md (temporal)                      │
 │ ⚠️  REQUIERE APROBACIÓN DEL USUARIO                                    │
 └────────────────────────────────┬─────────────────────────────────────────┘
                                  │
                                  ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│ PHASE 3: RESEARCH                                                       │
-│ @Research explora codebase + patrones + documentación externa          │
-│ Output: Hallazgos documentados para @Tester y @Build                    │
-└────────────────────────────────┬─────────────────────────────────────────┘
-                                 │
-                                 ▼
-┌──────────────────────────────────────────────────────────────────────────┐
-│ 🔴 PHASE 4: TEST CREATION (TDD - RED PHASE)                            │
+│ 🔴 PHASE 3: TEST CREATION (TDD - RED PHASE)                            │
 │ @Tester crea TODOS los tests:                                           │
 │   • Unit Tests (cada función/método)                                    │
 │   • Integration Tests (flujos entre módulos)                            │
@@ -157,46 +143,40 @@ Cada feature sigue estas 10 fases en orden estricto. **Ninguna fase se salta** s
                                  │
                                  ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│ 🟢 PHASE 5: IMPLEMENTATION (TDD - GREEN PHASE)                         │
+│ 🟢 PHASE 4: IMPLEMENTATION (TDD - GREEN PHASE)                         │
 │ @Build lee los tests y implementa código mínimo para que pasen          │
 │ Output: Código funcional + Tests pasando (Green)                        │
 └────────────────────────────────┬─────────────────────────────────────────┘
                                  │
                                  ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│ 🔵 PHASE 6: CODE QUALITY (TDD - REFACTOR PHASE)                        │
+│ 🔵 PHASE 5: CODE QUALITY (TDD - REFACTOR PHASE)                        │
 │ @CodeReview analiza y mejora código contra SOLID + Clean Code           │
-│   • Si REJECTED → @Build corrige → se repite Phase 6                   │
+│   • Si REJECTED → @Build corrige → se repite Phase 5                   │
 │   • Si APPROVED → tests siguen pasando tras refactor                   │
 │ Output: Código refactorizado + tests pasando                            │
 └────────────────────────────────┬─────────────────────────────────────────┘
                                  │
                                  ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│ PHASE 7: TESTING & SECURITY                                             │
-│ @QA ejecuta tests completos + @Security escanea vulnerabilidades        │
-│ Output: APPROVED o REJECTED (si REJECTED → @Build corrige)             │
+│ PHASE 6: QA & VALIDATION                                                │
+│ @QA ejecuta validación completa:                                        │
+│   • Tests funcionales (unit, integration, e2e)                          │
+│   • Security scan (OWASP Top 10, dependency audit)                     │
+│   • Performance check (LCP, FID, CLS, bundle size)                     │
+│   • Spec compliance (todos los requisitos cubiertos)                    │
+│ Output: QA_PASSED o QA_FAILED (si FAILED → @Build corrige)            │
 └────────────────────────────────┬─────────────────────────────────────────┘
                                  │
                                  ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│ PHASE 8: PERFORMANCE                                                    │
-│ @Perf verifica Core Web Vitals, bundle size, memoria                    │
-│ Output: APPROVED o REJECTED (si REJECTED → @Build corrige)             │
-└────────────────────────────────┬─────────────────────────────────────────┘
-                                 │
-                                 ▼
-┌──────────────────────────────────────────────────────────────────────────┐
-│ PHASE 9: INFRASTRUCTURE (Conditional)                                   │
-│ @DevOps prepara Docker + CI/CD solo si es necesario                     │
-│ Output: Dockerfile + docker-compose + workflows (o SKIP)               │
-└────────────────────────────────┬─────────────────────────────────────────┘
-                                 │
-                                 ▼
-┌──────────────────────────────────────────────────────────────────────────┐
-│ PHASE 10: DOCUMENTATION                                                 │
-│ @Docs actualiza documentación + genera PR body                          │
-│ Output: Documentación actualizada + Pull Request listo                  │
+│ PHASE 7: DOCUMENTATION                                                  │
+│ @Docs actualiza documentación del proyecto                              │
+│   • Architecture Overview (Mermaid diagrams)                            │
+│   • API Reference (si aplica)                                           │
+│   • Feature Logs                                                        │
+│   • ADRs (Architecture Decision Records)                                │
+│ Output: Documentación actualizada                                       │
 │ 🏁 PIPELINE_COMPLETE: [Feature_Name]                                    │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
@@ -205,17 +185,13 @@ Cada feature sigue estas 10 fases en orden estricto. **Ninguna fase se salta** s
 
 | Fase | Agente(s) | Output | Gate | Retry |
 |------|-----------|--------|------|-------|
-| 0 | @Orch | Contexto cargado | Automático | — |
 | 1 | @Spec | `[feature].spec.md` | **Usuario aprueba** | — |
-| 2 | @Plan | `[feature]-plan.md` | **Usuario aprueba** | — |
-| 3 | @Research | Hallazgos documentados | Automático | — |
-| 4 | @Tester | Tests (RED) | Automático | — |
-| 5 | @Build | Código + Tests (GREEN) | Automático | Max 3 |
-| 6 | @CodeReview | Código refactorizado | APPROVED/REJECTED | Max 3 |
-| 7 | @QA + @Security | Tests + Seguridad | APPROVED/REJECTED | Max 3 |
-| 8 | @Perf | Performance check | APPROVED/REJECTED | Max 3 |
-| 9 | @DevOps | Infra (opcional) | Automático | — |
-| 10 | @Docs | Docs + PR | Automático | — |
+| 2 | @Plan | `/tmp/opencode/plan-[feature].md` | **Usuario aprueba** | — |
+| 3 | @Tester | Tests (RED) | Automático | — |
+| 4 | @Build | Código + Tests (GREEN) | Automático | Max 2 |
+| 5 | @CodeReview | Código refactorizado | APPROVED/REJECTED | Max 2 |
+| 6 | @QA | Tests + Seguridad + Performance | PASSED/FAILED | Max 2 |
+| 7 | @Docs | Docs actualizadas | Automático | — |
 
 ---
 
@@ -224,21 +200,22 @@ Cada feature sigue estas 10 fases en orden estricto. **Ninguna fase se salta** s
 ### Agentes Principales (Pipeline)
 
 #### 🎯 @Orch (Orchestrator)
-**Rol:** Master Pipeline Orchestrator — Controla el flujo completo
+**Rol:** Pipeline Coordinator — Controla el flujo completo
 
 | Aspecto | Detalle |
 |---------|---------|
-| **Responsabilidad** | Detectar tipo de request, crear rama, orquestar las 10 fases |
+| **Responsabilidad** | Coordinar las 7 fases, routing de agentes, tracking de estado |
 | **Entrada** | Solicitud del usuario |
-| **Salida** | Rama creada + pipeline completo |
-| **Regla clave** | **Nunca opera en `main`** — siempre crea feature branch |
+| **Salida** | Pipeline completo + contexto guardado en Engram |
+| **Regla clave** | **Traffic director** — no micromanage, solo coordina |
 | **Señal de salida** | `PIPELINE_COMPLETE: [Feature_Name]` |
-| **Formato de estado** | `[PHASE: X/10] [CURRENT: Phase_X] [STATUS: in_progress]` |
+| **Formato de estado** | `[Phase X/7] [Agent: @X] [Status: running\|waiting\|done] [Retry: N/2]` |
+| **Permisos** | bash: allow, read: allow, edit: deny |
 
 ```
 Ejemplo de uso:
   Usuario: "Agregar autenticación con Google"
-  @Orch: Crea rama "feature/google-auth", inicia Phase 0
+  @Orch: Coordina pipeline completo, pausa para aprobaciones
 ```
 
 ---
@@ -252,7 +229,8 @@ Ejemplo de uso:
 | **Entrada** | Solicitud en lenguaje natural |
 | **Salida** | `.opencode/plans/[feature].spec.md` |
 | **Contenido de spec** | Visión, requisitos funcionales, criterios de aceptación, restricciones |
-| **Señal de salida** | `SPEC_DEFINED: [feature]` |
+| **Señal de salida** | `SPECIFICATION_LOCKED: [Filename] - Waiting for User Approval` |
+| **Permisos** | edit: deny, read: allow |
 
 ```
 Estructura de una Spec:
@@ -273,35 +251,22 @@ Estructura de una Spec:
 |---------|---------|
 | **Responsabilidad** | Stack discovery, arquitectura, ERD, estrategia TDD |
 | **Entrada** | Spec aprobada |
-| **Salida** | `.opencode/plans/[feature]-plan.md` |
-| **Subagentes** | @Research, @UX (si necesita UI) |
-| **Componentes** | ERD, Security Strategy, TDD Strategy, Tech Stack |
-| **Señal de salida** | `PLAN_ESTABLISHED: [Plan_Filename]` |
+| **Salida** | `/tmp/opencode/plan-[feature].md` (temporal) |
+| **Componentes** | ERD (Mermaid), Security Strategy, TDD Strategy, Tech Stack |
+| **Señal de salida** | `PLAN_LOCKED: [Filename] - Waiting for User Approval` |
+| **Permisos** | edit: deny, read: allow |
 
 ```
 Contenido del Plan:
-├── Stack Discovery (frameworks, dependencias detectadas)
-├── Architectural Decisions (monolito vs microservicios, etc.)
-├── Entity Relationship Diagram (ERD)
-├── Security Strategy (auth, OWASP considerations)
-├── TDD Strategy (tipos de tests por feature)
-├── File Structure proposal
+├── Architecture Overview
+├── Entity Relationship Diagram (Mermaid)
+├── Security Strategy (JWT, CORS, Input Validation)
+├── Testing Strategy (Unit + Security tests)
+├── Step-by-Step Roadmap
 └── Integration Points
 ```
 
----
-
-#### 🔍 @Research (Intelligence)
-**Rol:** Investigador técnico — busca información verificada
-
-| Aspecto | Detalle |
-|---------|---------|
-| **Responsabilidad** | Documentación oficial, patterns, versiones exactas |
-| **Entrada** | Contexto del plan |
-| **Salida** | Hallazgos documentados con fuentes |
-| **Herramientas** | `read_file`, `ls`, `websearch`, `context7` |
-| **Método** | Environment fingerprinting → Web discovery → Verification |
-| **Señal de salida** | `RESEARCH_COMPLETE: [Summary of findings]` |
+> ⚠️ **NOTA:** El plan es un documento temporal. La spec (`.opencode/plans/[feature].spec.md`) es la fuente de verdad permanente.
 
 ---
 
@@ -311,11 +276,12 @@ Contenido del Plan:
 | Aspecto | Detalle |
 |---------|---------|
 | **Responsabilidad** | Crear TODOS los tests antes de cualquier implementación |
-| **Entrada** | Spec + Plan + Research |
+| **Entrada** | Spec + Plan |
 | **Salida** | Archivos de test en `/tests/` |
 | **Tipos de tests** | Unit, Integration, Edge Cases, Error Handling |
 | **Estado de tests** | ❌ Todos deben FALLAR (Red state) |
-| **Señal de salida** | `TESTS_CREATED: [N] tests - State: RED` |
+| **Señal de salida** | `TESTS_CREATED: [N] tests - State: RED (all failing as expected)` |
+| **Permisos** | edit: deny, read: allow, bash: allow |
 
 ```
 Tipos de tests que crea @Tester:
@@ -323,7 +289,7 @@ Tipos de tests que crea @Tester:
 ├── Integration Tests ─ Flujos entre módulos
 ├── Edge Cases ──────── Boundary conditions
 ├── Error Handling ──── Exception paths
-└── Contract Tests ──── API contracts (si aplica)
+└── Happy Path ──────── Escenarios exitosos esperados
 ```
 
 > ⚠️ **REGLA CRÍTICA:** @Tester NO escribe código de implementación. SOLO tests.
@@ -340,16 +306,23 @@ Tipos de tests que crea @Tester:
 | **Salida** | Código funcional + Tests pasando |
 | **Regla** | **Mínimo viable** — No implementar features extras |
 | **Prohibido** | Valores hardcodeados, clases sin sentido |
-| **Señal de salida** | `IMPLEMENTATION_COMPLETE: Tests passing` |
+| **Señal de salida** | `IMPLEMENTATION_COMPLETE: [N] tests passing` |
+| **Permisos** | edit: allow, read: allow, bash: allow |
 
 ```
 Workflow de @Build:
 1. Lee todos los tests creados por @Tester
-2. Identifica qué código falta para que pasen
-3. Implementa código mínimo necesario
-4. Ejecuta tests → Verifica que TODOS pasen (Green)
-5. Si algún test falla → Ajusta hasta que pasen
+2. Lee spec y plan para contexto
+3. Identifica qué código falta para que pasen
+4. Implementa código mínimo necesario
+5. Ejecuta tests → Verifica que TODOS pasan (Green)
+6. Si algún test falla → Ajusta hasta que pasen
 ```
+
+**Retry Context:** Si @Build es invocado con un reporte de rechazo de @CodeReview o @QA:
+1. Lee los issues específicos del reporte
+2. Fix SOLO los issues reportados — no refactorice código no relacionado
+3. Ejecuta tests después de cada fix
 
 ---
 
@@ -362,7 +335,8 @@ Workflow de @Build:
 | **Entrada** | Código implementado + Tests |
 | **Salida** | Código refactorizado + Tests siguen pasando |
 | **Validación** | Análisis SOLID estricto + Clean Code |
-| **Señal de salida** | `CODE_REVIEW_COMPLETE: APPROVED/REJECTED` |
+| **Señal de salida** | `REVIEW_APPROVED` o `REVIEW_REJECTED: [Issues]` |
+| **Permisos** | edit: deny, read: allow, bash: allow |
 
 ```
 Checklist de @CodeReview:
@@ -378,58 +352,71 @@ Checklist de @CodeReview:
 └── Tests siguen pasando tras refactor
 ```
 
+**Formato de Rechazo:**
+```
+## Code Review Failed
+
+### Issues Found
+1. [file:line] — [issue type] — [how to fix]
+2. [file:line] — [issue type] — [how to fix]
+
+### Required Changes
+- [specific instruction for @Build]
+```
+
 ---
 
 #### 🛡️ @QA (Quality Assurance)
-**Rol:** Validación integral de calidad
+**Rol:** Validación integral de calidad (Tests + Security + Performance)
 
 | Aspecto | Detalle |
 |---------|---------|
-| **Responsabilidad** | Tests funcionales + visual + semantic linting + static analysis |
+| **Responsabilidad** | Tests funcionales + Security scan + Performance check + Spec compliance |
 | **Entrada** | Código refactorizado |
-| **Salida** | APPROVED o REJECTED |
-| **Subagentes** | @Security |
-| **Validaciones** | Functional (100%), Visual, Semantic, Type checking, Linting |
-| **Señal de salida** | `PHASE_APPROVED` o `PHASE_REJECTED: [Reason]` |
+| **Salida** | `QA_PASSED` o `QA_FAILED: [Report]` |
+| **Sub-funciones** | Functional Testing, Security Scan, Performance Check, Spec Compliance |
+| **Señal de salida** | `QA_PASSED` o `QA_FAILED: [Report]` |
+| **Permisos** | edit: deny, read: allow, bash: allow |
 
----
+```
+Validation Checklist de @QA:
+├── Functional Testing
+│   ├── Unit tests → must pass
+│   ├── Integration tests → must pass
+│   └── E2E tests → must pass
+├── Security Scan
+│   ├── OWASP Top 10 vulnerabilities
+│   ├── Hardcoded secrets check
+│   ├── Dependency audit (npm audit, pip-audit)
+│   └── Input validation & auth patterns
+├── Performance Check
+│   ├── LCP < 2.5s
+│   ├── FID < 100ms
+│   ├── CLS < 0.1
+│   └── Bundle size < 200KB
+└── Spec Compliance
+    ├── Every requirement implemented
+    ├── Every edge case handled
+    └── Every success criterion met
+```
 
-#### 🔒 @Security (SecOps)
-**Rol:** Seguridad de la aplicación
+**Formato de Fallo:**
+```
+## QA Failed
 
-| Aspecto | Detalle |
-|---------|---------|
-| **Responsabilidad** | SAST, Supply Chain Audit, Secret Detection |
-| **Entrada** | Código fuente |
-| **Salida** | PASS/FAIL + vulnerabilidades encontradas |
-| **Escaneos** | OWASP Top 10, npm audit, pip-audit, API keys hardcodeadas |
-| **Señal de salida** | `SECURITY_SCAN_COMPLETE: [PASS/FAIL] - [N] vulnerabilities` |
+### Test Failures
+- [test name]: [error]
 
----
+### Security Issues
+- [issue]: [severity] [fix]
 
-#### ⚡ @Perf (Performance)
-**Rol:** Performance Profiler
+### Performance Issues
+- [metric]: [actual] vs [target]
 
-| Aspecto | Detalle |
-|---------|---------|
-| **Responsabilidad** | Core Web Vitals, bundle size, memoria |
-| **Entrada** | Código listo para producción |
-| **Salida** | APPROVED o REJECTED |
-| **Métricas** | LCP, FID, CLS, bundle size, memory usage |
-| **Señal de salida** | `PERFORMANCE_CHECK_COMPLETE: [PASS/FAIL]` |
-
----
-
-#### 📦 @DevOps (Infrastructure)
-**Rol:** Infraestructura y despliegue
-
-| Aspecto | Detalle |
-|---------|---------|
-| **Responsabilidad** | Containerization + CI/CD pipelines |
-| **Entrada** | Stack tecnológico detectado |
-| **Salida** | Dockerfile, docker-compose, GitHub Actions workflows |
-| **Condición** | Solo se ejecuta si es necesario (conditional) |
-| **Señal de salida** | `INFRA_READY: [Deployment Strategy Name]` |
+### Required Fixes for @Build
+1. [specific fix]
+2. [specific fix]
+```
 
 ---
 
@@ -438,50 +425,76 @@ Checklist de @CodeReview:
 
 | Aspecto | Detalle |
 |---------|---------|
-| **Responsabilidad** | Actualizar AGENTS.md, docs, PR body |
-| **Entrada** | Resumen de todas las fases |
-| **Salida** | Documentación actualizada + PR body |
-| **Archivos** | AGENTS.md, /docs/architecture/*, PR description |
-| **Señal de salida** | `DOCS_UPDATED: [List of files]` |
+| **Responsabilidad** | Mantener documentación clara del proyecto |
+| **Entrada** | Código aprobado por @QA + spec original |
+| **Salida** | Documentación actualizada en `/docs` |
+| **Archivos** | Architecture_Overview.md, API_Reference.md, Feature_Logs/, ADRs |
+| **Señal de salida** | `DOCUMENTATION_UPDATED` |
+| **Permisos** | edit: deny, read: allow, bash: allow |
+
+```
+Documentación que mantiene @Docs:
+├── /docs/Architecture_Overview.md ── Diagramas Mermaid + data flow
+├── /docs/API_Reference.md ── Endpoints, payloads, response codes (si aplica)
+├── /docs/Feature_Logs/[Feature_Name].md ── Resumen de implementación
+└── /docs/ADRs/ ── Architecture Decision Records
+```
 
 ---
 
 ### Agentes de Soporte
 
-#### 🎨 @UX (Designer)
-**Rol:** UI/UX Design con Stitch
-
-| Aspecto | Detalle |
-|---------|---------|
-| **Responsabilidad** | Diseños visuales, design tokens, component mapping |
-| **Herramienta** | Stitch MCP (`stitch_*`) |
-| **Señal de salida** | `UX_SPEC_ESTABLISHED: [UX_Filename]` |
-
----
-
 #### 🐛 @Debugger (Debug Specialist)
-**Rol:** Diagnóstico de errores
+**Rol:** Diagnóstico de errores (Auxiliar — bajo demanda)
 
 | Aspecto | Detalle |
 |---------|---------|
-| **Responsabilidad** | Root cause analysis, fix proposals, pattern recognition |
+| **Responsabilidad** | Root cause analysis, propuestas de fix |
 | **Entrada** | Error logs + stack traces + código |
 | **Salida** | Diagnóstico + propuesta de fix |
 | **Regla** | **Solo diagnostica** — No implementa fixes |
-| **Señal de salida** | `DIAGNOSIS_COMPLETE: [Bug Summary] - Fix Proposed` |
+| **Señal de salida** | `DIAGNOSIS_COMPLETE: [Bug Summary]` |
+| **Permisos** | edit: deny, read: allow, bash: allow |
+
+```
+Cuándo invocar a @Debugger:
+├── @Build no puede entender por qué los tests fallan
+├── @QA encuentra un bug que necesita root cause analysis
+└── Comportamiento inesperado durante cualquier fase
+```
+
+**Formato de Reporte:**
+```
+## Bug Report
+- **Error:** [type] at [file:line]
+- **Root Cause:** [why it happens]
+- **Fix:** [specific code change]
+- **Prevention:** [how to avoid in future]
+```
 
 ---
 
-#### 💡 @Ask (Advisor)
-**Rol:** Asesor arquitectónico estratégico
+#### 💡 @Ask (Senior Technical Consultant)
+**Rol:** Asesor arquitectónico estratégico (Read-Only)
 
 | Aspecto | Detalle |
 |---------|---------|
-| **Responsabilidad** | Análisis sistémico, detección de anti-patrones |
+| **Responsabilidad** | Guidance técnica de alto nivel, explicar conceptos complejos |
 | **Entrada** | Preguntas del usuario |
-| **Salida** | Recomendaciones estratégicas |
-| **Regla** | **Solo aconseja** — Guía hacia @Orch si necesita implementación |
-| **Señal de salida** | `STRATEGY_ADVISED: [Resumen de la recomendación]` |
+| **Salida** | Recomendaciones estratégicas (solo advice, sin modificar archivos) |
+| **Regla** | **Solo aconseja** — No modifica archivos, no ejecuta bash |
+| **Señal de salida** | `ADVICE_RENDERED` |
+| **Permisos** | edit: deny, read: allow, bash: deny |
+| **Temperatura** | 0.7 (más creativo que los agentes operacionales) |
+
+```
+Estándares de @Ask:
+├── Seniority & Logic — Explica el "Why" detrás de cada recomendación
+├── Best Practices — Usa analogías y estándares de la industria
+├── Debt Prevention — Advierte sobre deuda técnica
+├── Strategic Deep Dives — Desde low-level hasta cloud orchestration
+└── The Bird's-Eye View — Analiza desde perspectiva alta cuando otros fallan
+```
 
 ---
 
@@ -527,23 +540,28 @@ El sistema usa **Engram** para preservar contexto entre sesiones:
 |------|------|--------|
 | **User Approval** | Phase 1 (Spec) | Usuario debe aprobar "Approved" o "Yes" |
 | **User Approval** | Phase 2 (Plan) | Usuario debe aprobar "Approved" o "Yes" |
-| **TDD Red** | Phase 4 | @Tester confirma tests creados y FALLANDO |
-| **TDD Green** | Phase 5 | @Build confirma tests PASANDO |
-| **SOLID Review** | Phase 6 | @CodeReview aprueba calidad de código |
-| **QA Gate** | Phase 7 | @QA aprueba funcionalidad + seguridad |
-| **Perf Gate** | Phase 8 | @Perf aprueba rendimiento |
+| **TDD Red** | Phase 3 | @Tester confirma tests creados y FALLANDO |
+| **TDD Green** | Phase 4 | @Build confirma tests PASANDO |
+| **SOLID Review** | Phase 5 | @CodeReview aprueba calidad de código |
+| **QA Gate** | Phase 6 | @QA aprueba funcionalidad + seguridad + performance |
 
 ### Retry Policy
 
 Si un gate falla:
 
 ```
-Gate REJECTED → @Build corrige → re-intenta gate
-                 ↓
-              Max 3 intentos
-                 ↓
-              Si persiste → ESCALAR al usuario
+Gate REJECTED/FAILED → @Build corrige → re-intenta gate
+                       ↓
+                    Max 2 intentos
+                       ↓
+                    Si persiste → ESCALAR al usuario
 ```
+
+**Protocolo de Retry (Orch.md):**
+1. Track retry count: `[Retry: 1/2]` o `[Retry: 2/2]`
+2. Incluir rejection report al invocar @Build
+3. En retry #2: Si @QA falla again, PARAR y reportar al usuario
+4. **Nunca exceder 2 retries** — escalar al usuario
 
 ---
 
@@ -582,10 +600,6 @@ Usuario: "Quiero agregar autenticación social con Google y GitHub"
 ### Pipeline Ejecutado (TDD)
 
 ```
-PHASE 0 ───────────────────────────────────────────────────────────────
-  @Orch detecta: feature request → crea rama "feature/social-auth"
-  @Orch busca contexto en Engram: auth patterns previos
-
 PHASE 1 ───────────────────────────────────────────────────────────────
   @Spec define feature:
     - Login con Google OAuth2
@@ -595,25 +609,20 @@ PHASE 1 ────────────────────────
   → Archivo: .opencode/plans/social-auth.spec.md
   → 🔒 ESPERANDO APROBACIÓN DEL USUARIO
   → Usuario: "Approved"
+  → Señal: SPECIFICATION_LOCKED: social-auth.spec.md
 
 PHASE 2 ───────────────────────────────────────────────────────────────
   @Plan crea plan técnico:
     - Stack: Next.js + NextAuth.js
-    - ERD: User, Account, Session tables
+    - ERD: User, Account, Session tables (Mermaid diagram)
     - Security: CSRF, PKCE flow
-    - TDD Strategy: Unit (services), Integration (OAuth flow), E2E (UI)
-  → Archivo: .opencode/plans/social-auth-plan.md
+    - TDD Strategy: Unit (services), Integration (OAuth flow)
+  → Archivo: /tmp/opencode/plan-social-auth.md (temporal)
   → 🔒 ESPERANDO APROBACIÓN DEL USUARIO
   → Usuario: "Approved"
+  → Señal: PLAN_LOCKED: plan-social-auth.md
 
 PHASE 3 ───────────────────────────────────────────────────────────────
-  @Research investiga:
-    - NextAuth.js v5 API changes
-    - Google OAuth2 setup requirements
-    - GitHub OAuth scopes
-    - PKCE implementation patterns
-
-PHASE 4 ───────────────────────────────────────────────────────────────
   🔴 @Tester crea tests (RED):
     - Unit: GoogleProvider.getAuthorizationUrl()
     - Unit: GitHubProvider.exchangeCode()
@@ -621,45 +630,41 @@ PHASE 4 ────────────────────────
     - Edge: Token refresh after expiry
     - Edge: Invalid state parameter (CSRF)
   → Estado: TODOS FALLAN (esperado)
+  → Señal: TESTS_CREATED: 12 tests - State: RED
 
-PHASE 5 ───────────────────────────────────────────────────────────────
+PHASE 4 ───────────────────────────────────────────────────────────────
   🟢 @Build implementa código (GREEN):
     - Implementa GoogleProvider class
     - Implementa GitHubProvider class  
     - Implementa OAuth callback handler
     - Implementa token refresh logic
   → Ejecuta tests → TODOS PASAN ✅
+  → Señal: IMPLEMENTATION_COMPLETE: 12 tests passing
 
-PHASE 6 ───────────────────────────────────────────────────────────────
+PHASE 5 ───────────────────────────────────────────────────────────────
   🔵 @CodeReview refactor:
     - Extrae lógica común a BaseOAuthProvider (SRP)
     - Inyecta ITokenService en lugar de crear tokens inline (DIP)
     - Funciones >30 líneas → divididas
   → Tests siguen pasando ✅
-  → APPROVED
+  → Señal: REVIEW_APPROVED
+
+PHASE 6 ───────────────────────────────────────────────────────────────
+  @QA valida todo:
+    - Tests funcionales: 12/12 pass ✅
+    - Security scan: OWASP check PASS ✅
+    - npm audit: 0 vulnerabilities ✅
+    - Performance: LCP 1.2s, bundle +12KB ✅
+    - Spec compliance: 100% ✅
+  → Señal: QA_PASSED
 
 PHASE 7 ───────────────────────────────────────────────────────────────
-  @QA + @Security:
-    - Tests funcionales: 100% pass
-    - OWASP check: PASS
-    - npm audit: 0 vulnerabilities
-  → APPROVED
-
-PHASE 8 ───────────────────────────────────────────────────────────────
-  @Perf:
-    - Bundle size: +12KB (aceptable)
-    - LCP: 1.2s (dentro de target)
-  → APPROVED
-
-PHASE 9 ───────────────────────────────────────────────────────────────
-  @DevOps (no necesario para este feature)
-  → SKIP
-
-PHASE 10 ──────────────────────────────────────────────────────────────
-  @Docs:
-    - Actualiza AGENTS.md con nuevo patrón OAuth
-    - Genera PR body con resumen de cambios
-  → PIPELINE_COMPLETE: social-auth
+  @Docs documenta:
+    - Actualiza Architecture_Overview.md con flujo OAuth
+    - Crea Feature_Logs/social-auth.md
+    - Genera ADR para decisión de NextAuth.js
+  → Señal: DOCUMENTATION_UPDATED
+  → 🏁 PIPELINE_COMPLETE: social-auth
 ```
 
 ---
@@ -671,30 +676,26 @@ PHASE 10 ───────────────────────�
 | Agente | Señal | Ejemplo |
 |--------|-------|---------|
 | @Orch | `PIPELINE_COMPLETE` | `PIPELINE_COMPLETE: social-auth` |
-| @Spec | `SPEC_DEFINED` | `SPEC_DEFINED: social-auth` |
-| @Plan | `PLAN_ESTABLISHED` | `PLAN_ESTABLISHED: social-auth-plan.md` |
-| @Research | `RESEARCH_COMPLETE` | `RESEARCH_COMPLETE: OAuth patterns found` |
-| @Tester | `TESTS_CREATED` | `TESTS_CREATED: 12 tests - State: RED` |
-| @Build | `IMPLEMENTATION_COMPLETE` | `IMPLEMENTATION_COMPLETE: Tests passing` |
-| @CodeReview | `CODE_REVIEW_COMPLETE` | `CODE_REVIEW_COMPLETE: APPROVED - 5 improvements` |
-| @QA | `PHASE_APPROVED` / `PHASE_REJECTED` | `PHASE_APPROVED` |
-| @Security | `SECURITY_SCAN_COMPLETE` | `SECURITY_SCAN_COMPLETE: PASS - 0 vulns` |
-| @Perf | `PERFORMANCE_CHECK_COMPLETE` | `PERFORMANCE_CHECK_COMPLETE: PASS` |
-| @DevOps | `INFRA_READY` | `INFRA_READY: docker-deploy` |
-| @Docs | `DOCS_UPDATED` | `DOCS_UPDATED: AGENTS.md, PR body` |
+| @Spec | `SPECIFICATION_LOCKED` | `SPECIFICATION_LOCKED: social-auth.spec.md - Waiting for User Approval` |
+| @Plan | `PLAN_LOCKED` | `PLAN_LOCKED: plan-social-auth.md - Waiting for User Approval` |
+| @Tester | `TESTS_CREATED` | `TESTS_CREATED: 12 tests - State: RED (all failing as expected)` |
+| @Build | `IMPLEMENTATION_COMPLETE` | `IMPLEMENTATION_COMPLETE: 12 tests passing` |
+| @CodeReview | `REVIEW_APPROVED` / `REVIEW_REJECTED` | `REVIEW_APPROVED` o `REVIEW_REJECTED: 3 issues found` |
+| @QA | `QA_PASSED` / `QA_FAILED` | `QA_PASSED` o `QA_FAILED: 2 test failures` |
+| @Docs | `DOCUMENTATION_UPDATED` | `DOCUMENTATION_UPDATED: Architecture_Overview.md, Feature_Logs/` |
 | @Debugger | `DIAGNOSIS_COMPLETE` | `DIAGNOSIS_COMPLETE: Auth race condition` |
-| @Ask | `STRATEGY_ADVISED` | `STRATEGY_ADVISED: Use event-driven` |
+| @Ask | `ADVICE_RENDERED` | `ADVICE_RENDERED: Use event-driven architecture` |
 
 ### Formato de Estado
 
 ```bash
-[PHASE: 6/10] [CURRENT: Phase_6] [STATUS: in_progress]
-[TDD: 🔵 REFACTOR]
+[Phase 3/7] [Agent: @Tester] [Status: running] [Retry: 0/2]
+[TDD: 🔴 RED PHASE]
 
-[PHASE: 6/10] [CURRENT: Phase_6] [STATUS: waiting_approval]
-[TDD: 🔵 REFACTOR]
+[Phase 5/7] [Agent: @CodeReview] [Status: waiting] [Retry: 0/2]
+[TDD: 🔵 REFACTOR PHASE]
 
-[PHASE: 7/10] [CURRENT: Phase_7] [STATUS: complete]
+[Phase 6/7] [Agent: @QA] [Status: running] [Retry: 1/2]
 [TDD: N/A]
 ```
 
@@ -709,19 +710,23 @@ PHASE 10 ───────────────────────�
 | Tests no fallan en Red Phase | @Tester no creó tests correctamente | Re-ejecutar @Tester con spec más clara |
 | Tests no pasan en Green Phase | @Build no implementó correctamente | Revisar spec y re-ejecutar @Build |
 | @CodeReview REJECTED múltiples veces | Código tiene deuda técnica significativa | Considerar arquitectura diferente |
-| @QA REJECTED | Tests o seguridad fallan | @Build corrige issues específicos |
-| @Perf REJECTED | Performance por debajo del target | Optimizar hot paths, lazy loading |
+| @QA FAILED | Tests o seguridad fallan | @Build corrige issues específicos |
 | Pipeline stuck en Phase 1/2 | Usuario no ha aprobado | Esperar aprobación o ajustar spec/plan |
 
 ### Límites de Retry
 
 ```
-Build → CodeReview: Máximo 3 intentos
-Build → QA:         Máximo 3 intentos
-Build → Perf:       Máximo 3 intentos
+Build → CodeReview: Máximo 2 intentos
+Build → QA:         Máximo 2 intentos
 ```
 
-Si después de 3 intentos persiste el fallo → **Escalar al usuario** con reporte detallado.
+Si después de 2 intentos persiste el fallo → **Escalar al usuario** con reporte detallado:
+
+```
+⚠️ ESCALATION: @Build has failed 2 QA cycles.
+Issues: [summary from last QA report]
+Recommendation: Review architecture or break feature into smaller parts.
+```
 
 ---
 
@@ -740,11 +745,12 @@ Este sistema es parte de la configuración personal de `@alejandrocabeza`.
 1. Definir responsabilidad clara y exclusiva
 2. Definir señal de salida (exit signal)
 3. Definir contexto de entrada requerido
-4. Agregar a la sección de agentes en este README
-5. Actualizar el flujo de fases si aplica
+4. Crear archivo en `/agents/[Nombre].md`
+5. Agregar a la sección de agentes en este README
+6. Actualizar el flujo de fases si aplica
 
 ---
 
 **Última actualización:** 2026-06-04  
-**Versión:** 3.0 (TDD First + Engram Memory)  
+**Versión:** 4.0 (7-Phase Pipeline + Integrated QA)  
 **Autor:** @alejandrocabeza
