@@ -2,6 +2,9 @@
 -- Scripts y servicios que inician con Hyprland
 
 hl.on("hyprland.start", function()
+    -- D-Bus environment setup (must run first before other services)
+    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+    
     local nix_bin = "/home/alejandrocabeza/.nix-profile/bin/"
     hl.exec_cmd(nix_bin .. "swaybg -i /home/alejandrocabeza/.dotfiles/wallpapers/$(ls /home/alejandrocabeza/.dotfiles/wallpapers/ | head -1) -m fill")
     hl.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/wallpaper_carousel.sh")

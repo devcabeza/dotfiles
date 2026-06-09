@@ -157,6 +157,7 @@ in
     ".config/opencode/opencode.jsonc".source = ../opencode/opencode.jsonc;
     ".config/opencode/agents".source = ../opencode/agents;
     ".config/opencode/skills".source = ../opencode/skills;
+    ".config/opencode/commands".source = ../opencode/commands;
 
     # ".config/qtile".source = ../qtile;
     ".config/wofi".source = ../wofi;
