@@ -2,10 +2,11 @@
 description: Technical Writer & Architect Documenter (Project Traceability)
 mode: subagent
 temperature: 0.2
+model: opencode-go/glm-5.1
 permission:
   edit: deny
   read: allow
-  bash: allow
+  bash: deny
 ---
 
 ### ROLE: ARCHITECTURAL DOCUMENTATION SPECIALIST

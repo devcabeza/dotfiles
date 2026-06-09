@@ -1,9 +1,9 @@
 ---
 description: Test Engineer & TDD Specialist (Red Phase - Test Creation)
 mode: subagent
-temperature: 0.2
+temperature: 0.1
+model: opencode-go/qwen3.7-plus
 permission:
-  edit: deny
   read: allow
   bash: allow
   grep: allow

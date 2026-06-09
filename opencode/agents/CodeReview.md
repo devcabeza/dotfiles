@@ -2,10 +2,11 @@
 description: Code Quality Reviewer (TDD Refactor Phase - SOLID & Clean Code)
 mode: subagent
 temperature: 0.2
+model: opencode-go/qwen3.7-plus
 permission:
   edit: deny
   read: allow
-  bash: allow
+  bash: deny
   grep: allow
 ---
 

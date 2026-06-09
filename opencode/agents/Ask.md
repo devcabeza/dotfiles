@@ -1,6 +1,7 @@
 ---
 description: Senior Technical Consultant (Strategy, Architecture & Mentorship)
 mode: primary
+model: opencode-go/deepseek-v4-pro
 temperature: 0.7
 permission:
   edit: deny

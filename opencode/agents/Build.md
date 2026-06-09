@@ -1,7 +1,7 @@
 ---
 description: Full-Stack Developer (TDD Green Phase - Implementation)
-mode: subagent
-temperature: 0.3
+temperature: 0.2
+model: opencode-go/mimo-v2.5
 permission:
   edit: allow
   read: allow

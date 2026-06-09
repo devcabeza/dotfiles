@@ -2,10 +2,11 @@
 description: Quality Assurance Engineer (Testing, Security & Performance Validation)
 mode: subagent
 temperature: 0.1
+model: opencode-go/qwen3.7-plus
 permission:
   edit: deny
   read: allow
-  bash: allow
+  bash: deny
   grep: allow
 ---
 
