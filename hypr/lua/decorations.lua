@@ -1,5 +1,6 @@
 -- Decoraciones: redondeo, blur, sombras, opacidad
 -- Paleta Gruvbox Material
+-- Basado en la API Lua de Hyprland (wiki.hypr.land)
 
 hl.config({
     decoration = {
@@ -25,11 +26,13 @@ hl.config({
             special = false,
         },
 
-        drop_shadow = true,
-        shadow_range = 4,
-        shadow_render_power = 3,
-        shadow_offset = { 3, 3 },
-        ["col.shadow"] = "rgba(1a1a1aee)",
-        shadow_ignore_window = true,
+        shadow = {
+            enabled = true,
+            range = 4,
+            render_power = 3,
+            offset = { 3, 3 },
+            color = "rgba(1a1a1aee)",
+            scale = 1.0,
+        },
     },
 })
