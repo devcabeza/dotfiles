@@ -9,8 +9,8 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("systemctl --user import-environment $(env | cut -d'=' -f 1)")
     hl.exec_cmd("dbus-update-activation-environment --systemd --all")
 
-    -- Launcher daemon (start silently, no window)
-    hl.exec_cmd("/home/alejandrocabeza/.nix-profile/bin/hyprlauncher -d")
+    -- Launcher daemon (small delay for faster first launch)
+    hl.exec_cmd("sleep 2 && /home/alejandrocabeza/.nix-profile/bin/hyprlauncher -d")
 
     local nix_bin = "/home/alejandrocabeza/.nix-profile/bin/"
     hl.exec_cmd(nix_bin .. "swaybg -i /home/alejandrocabeza/.dotfiles/wallpapers/$(ls /home/alejandrocabeza/.dotfiles/wallpapers/ | head -1) -m fill")
