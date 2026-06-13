@@ -1,10 +1,7 @@
 -- Configuración principal de Hyprland (formato Lua)
 -- Entry point que carga los módulos en orden
--- Orden: primero entorno, luego configuración, finalmente acciones
 
 local modules = {
-    -- Variables de entorno (DEBE IR PRIMERO)
-    "lua.env",
     -- Variables y helpers
     "lua.variables",
     "lua.helpers",
