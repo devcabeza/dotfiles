@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export PATH="$HOME/.nix-profile/bin:$PATH"
+
+battery_info=$(upower -i "$(upower -e | grep BAT)")
+
+echo "$battery_info" | awk '/time to (empty|full)/ {
+    value = $4
+    unit = $5
+    if (unit ~ /^minute/) {
+        printf "%dm", int(value)
+    } else {
+        hours = int(value)
+        minutes = int((value - hours) * 60)
+        if (minutes > 0) {
+            printf "%dh %dm", hours, minutes
+        } else {
+            printf "%dh", hours
+        }
+    }
+    exit
+}'

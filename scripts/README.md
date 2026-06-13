@@ -31,6 +31,7 @@ Cada script Omarchy usa el namespace `org.omarchy.<nombre>` como clase de ventan
 | screenrecord.sh | `org.omarchy.screenrecord` | 700×450 |
 | gaps_toggle.sh | `org.omarchy.gaps-toggle` | 400×200 |
 | close_all_windows.sh | `org.omarchy.close-all` | 400×200 |
+| mic_toggle.sh | `org.omarchy.mic-toggle` | 400×200 |
 
 ### Cómo crear un nuevo script Omarchy
 
@@ -82,6 +83,19 @@ Cada script Omarchy usa el namespace `org.omarchy.<nombre>` como clase de ventan
 | `org.omarchy.audio-output` — `audio_output_switch.sh` | Cambiar entre salidas de audio | `SUPER + SHIFT + A` | pactl, wpctl, jq |
 | `org.omarchy.gaps-toggle` — `gaps_toggle.sh` | Quitar/restaurar gaps entre ventanas | `SUPER + ALT + G` | hyprctl |
 | `org.omarchy.close-all` — `close_all_windows.sh` | Cerrar todas las ventanas del workspace | `SUPER + ALT + W` | hyprctl, jq |
+| `org.omarchy.mic-toggle` — `mic_toggle.sh` | Silenciar/activar micrófono con notificación | `SUPER + SHIFT + M` | wpctl, dunst |
+| — `battery_present.sh` | Detectar si hay batería presente (exit 0/1) | — | /sys/class/power_supply |
+| — `battery_capacity.sh` | Capacidad total de batería en Wh | — | upower |
+| — `battery_remaining.sh` | Porcentaje restante de batería | — | upower |
+| — `battery_remaining_time.sh` | Tiempo restante formateado | — | upower |
+| — `battery_status.sh` | Estado completo de batería (%, tiempo, W, Wh) | — | upower |
+| — `monitor_scale.sh` | Obtener escala del monitor activo | — | hyprctl, jq |
+| — `monitor_watch.sh` | Detectar conexión/desconexión de monitores | *(autostart opcional)* | socat, hyprctl |
+| — `hw_intel.sh` | Detectar CPU Intel (exit 0/1) | — | /proc/cpuinfo |
+| — `hw_match.sh` | Detectar modelo de hardware por DMI | — | /sys/class/dmi/id |
+| — `hw_external_monitors.sh` | Detectar monitores externos conectados | — | /sys/class/drm |
+| — `hw_touchpad.sh` | Obtener nombre del touchpad | — | hyprctl, jq |
+| — `terminal_cwd.sh` | Obtener directorio actual del terminal activo | — | hyprctl, procps |
 | — `wallpaper_carousel.sh` | Carrusel automático de wallpapers (~30 min) | *(autostart)* | swaybg, coreutils |
 | — `voice_control.sh` | Iniciar/detener Handy (control por voz) | `SUPER + C` (start/release stop) | handy |
 | — `voice_control_handy.sh` | Proxy de voz para Handy | — | handy |
@@ -115,6 +129,8 @@ Cada script Omarchy usa el namespace `org.omarchy.<nombre>` como clase de ventan
 | `wf-recorder` | Grabación de pantalla en Wayland |
 | `ffmpeg` | Procesamiento de vídeo (screen recording) |
 | `pandoc` | Previsualización de documentos (Ranger) |
+| `socat` | Escucha de sockets (monitor_watch, opcional) |
+| `upower` | Información de batería |
 
 ---
 
