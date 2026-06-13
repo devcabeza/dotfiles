@@ -14,6 +14,7 @@
     "modules-right": ["pulseaudio", "cpu", "network", "bluetooth", "battery", "custom/battery-status", "tray"],
 
     "hyprland/workspaces": {
+        "on-click": "activate",
         "format": "{icon}",
         "format-icons": {
             "1": "󰎯",
@@ -29,11 +30,14 @@
             "default": "󰊠"
         },
         "persistent-workspaces": {
-            "*": 4
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
         },
-        "all-outputs": false,
-        "move-to-monitor": true,
-        "enable-bar-scroll": true
+        "all-outputs": true,
+        "move-to-monitor": true
     },
 
     "hyprland/window": {
