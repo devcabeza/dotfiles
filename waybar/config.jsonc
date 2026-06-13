@@ -11,7 +11,7 @@
 
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "cpu", "network", "bluetooth", "battery", "tray"],
+    "modules-right": ["pulseaudio", "cpu", "network", "bluetooth", "battery", "custom/battery-status", "tray"],
 
     "hyprland/workspaces": {
         "format": "{icon}",
@@ -76,7 +76,7 @@
 
     "cpu": {
         "interval": 5,
-        "format": "󰍛",
+        "format": "󰍛 {usage}%",
         "on-click": "/home/alejandrocabeza/.dotfiles/scripts/btop_menu.sh",
         "tooltip": false
     },
@@ -107,7 +107,16 @@
         "format-charging": "󰂄  {capacity}%",
         "format-full": "󰁹  Full",
         "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "tooltip-format": "{timeToFull} at {power}W",
+        "format-time": "{H}h {M}min",
         "on-click": "/home/alejandrocabeza/.dotfiles/scripts/wallpaper_picker.sh",
+        "tooltip": true
+    },
+
+    "custom/battery-status": {
+        "exec": "/home/alejandrocabeza/.dotfiles/scripts/battery_status.sh",
+        "interval": 120,
+        "format": "{}",
         "tooltip": false
     },
 
