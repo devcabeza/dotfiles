@@ -140,15 +140,15 @@ hl.window_rule({
     suppress_event = "maximize",
 })
 
--- Fix XWayland: evitar foco en ventanas sin clase/título (ventanas fantasma)
+-- Fix XWayland: evitar foco inicial en ventanas sin clase/título (ventanas fantasma)
 hl.window_rule({
     match = {
         class = "^$",
         title = "^$",
-        xwayland = 1,
-        floating = 1,
-        fullscreen = 0,
-        pinned = 0,
+        xwayland = true,
+        float = true,
+        fullscreen = false,
+        pin = false,
     },
-    no_focus = true,
+    no_initial_focus = true,
 })
