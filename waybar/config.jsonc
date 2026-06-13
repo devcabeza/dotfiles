@@ -32,7 +32,8 @@
             "*": 4
         },
         "all-outputs": false,
-        "move-to-monitor": true
+        "move-to-monitor": true,
+        "enable-bar-scroll": true
     },
 
     "hyprland/window": {

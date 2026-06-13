@@ -153,10 +153,6 @@ hl.window_rule({
     workspace = 1,
 })
 
-hl.window_rule({
-    match = { class = "^Alacritty$" },
-    workspace = 2,
-})
 
 hl.window_rule({
     match = { class = "^code-oss$" },
