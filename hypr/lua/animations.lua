@@ -15,3 +15,8 @@ hl.animation({ leaf = "windowsOut", enabled = true, speed = 8,    bezier = "line
 hl.animation({ leaf = "border",     enabled = true, speed = 10,   bezier = "linear" })
 hl.animation({ leaf = "fade",       enabled = true, speed = 6,    bezier = "linear" })
 hl.animation({ leaf = "workspaces", enabled = true, speed = 6,    bezier = "linear" })
+hl.animation({ leaf = "layers",       enabled = true, speed = 6, bezier = "myBezier" })
+hl.animation({ leaf = "layersOut",    enabled = true, speed = 6, bezier = "myBezier", style = "popin 80%" })
+hl.animation({ leaf = "fadeLayers",   enabled = true, speed = 6, bezier = "myBezier" })
+hl.animation({ leaf = "fadeLayersOut",enabled = true, speed = 6, bezier = "myBezier" })
+hl.animation({ leaf = "borderangle",  enabled = true, speed = 10, bezier = "linear", loops = -1 })

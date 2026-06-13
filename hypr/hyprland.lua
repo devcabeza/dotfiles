@@ -1,14 +1,34 @@
 -- Configuración principal de Hyprland (formato Lua)
 -- Entry point que carga los módulos en orden
+-- Orden: primero entorno, luego configuración, finalmente acciones
 
 local modules = {
+    -- Variables de entorno (DEBE IR PRIMERO)
+    "lua.env",
+    -- Variables y helpers
     "lua.variables",
     "lua.helpers",
+    -- Hardware y pantalla
     "lua.monitors",
     "lua.input",
+    -- Apariencia visual
     "lua.general",
-    "lua.windowrules",
+    "lua.decorations",
     "lua.animations",
+    "lua.cursor",
+    -- Gestos y comportamiento
+    "lua.gestures",
+    "lua.misc",
+    -- Render y GPU
+    "lua.render",
+    "lua.opengl",
+    -- Compatibilidad y ecosistema
+    "lua.xwayland",
+    "lua.ecosystem",
+    -- Reglas
+    "lua.windowrules",
+    "lua.layerrules",
+    -- Servicios y binds
     "lua.autostart",
     "lua.binds",
 }

@@ -102,3 +102,29 @@ hl.bind(m.mainMod .. " + C",         hl.dsp.exec_cmd("/home/alejandrocabeza/.dot
 hl.bind(m.mainMod .. " + SHIFT + minus", hl.dsp.window.move({ workspace = "special:magic" }))
 hl.bind(m.mainMod .. " + minus",         hl.dsp.workspace.toggle_special("magic"))
 
+-- ============================
+-- Navegación rápida entre workspaces
+-- ============================
+hl.bind(m.mainMod .. " + bracketright",    hl.dsp.workspace.next())
+hl.bind(m.mainMod .. " + bracketleft",     hl.dsp.workspace.prev())
+hl.bind(m.mainMod .. " + SHIFT + bracketright", hl.dsp.window.move({ workspace = "r+1" }))
+hl.bind(m.mainMod .. " + SHIFT + bracketleft",  hl.dsp.window.move({ workspace = "r-1" }))
+
+-- ============================
+-- Lock de pantalla (requiere hyprlock)
+-- ============================
+hl.bind(m.mainMod .. " + SHIFT + Escape",  hl.dsp.exec_cmd("hyprlock"))
+
+-- ============================
+-- Grupos de ventanas (tabs)
+-- ============================
+hl.bind(m.mainMod .. " + G",              hl.dsp.group.toggle())
+hl.bind(m.mainMod .. " + SHIFT + G",      hl.dsp.group.toggle({ action = "lock" }))
+hl.bind(m.mainMod .. " + TAB",            hl.dsp.group.next())
+hl.bind(m.mainMod .. " + SHIFT + TAB",    hl.dsp.group.prev())
+
+-- ============================
+-- Modo no molestar (dunst)
+-- ============================
+hl.bind(m.mainMod .. " + SHIFT + D",      hl.dsp.exec_cmd("dunstctl set-paused toggle"))
+

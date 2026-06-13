@@ -56,3 +56,76 @@ hl.window_rule({
     size = { 350, 220 },
     center = true,
 })
+
+-- ============================
+-- Apps comunes que deben flotar
+-- ============================
+hl.window_rule({
+    match = { class = "^pavucontrol$" },
+    float = true,
+    size = { 800, 600 },
+    center = true,
+})
+
+hl.window_rule({
+    match = { class = "^org\\.gnome\\.Calculator$" },
+    float = true,
+    size = { 400, 500 },
+    center = true,
+})
+
+hl.window_rule({
+    match = { class = "^org\\.pwmt\\.zathura$" },
+    float = true,
+    size = { 900, 650 },
+    center = true,
+})
+
+hl.window_rule({
+    match = { class = "^mpv$" },
+    float = true,
+    center = true,
+})
+
+hl.window_rule({
+    match = { class = "^imv$" },
+    float = true,
+    center = true,
+})
+
+hl.window_rule({
+    match = { class = "^org\\.keepassxc\\.KeePassXC$" },
+    float = true,
+    size = { 900, 600 },
+    center = true,
+})
+
+hl.window_rule({
+    match = { title = "^Picture-in-Picture$" },
+    float = true,
+    size = { 480, 270 },
+    pin = true,
+})
+
+-- ============================
+-- Asignaciones a workspaces por clase
+-- ============================
+hl.window_rule({
+    match = { class = "^firefox$", title = "^(?!.*Picture-in-Picture).*$" },
+    workspace = 1,
+})
+
+hl.window_rule({
+    match = { class = "^Alacritty$" },
+    workspace = 2,
+})
+
+hl.window_rule({
+    match = { class = "^code-oss$" },
+    workspace = 3,
+})
+
+hl.window_rule({
+    match = { class = "^Code$" },
+    workspace = 3,
+})

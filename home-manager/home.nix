@@ -89,13 +89,11 @@ in
     pkgs.sqlite
     pkgs.postgresql
     pkgs.delta
-    pkgs.luarocks-nix
     pkgs.luaPackages.luacheck
     pkgs.stylua
     pkgs.biome
     pkgs.prettierd
     pkgs.blade-formatter
-    pkgs.oh-my-fish
     pkgs.libgcc
     pkgs.bun
     pkgs.python313
@@ -108,7 +106,6 @@ in
     # WiFi, Bluetooth, Notifications
     pkgs.dunst
     pkgs.blueman
-    pkgs.impala
     pkgs.iwd
     pkgs.jq
     pkgs.networkmanagerapplet
@@ -132,6 +129,19 @@ in
     pkgs.ffmpegthumbnailer
     pkgs.exiftool
     pkgs.odt2txt
+
+    # Hyprland ecosystem
+    pkgs.hyprlock
+    pkgs.hypridle
+    pkgs.hyprpicker
+    pkgs.hyprsunset
+    pkgs.cliphist
+    pkgs.swappy
+    pkgs.bibata-cursors
+
+    # GTK theme support
+    pkgs.adw-gtk3
+    pkgs.papirus-icon-theme
   ];
 
   fonts.fontconfig.enable = true;
@@ -173,6 +183,20 @@ in
     # Ranger Config
     ".config/ranger/rc.conf".source = ../ranger/rc.conf;
     ".config/ranger/scope.sh".source = ../ranger/scope.sh;
+
+    # Dunst Config
+    ".config/dunst/dunstrc".source = ../dunst/dunstrc;
+
+    # GTK Theme Config
+    ".config/gtk-3.0/settings.ini".source = ../gtk-3.0/settings.ini;
+    ".config/gtk-4.0/settings.ini".source = ../gtk-4.0/settings.ini;
+
+    # Swappy Config
+    ".config/swappy/config".source = ../swappy/config;
+
+    # Walker Config
+    ".config/walker/config.toml".source = ../walker/config.toml;
+    ".config/walker/themes/default.css".source = ../walker/themes/default.css;
   };
 
 
