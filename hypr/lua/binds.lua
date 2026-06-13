@@ -142,3 +142,9 @@ hl.bind(m.mainMod .. " + SHIFT + TAB",    hl.dsp.group.prev())
 -- Modo no molestar (dunst)
 -- ============================
 hl.bind(m.mainMod .. " + SHIFT + D",      hl.dsp.exec_cmd("dunstctl set-paused toggle"))
+
+-- ============================
+-- Temas (theme switcher)
+-- ============================
+hl.bind(m.mainMod .. " + ALT + T", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/theme_toggle.sh"))
+hl.bind(m.mainMod .. " + ALT + S", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/theme_switch.sh"))
