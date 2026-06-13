@@ -1,0 +1,121 @@
+# 🧰 Scripts de Automatización — dotfiles
+
+Este directorio contiene **todos los scripts de automatización** del sistema, incluyendo los 8 scripts con namespace **Omarchy** que se lanzan como ventanas flotantes en Hyprland.
+
+---
+
+## 📦 El patrón Omarchy
+
+Cada script Omarchy usa el namespace `org.omarchy.<nombre>` como clase de ventana (`--class`) de Alacritty. Esto permite que Hyprland — a través de `windowrules.lua` — los detecte automáticamente y los ponga en **modo flotante**, centrados y con el tamaño adecuado.
+
+### Mecanismo
+
+1. El script lanza Alacritty con `--class "org.omarchy.<nombre>"`
+2. Hyprland captura la clase mediante `hl.window_rule()` en `windowrules.lua`
+3. La ventana se muestra flotante, centrada y con dimensiones predefinidas
+
+### Tamaños flotantes
+
+| Script | Clase | Tamaño |
+|---|---|---|
+| wifi_menu.sh | `org.omarchy.wifi` | 700×450 |
+| bluetooth_menu.sh | `org.omarchy.bluetui` | 700×450 |
+| package_manager.sh | `org.omarchy.package-manager` | 900×600 |
+| keybinds_menu.sh | `org.omarchy.keybinds-menu` | 700×500 |
+| screenshot.sh | `org.omarchy.screenshot` | 700×450 |
+| wallpaper_picker.sh | `org.omarchy.wallpaper-picker` | 800×600 |
+| btop_menu.sh | `org.omarchy.btop` | 900×600 |
+| sysmenu.sh | `org.omarchy.sysmenu` | 350×220 |
+
+### Cómo crear un nuevo script Omarchy
+
+1. **Crear el script** con el siguiente esquema básico:
+   ```bash
+   #!/usr/bin/env bash
+   APP_ID="org.omarchy.mi-script"
+
+   if [ -z "$ALACRITTY_WINDOW_ID" ]; then
+       exec alacritty --class "$APP_ID" -e "$0" "$@"
+   fi
+
+   # ... lógica del script ...
+   ```
+
+2. **Añadir la window rule** en `hypr/lua/windowrules.lua`:
+   ```lua
+   hl.window_rule({
+       match = { class = "^org\\.omarchy\\.mi-script$" },
+       float = true,
+       size = { 800, 600 },
+       center = true,
+   })
+   ```
+
+3. **Registrar el keybind** en `hypr/lua/binds.lua`:
+   ```lua
+   hl.bind(m.mainMod .. " + X", hl.dsp.exec_cmd("~/.dotfiles/scripts/mi_script.sh"))
+   ```
+
+4. **Ejecutar `uhm`** solo si el script necesita un paquete nuevo en `home.nix`
+
+---
+
+## 📋 Tabla completa de scripts
+
+| Clase / Script | Función | Atajo | Dependencias |
+|---|---|---|---|
+| `org.omarchy.wifi` — `wifi_menu.sh` | Gestión WiFi (nmtui) | `SUPER + N` | nmtui |
+| `org.omarchy.bluetui` — `bluetooth_menu.sh` | Gestión Bluetooth (bluetui) | `SUPER + B` | bluetui |
+| `org.omarchy.package-manager` — `package_manager.sh` | Buscar e instalar paquetes Nix (fzf) | `SUPER + SHIFT + P` | nix, fzf |
+| `org.omarchy.keybinds-menu` — `keybinds_menu.sh` | Mostrar atajos de teclado | `SUPER + /` | — |
+| `org.omarchy.screenshot` — `screenshot.sh` | Captura de pantalla (grim + slurp + swappy) | `SUPER + SHIFT + S` | grim, slurp, swappy, wl-clipboard |
+| `org.omarchy.wallpaper-picker` — `wallpaper_picker.sh` | Selector de wallpapers (fzf + swaybg) | `SUPER + P` | fzf, swaybg, killall |
+| `org.omarchy.btop` — `btop_menu.sh` | Monitor de recursos (btop) | — | btop |
+| `org.omarchy.sysmenu` — `sysmenu.sh` | Menú de sistema (lock, suspend, reboot, poweroff) | `SUPER + Escape` | hyprlock, systemd |
+| — `wallpaper_carousel.sh` | Carrusel automático de wallpapers (~30 min) | *(autostart)* | swaybg, coreutils |
+| — `voice_control.sh` | Iniciar/detener Handy (control por voz) | `SUPER + C` (start/release stop) | handy |
+| — `voice_control_handy.sh` | Proxy de voz para Handy | — | handy |
+| — `handy_voice_setup.sh` | Configuración Handy (normal/AI) | `ALT + I` / `ALT + SHIFT + I` | handy |
+| — `handy_ai_processor.py` | Procesador AI en Python para Handy | — | python3, openai |
+| — `handy_ai_processor.sh` | Shell wrapper del procesador AI | — | — |
+| — `whisper-dictation.sh` | Dictado por voz con Whisper STT | — | whisper.cpp, jq |
+| — `ranger_scope.sh` | Previsualizaciones para Ranger | *(integrado en rc.conf)* | Ranger, ffmpegthumbnailer, pandoc |
+
+> **Nota**: `SUPER` es la tecla Windows/Command. `ALT` es la tecla Alt.
+
+---
+
+## 🔧 Dependencias principales
+
+| Paquete | Uso |
+|---|---|
+| `nmtui` | Interfaz TUI para NetworkManager (WiFi) |
+| `bluetui` | Interfaz TUI para Bluetooth |
+| `fzf` | Navegación difusa en menús (paquetes, wallpapers) |
+| `grim` / `slurp` | Captura de pantalla en Wayland |
+| `swappy` | Anotación de capturas |
+| `swaybg` | Gestión de fondos de pantalla |
+| `btop` | Monitor de recursos |
+| `hyprlock` | Bloqueo de pantalla |
+| `wl-clipboard` | Portapapeles en Wayland (wl-copy) |
+| `handy` | Asistente de voz |
+| `whisper.cpp` | Speech-to-text local |
+| `ffmpegthumbnailer` | Miniaturas de vídeo (Ranger) |
+| `pandoc` | Previsualización de documentos (Ranger) |
+
+---
+
+## 🚀 Despliegue
+
+Los scripts **no necesitan `uhm` para existir** — están en el repositorio y se referencian con rutas absolutas (`/home/alejandrocabeza/.dotfiles/scripts/`) desde `binds.lua` y `autostart.lua`.
+
+Sin embargo, si un script introduce **nuevas dependencias** (ej. `btop`, `bluetui`, `handy`), hay que:
+
+1. Añadir el paquete a `home-manager/home.nix` bajo `home.packages`
+2. Ejecutar `uhm` para que Home Manager lo instale
+
+Resumen:
+- **Script nuevo sin dependencias** → crear el archivo + window rule + keybind → no hace falta `uhm`
+- **Script nuevo con paquetes nuevos** → crear archivo + window rule + keybind + editar `home.nix` + `uhm`
+
+> ⚠️ `ranger_scope.sh` es independiente: Ranger lo invoca por configuración interna (`rc.conf`), no necesita clase Omarchy ni window rule.
