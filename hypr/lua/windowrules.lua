@@ -168,21 +168,6 @@ hl.window_rule({
     workspace = 3,
 })
 
--- Temas (theme switcher)
-hl.window_rule({
-    match = { class = "^org\\.omarchy\\.theme-switch$" },
-    float = true,
-    size = { 800, 500 },
-    center = true,
-})
-
-hl.window_rule({
-    match = { class = "^org\\.omarchy\\.theme-toggle$" },
-    float = true,
-    size = { 400, 200 },
-    center = true,
-})
-
 -- ============================
 -- Reglas de sistema (estilo Omarchy)
 -- ============================
