@@ -4,7 +4,7 @@
 _G.hypr = {
     mainMod = "SUPER",
     altMod = "ALT",
-    menu = "$HOME/.nix-profile/bin/walker",
+    menu = "hyprlauncher --dmenu",
     filemanager = "nautilus",
     terminal = "alacritty",
 }

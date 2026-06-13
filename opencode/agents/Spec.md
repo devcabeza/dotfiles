@@ -2,7 +2,7 @@
 description: Project Specification Strategist (Spec-Driven Development Lead)
 mode: subagent
 temperature: 0.3
-model: opencode-go/kimi-k2.6
+model: opencode-go/deepseek-v4-pro
 permission:
   edit: deny
   read: allow

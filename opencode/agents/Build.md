@@ -1,7 +1,7 @@
 ---
 description: Full-Stack Developer (TDD Green Phase - Implementation)
 temperature: 0.2
-model: opencode-go/mimo-v2.5
+model: opencode-go/deepseek-v4-flash
 permission:
   edit: allow
   read: allow

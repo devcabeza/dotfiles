@@ -1,7 +1,7 @@
 ---
 description: Technical Architect (Strategic Planning, ERD & Security Strategy)
 temperature: 0.1
-model: opencode-go/kimi-k2.6
+model: opencode-go/deepseek-v4-pro
 permission:
   edit: deny
   read: allow

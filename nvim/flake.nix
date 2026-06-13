@@ -19,7 +19,7 @@
       flake = false;
     };
 
-    "plugins-opencode.nvim" = {
+    "plugins-opencode-nvim" = {
       url = "github:sudo-tee/opencode.nvim";
       flake = false;
     };
@@ -131,7 +131,6 @@
                 vue-language-server
                 svelte-language-server
                 # React Native
-                android-sdk
                 watchman
               ];
            test = with pkgs; [
@@ -174,12 +173,14 @@
         };
 
          startupPlugins = {
-             gitPlugins = with pkgs.neovimPlugins; [
-             ];
+              gitPlugins = with pkgs.neovimPlugins; [
+              ];
              general = with pkgs.vimPlugins; [
               # AI
               dressing-nvim
               img-clip-nvim
+               # AI - opencode
+               (pkgs.neovimPlugins."opencode-nvim")
               
               # UI/UX
               rainbow-delimiters-nvim
@@ -235,8 +236,7 @@
                mini-nvim
                toggleterm-nvim
                git-worktree-nvim
-               opencode-nvim
-               (nvim-treesitter.withPlugins (p: with p; [
+                (nvim-treesitter.withPlugins (p: with p; [
 
               bash
               c

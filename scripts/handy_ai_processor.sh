@@ -44,11 +44,15 @@ fi
 
 echo "Parsed Transcript: $TRANSCRIPT" >> "$LOG_FILE"
 
-# === RESTORE BLUETOOTH QUALITY & PIPEWIRE CLOCK ===
-# Now that recording is complete, restore bluetooth headset to high quality A2DP
+# === RESTORE AUDIO STATE & PIPEWIRE CLOCK ===
+# Now that recording is complete, restore bluetooth headset to high quality A2DP (if applicable)
 # and clear forced rate settings so normal audio works perfectly.
-echo "Restoring A2DP high-quality profile and resetting clock rate..." >> "$LOG_FILE"
-pactl set-card-profile bluez_card.B0_38_E2_9E_FF_7A a2dp-sink >> "$LOG_FILE" 2>&1
+echo "Restoring audio state and resetting clock rate..." >> "$LOG_FILE"
+
+# Only restore A2DP profile if we were in Bluetooth mode
+if [ -f "/tmp/handy_source_type" ] && [ "$(cat /tmp/handy_source_type)" = "bluetooth" ]; then
+    pactl set-card-profile bluez_card.B0_38_E2_9E_FF_7A a2dp-sink >> "$LOG_FILE" 2>&1
+fi
 pw-metadata -n settings 0 clock.force-rate 0 >> "$LOG_FILE" 2>&1
 
 # Exit early if transcript is empty or null

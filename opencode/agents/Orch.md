@@ -1,7 +1,7 @@
 ---
 description: Pipeline Coordinator (Phase Tracking & Agent Routing)
 mode: primary
-model: opencode-go/mimo-v2.5
+model: opencode-go/deepseek-v4-flash
 temperature: 0.1
 permission:
   edit: deny

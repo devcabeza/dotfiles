@@ -8,6 +8,7 @@ fish_add_path ~/.local/bin
 # Saludo vacío
 set fish_greeting ""
 set -gx TERM xterm-256color
+set -gx DOCKER_API_VERSION 1.40
 
 # --- Habilitar bindings Vi ---
 # Nota: Warp maneja sus propios atajos, a veces esto causa lag en Warp

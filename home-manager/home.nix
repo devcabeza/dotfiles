@@ -75,6 +75,10 @@ in
     pkgs.fd
     pkgs.tmux
     pkgs.lazygit
+    pkgs.lazydocker
+    pkgs.lazysql
+    pkgs.lazyjournal
+    pkgs.lazyssh
     pkgs.xclip
     pkgs.xsel
     pkgs.wl-clipboard
@@ -122,7 +126,7 @@ in
     # Ranger & Previews
     pkgs.ranger
     pkgs.ueberzugpp
-    pkgs.poppler_utils
+    pkgs.poppler-utils
     pkgs.xlsx2csv
     pkgs.glow
     pkgs.ffmpegthumbnailer
@@ -142,9 +146,6 @@ in
     # Neovim Config
     ".config/nvim".source = ../nvim;
 
-    # Ghostty Config
-    ".config/ghostty".source = ../ghostty;
-
     # Alacritty Config
     ".config/alacritty".source = ../alacritty;
 
@@ -159,18 +160,12 @@ in
     ".config/opencode/skills".source = ../opencode/skills;
     ".config/opencode/commands".source = ../opencode/commands;
 
-    # ".config/qtile".source = ../qtile;
-    ".config/wofi".source = ../wofi;
-
     # Hyprland
     ".config/hypr".source = ../hypr;
     ".config/waybar".source = ../waybar;
 
-    # Tmux Config (link only tmux.conf, not the whole directory — plugins/ needs to be writable for tpm)
+    # Tmux Config
     ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
-
-    # Zellij
-    # ".config/zellij".source = ../zellij;
 
     #lazygit
     ".config/lazygit".source = ../lazygit;
@@ -187,6 +182,7 @@ in
     COMPOSER_HOME = "${config.home.homeDirectory}/.composer";
     XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
     ENGRAM_DB_PATH = "/home/alejandrocabeza/.local/share/engram/engram.db";
+    DOCKER_API_VERSION = "1.40";
   };
 
   # --- Crear directorio de base de datos ---
