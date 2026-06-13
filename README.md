@@ -1,267 +1,439 @@
-# Dotfiles — Alejandro Cabeza
+# 🏡 Dotfiles — Alejandro Cabeza
 
-## Introducción
+![Nix](https://img.shields.io/badge/Nix-✓-informational?style=flat)
+![Home Manager](https://img.shields.io/badge/Home%20Manager-✓-blueviolet?style=flat)
+![Hyprland](https://img.shields.io/badge/WM-Hyprland-7daea3?style=flat)
+![Lua](https://img.shields.io/badge/Config-Lua-000080?style=flat)
+![Fish](https://img.shields.io/badge/Shell-Fish-7c5f9b?style=flat)
+![Wayland](https://img.shields.io/badge/Protocol-Wayland-7daea3?style=flat)
+![Gruvbox](https://img.shields.io/badge/Theme-Gruvbox%20Material-d8a657?style=flat)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat)
 
-Hola, mi nombre es **Alejandro Cabeza**, soy un desarrollador **Venezolano** apasionado por la customización y las automatizaciones de tareas. Durante mucho tiempo busqué la forma de automatizar mi proceso de instalación del entorno de desarrollo. Gracias a mi trabajo como desarrollador estoy constantemente en la terminal, lo que me hizo entender el poder de los scripts de automatización y la importancia de la replicabilidad de mis configuraciones.
-
-Todos los que trabajamos con Linux sabemos lo que pasa: nos cambiamos de **Distro** o de **OS** y toca hacer un gran esfuerzo para que todo funcione igual como lo teníamos antes. **Esta es mi solución.**
-
-Estas configuraciones están orientadas a las herramientas que uso diariamente como **Back-End Developer**, diseñadas para tener alta disponibilidad y replicabilidad en todos los entornos de escritorio y sistemas operativos en los que me muevo.
+> **Desarrollador Back-End 🇻🇪** atrapado en un loop infinito de customización de Linux, Nix y Wayland. Bienvenido a mi configuración.
 
 ---
 
-## Stack Principal
+## 📋 Tabla de Contenidos
 
-| Componente | Descripción |
+- [🎯 Introducción](#-introducción)
+- [⚡ Stack Principal](#-stack-principal)
+- [🚀 Instalación & Despliegue](#-instalación--despliegue)
+- [📂 Estructura del Proyecto](#-estructura-del-proyecto)
+- [🎨 Tema & Apariencia](#-tema--apariencia)
+- [📦 Paquetes Instalados](#-paquetes-instalados)
+- [⌨️ Atajos de Teclado](#️-atajos-de-teclado)
+- [📜 Scripts Personalizados](#-scripts-personalizados)
+- [🖼️ Galería](#️-galería)
+- [📝 Notas](#-notas)
+- [🤝 Contribuir / Fork](#-contribuir--fork)
+- [📄 Licencia](#-licencia)
+
+---
+
+## 🎯 Introducción
+
+### El problema
+
+Todos los que vivimos en la terminal lo conocemos: cambias de distro, formateas el disco, o te toca trabajar en una máquina nueva, y **todo se siente extraño**. Tus atajos no funcionan. Tus colores no están. Tus herramientas no existen. Pasar días reconstruyendo tu entorno es frustrante y agotador.
+
+### La solución
+
+Estos dotfiles son mi respuesta a ese problema. No es solo una colección de archivos de configuración — es un **sistema declarativo, reproducible y portable** construido sobre [Nix](https://nixos.org/) + [Home Manager](https://github.com/nix-community/home-manager).
+
+### La filosofía
+
+| Principio | Por qué |
 |---|---|
-| **Gestor de paquetes** | Nix + Home Manager (configuración declarativa y reproducible) |
-| **Compositor** | Hyprland (Wayland) con configuración modular en Lua (19 módulos) |
-| **Terminal** | Alacritty con Tmux integrado (prefix: `Ctrl+t`) |
-| **Shell** | Fish con modo Vi, Starship prompt (bloques sólidos Gruvbox) y fastfetch |
-| **Editor** | Neovim (NixCats + Lua, +40 plugins) |
-| **Barra** | Waybar flotante con estilos CSS Gruvbox Material |
-| **Launcher** | Walker (con prefixes: `>` runner, `=` calc, `@` web, `:` clipboard) |
-| **Launcher secundario** | Hyprlauncher (Alfred-style, atajo `ALT+SPACE`) |
-| **Notificaciones** | Dunst con tema Gruvbox Material |
-| **Asistente de voz** | Handy + Whisper + AI (GPT-local) |
-| **Gestor de Node** | Fnm (Fast Node Manager) |
-| **Wallpaper** | swaybg con carrusel automático y selector interactivo |
+| **Reproducibilidad** | Con un solo comando (`uhm`) mi entorno completo se despliega en cualquier máquina con Nix. No más "después lo configuro". |
+| **Declaratividad** | Todo está descrito: qué paquetes instalar, dónde van los dotfiles, qué servicios correr. El sistema deriva el estado deseado. |
+| **Modularidad** | Hyprland está dividido en 18 módulos Lua independientes. Cada concern tiene su archivo. Cada script tiene su propósito. |
+| **Wayland nativo** | Todo el stack corre sobre Wayland. Sin X11. Sin capas de compatibilidad. |
+| **Estética funcional** | El tema Gruvbox Material no es solo bonito — está diseñado para reducir fatiga visual y mantener consistencia en cada rincón del sistema. |
+
+Esto no es "mi config". Es una **herramienta de productividad** que he refinado durante años.
+
+> ⚠️ **Fuente de verdad**: Este README es una guía general. Para convenciones exactas y detalles de implementación, consulta el archivo [`AGENTS.md`](AGENTS.md). La fuente de verdad última **es el código fuente** (`home.nix`, `binds.lua`, los scripts).
 
 ---
 
-## Estructura del Proyecto
+## ⚡ Stack Principal
+
+```
+Gestor   →  Nix + Home Manager (flake)
+WM       →  Hyprland (Lua API, 19 módulos)
+Terminal →  Alacritty → Tmux (prefix Ctrl+t) → Fish (Vi mode)
+Prompt   →  Starship (bloques sólidos Gruvbox)
+Editor   →  Neovim (NixCats + Lua)
+Barra    →  Waybar flotante (CSS Gruvbox Material)
+Launcher →  Walker (> runner, = calc, @ web, : clipboard)
+Sec.     →  Hyprlauncher (Alfred-style, ALT+SPACE)
+Notifs.  →  Dunst (Gruvbox Material)
+Wallp.   →  swaybg + carrusel automático + selector interactivo
+Voz      →  Handy + Whisper + AI
+Node     →  Fnm (Fast Node Manager)
+Git      →  Delta (diff) + Lazygit (TUI)
+```
+
+### ¿Por qué Nix + Home Manager?
+
+Porque los dotfiles tradicionales (solo symlinks) resuelven la mitad del problema: distribuyen configuraciones, pero **no gestionan dependencias**. Con Home Manager:
+
+- Los paquetes se instalan **declarativamente** — no hay `apt install` manual
+- Las configuraciones se **symlinkean automáticamente** — no hay scripts de bootstrap
+- Las variables de entorno se **inyectan en el shell** — no hay que exportarlas a mano
+- Los cambios son **atómicos** — `uhm` y todo se actualiza junto, o nada
+- Tienes **rollback** — cada switch genera un backup
+
+---
+
+## 🚀 Instalación & Despliegue
+
+### Requisitos
+
+- Nix package manager (con flakes habilitados)
+- Home Manager instalado
+- Una distribución Linux con Wayland
+
+### Clonar e instalar
+
+```bash
+git clone https://github.com/alejandrocabeza/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+uhm
+```
+
+### El comando mágico: `uhm`
+
+Definido en `.bashrc`, este alias es el corazón del sistema:
+
+```bash
+alias uhm='home-manager switch -b backup --impure --flake ~/.dotfiles/home-manager#alejandrocabeza'
+```
+
+**`uhm`** hace tres cosas:
+1. Lee `home.nix` y determina qué paquetes instalar
+2. Symlinkea cada directorio de configuración a `~/.config/`
+3. Ejecuta hooks de activación (crear directorios, clonar TPM, etc.)
+
+> 🔴 **Importante**: Cambiar un archivo de configuración no es suficiente. Debe estar linkeado en `home.nix` bajo `home.file` y luego ejecutar `uhm`. Sin `uhm` los cambios no toman efecto.
+
+### Hooks de activación
+
+| Hook | Qué hace |
+|---|---|
+| `createEngramDir` | Crea `~/.local/share/engram/` para la base de datos de memoria persistente |
+| `installTpm` | Clona [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm) si no existe |
+
+---
+
+## 📂 Estructura del Proyecto
 
 ```
 dotfiles/
-├── AGENTS.md                 # Guía para agentes OpenCode (fuente de verdad)
-├── home-manager/
-│   ├── home.nix              # Configuración principal de Home Manager
-│   ├── flake.nix             # Flake para gestión declarativa
+├── AGENTS.md              # ⬅️ Fuente de verdad para agentes OpenCode
+├── .gitconfig             # Git config (delta, alias, conventional commits)
+├── .bashrc                # Bash fallback (uhm alias, fnm, tmux auto-start)
+│
+├── home-manager/          # 🧠 Corazón del sistema
+│   ├── home.nix           #    Config principal (paquetes, files, env vars)
+│   ├── flake.nix          #    Flake Nix
 │   └── flake.lock
-├── hypr/                     # Hyprland (WM Wayland)
-│   ├── hyprland.lua          # Entry point (carga 19 módulos)
-│   ├── hyprlauncher.conf     # Launcher Alfred-style
-│   ├── hyprtoolkit.conf      # Tema del toolkit
-│   ├── old.hyprland.conf     # Config legacy (referencia)
-│   ├── hyprlock.conf         # Pantalla de bloqueo
-│   ├── hypridle.conf         # Daemon de inactividad
-│   └── lua/
-│       ├── env.lua           # Variables de entorno Wayland
-│       ├── variables.lua     # Variables globales (mod, apps)
-│       ├── helpers.lua       # Función o.bind() estilo Omarchy
-│       ├── monitors.lua      # Monitores y resolución
-│       ├── input.lua         # Teclado, mouse, touchpad
-│       ├── general.lua       # Gaps, bordes, layout (dwindle)
-│       ├── decorations.lua   # Blur, sombras, redondeo, opacidad
-│       ├── animations.lua    # Curvas + 10 hojas de animación
-│       ├── cursor.lua        # Tema y comportamiento del cursor
-│       ├── gestures.lua      # Swipe de workspaces (3 dedos)
-│       ├── misc.lua          # VFR, VRR, DPMS, logo, etc.
-│       ├── render.lua        # Explicit sync, direct scanout
-│       ├── opengl.lua        # OpenGL introspection
-│       ├── xwayland.lua      # XWayland scaling
-│       ├── ecosystem.lua     # Sin nag de donación
-│       ├── windowrules.lua   # Reglas flotantes (Omarchy + apps)
-│       ├── layerrules.lua    # Blur en waybar, dunst, etc.
-│       ├── submaps.lua       # Modos de teclado (sistema)
-│       ├── autostart.lua     # Servicios al iniciar
-│       └── binds.lua         # Todos los keybindings
-├── nvim/                     # Neovim (NixCats + Lua, ver nvim/AGENTS.md)
+│
+├── hypr/                  # 🪟 Hyprland (configuración modular Lua)
+│   ├── hyprland.lua       #    Entry point (carga 18 módulos)
+│   ├── hyprlauncher.conf  #    Launcher Alfred-style
+│   ├── old.hyprland.conf  #    Config legacy (referencia)
+│   └── lua/               #    📁 Módulos Lua
+│       ├── env.lua        #      Variables de entorno Wayland
+│       ├── variables.lua  #      Variables globales (mod, apps)
+│       ├── helpers.lua    #      Función helper o.bind()
+│       ├── monitors.lua   #      Monitores y resolución
+│       ├── input.lua      #      Teclado, mouse, touchpad
+│       ├── general.lua    #      Gaps, bordes, layout (dwindle)
+│       ├── decorations.lua#      Blur, sombras, redondeo, opacidad
+│       ├── animations.lua #      Curvas + 10 hojas de animación
+│       ├── cursor.lua     #      Tema y comportamiento del cursor
+│       ├── gestures.lua   #      Swipe de workspaces (3 dedos)
+│       ├── misc.lua       #      VFR, VRR, DPMS, logo
+│       ├── render.lua     #      Explicit sync, direct scanout
+│       ├── opengl.lua     #      OpenGL introspection
+│       ├── xwayland.lua   #      XWayland scaling
+│       ├── ecosystem.lua  #      Sin nag de donación
+│       ├── windowrules.lua#      Reglas flotantes (Omarchy + apps)
+│       ├── layerrules.lua #      Blur en waybar, dunst, etc.
+│       ├── autostart.lua  #      Servicios al iniciar
+│       └── binds.lua      #      Todos los keybindings (130 líneas)
+│
+├── alacritty/             # 🖥️ Terminal (sin bordes, 95% opacidad, Gruvbox)
+│   └── alacritty.toml
+│
+├── tmux/                  # 🔲 Multiplexor (prefix Ctrl+t, Gruvbox, TPM)
+│   └── tmux.conf
+│
+├── fish/                  # 🐟 Shell principal (Vi mode, Starship)
+│   ├── config.fish
+│   ├── conf.d/
+│   └── functions/
+│
+├── waybar/                # 📊 Barra flotante (CSS Gruvbox Material)
+│   ├── config.jsonc
+│   └── styles.css
+│
+├── walker/                # 🔍 Launcher principal (prefixes, temas)
+│   ├── config.toml
+│   └── themes/default.css
+│
+├── dunst/                 # 🔔 Notificaciones (Gruvbox Material)
+│   └── dunstrc
+│
+├── nvim/                  # ✏️ Neovim (ver nvim/AGENTS.md)
 │   ├── init.lua
 │   ├── flake.nix
 │   └── lua/
-│       ├── config/           # Core settings, keymaps, autocmds
-│       ├── plugins/          # +40 plugins (LSP, DAP, Treesitter…)
-│       ├── setup/            # LSP servers, snacks dashboard
-│       └── nixCatsUtils/    # Bridge Nix ↔ Lua
-├── alacritty/
-│   └── alacritty.toml        # Terminal (Gruvbox, sin bordes, 95% opacidad)
-├── waybar/
-│   ├── config.jsonc          # Barra flotante con workspaces, clock, pulse…
-│   └── styles.css            # CSS Gruvbox Material (bordes redondeados)
-├── dunst/
-│   └── dunstrc               # Notificaciones Gruvbox Material
-├── gtk-3.0/
-│   └── settings.ini          # Tema oscuro GTK3
-├── gtk-4.0/
-│   └── settings.ini          # Tema oscuro GTK4
-├── walker/
-│   ├── config.toml           # Launcher (prefixes, providers, keybinds)
-│   └── themes/default.css    # Tema personalizado
-├── swappy/
-│   └── config                # Anotaciones de capturas
-├── tmux/
-│   └── tmux.conf             # Tmux (prefix Ctrl+t, Gruvbox, TPM)
-├── fish/
-│   ├── config.fish           # Shell principal (Vi mode, Starship)
-│   ├── conf.d/               # Tide config (legacy)
-│   └── functions/            # FZF functions (historial, git, kill…)
-├── ranger/
-│   ├── rc.conf               # File manager (previews, icons)
-│   └── scope.sh              # Previsualizaciones
-├── lazygit/
-│   └── config.yml            # Git TUI
-├── scripts/                  # Scripts de automatización
-│   ├── org.omarchy.*         # 8 scripts con namespace Omarchy
-│   │   ├── wifi_menu.sh           # Menú WiFi (nmtui)
-│   │   ├── bluetooth_menu.sh      # Menú Bluetooth (bluetui)
-│   │   ├── package_manager.sh     # Gestor de paquetes (fzf)
-│   │   ├── keybinds_menu.sh       # Atajos de teclado
-│   │   ├── screenshot.sh          # Capturas (grim + slurp)
-│   │   ├── wallpaper_picker.sh    # Selector de wallpapers (fzf + swaybg)
-│   │   ├── btop_menu.sh           # Monitor de recursos (btop)
-│   │   └── sysmenu.sh             # Menú de sistema (apagar, reiniciar…)
-│   ├── wallpaper_carousel.sh # Carrusel automático de wallpapers
-│   ├── ranger_scope.sh       # Previews para ranger
-│   ├── whisper-dictation.sh  # Dictado por voz (Whisper)
-│   ├── voice_control.sh      # Control por voz (Handy)
-│   ├── voice_control_handy.sh # Proxy de voz Handy
-│   ├── handy_voice_setup.sh  # Configuración de Handy
-│   ├── handy_ai_processor.sh # Procesador AI de Handy
-│   └── handy_ai_processor.py # Procesador AI en Python
-├── wallpapers/               # +40 fondos de pantalla
-├── opencode/
-│   ├── opencode.jsonc        # Config OpenCode (MCP: engram, supabase, vercel…)
-│   ├── commands/             # Comandos personalizados (commit-push, pull-request)
-│   └── skills/               # Skills (context7, spec-driven-dev, planning-protocol)
-├── crobjob/
-│   └── backup.sh             # Backup programado
-├── nix/
-│   └── nix.conf              # Configuración global de Nix
-├── utils/lamp/               # LAMP stack (Docker Compose + PHPMyAdmin)
-├── .gitconfig                # Git config (delta, alias, conventional commits)
-├── .bashrc                   # Fallback bash (uhm alias, fnm, tmux auto)
-└── AGENTS.md                 # ⬅️ Fuente de verdad para agentes
+│
+├── gtk-3.0/               # 🎨 Tema oscuro GTK3
+│   └── settings.ini
+├── gtk-4.0/               # 🎨 Tema oscuro GTK4
+│   └── settings.ini
+│
+├── swappy/                # 📸 Anotaciones de capturas
+│   └── config
+│
+├── ranger/                # 📁 File manager (previews, icons)
+│   ├── rc.conf
+│   └── scope.sh
+│
+├── lazygit/               # 🔧 Git TUI
+│   └── config.yml
+│
+├── scripts/               # ⚡ Automatización
+│   ├── *.omarchy.*.sh     #    8 scripts namespace Omarchy
+│   ├── wallpaper_carousel.sh
+│   ├── voice_control.sh
+│   ├── handy_*.sh / .py
+│   ├── whisper-dictation.sh
+│   └── ranger_scope.sh
+│
+├── opencode/              # 🤖 OpenCode (config, commands, skills)
+│   ├── opencode.jsonc
+│   ├── commands/
+│   └── skills/
+│
+├── wallpapers/            # 🖼️ +100 fondos de pantalla
+├── nix/                   # ⚙️ Config global de Nix
+│   └── nix.conf
+├── crobjob/               # ⏰ Backup programado
+│   └── backup.sh
+├── utils/lamp/            # 🐳 LAMP stack (Docker Compose + PHPMyAdmin)
+└── .bashrc                # 📝 Bash fallback (uhm alias, fnm, tmux auto)
 ```
 
 ---
 
-## Paquetes Instalados (Home Manager)
+## 🎨 Tema & Apariencia
 
-### Desarrollo
-- **PHP 8.4** con extensiones: imagick, gd, pdo_sqlite, pdo_mysql, pdo_pgsql, intl, zip, bcmath, sodium, opcache, redis
-- **Composer** (override con PHP custom, memory_limit 512M)
-- **Node.js** via Fnm — gestión multi-versión
-- **Bun** — Runtime alternativo de JS/TS
-- **Python 3.13**
-- **Rust** (rustup)
-- **Lua** (luarocks-nix) + luacheck + stylua
-- **SQLite** / **PostgreSQL**
-- **GNU Make 4.2**
-- **Biome** / **Prettierd** / **Blade Formatter** — formateo de código
+Cada píxel está diseñado para ser funcional, consistente y agradable a la vista durante horas frente a la terminal.
 
-### Terminal & Productividad
-- **Neovim** — Editor principal (NixCats + Lua)
-- **Fish** — Shell con modo Vi
-- **Tmux** — Multiplexor de terminal (prefix `Ctrl+t`)
-- **Alacritty** — Terminal GPU-accelerated (sin bordes, Gruvbox)
-- **Starship** — Prompt cross-shell (bloques sólidos)
-- **Fastfetch** — Info del sistema
-- **Bat** — Cat con syntax highlighting
-- **Eza** — Reemplazo moderno de `ls` (iconos, colores)
-- **Fzf** + **Fd** + **Ripgrep** — Búsqueda y filtrado
-- **Delta** — Diff viewer con tema Gruvbox
-- **Lazygit** / **Lazydocker** / **Lazyjournal** / **Lazysql** / **Lazyssh** — Lazysuite TUI
-- **btop** — Monitor de recursos
+### Paleta de colores: Gruvbox Material Oscuro
 
-### Wayland & UI
-- **Hyprland** — Compositor Wayland (configuración modular en Lua)
-- **Waybar** — Barra de estado flotante (CSS personalizado)
-- **Walker** — Application launcher (prefixes, temas)
-- **Hyprlauncher** — Launcher estilo Alfred
-- **Dunst** — Notificaciones (tema Gruvbox Material)
-- **Swaybg** — Wallpaper daemon
-- **Grim** + **Slurp** — Screenshots nativos Wayland
-- **Swappy** — Anotación de capturas
-- **Brightnessctl** — Control de brillo
-- **Hyprlock** — Pantalla de bloqueo
-- **Hypridle** — Daemon de inactividad (auto-lock + DPMS + suspend)
-- **Hyprpicker** — Color picker
-- **Hyprsunset** — Filtro de luz azul nocturna
-- **Cliphist** — Clipboard manager con historial
+```
+Fondo     → #282828 (dark)
+Frente    → #ddc7a1 (warm white)
+Acento    → #7daea3 (teal)
+Rojo      → #ea6962
+Verde     → #a9b665
+Amarillo  → #d8a657
+Magenta   → #d3869b
+Naranja   → #e78a4e
+Gris      → #a89984
+```
 
-### Red & Hardware
-- **IWD** — Daemon WiFi
-- **NetworkManager** applet — Applet GTK para WiFi
-- **Blueman** + **Bluetui** — Bluetooth
-- **Impala** — Gestión de red por TUI
+Elegí Gruvbox Material porque tiene **alto contraste sin ser agresivo**, funciona bien tanto de día como de noche, y mantiene una calidez visual que reduce la fatiga ocular.
 
-### Asistente de Voz
-- **Handy** — Asistente por voz
-- **Whisper** — Modelo de dictado (STT)
-- **whisper-dictation.sh** — Dictado por voz a texto
+### Distribución visual
 
-### Utilidades
-- **ImageMagick** — Procesamiento de imágenes
-- **Jq** — JSON processor
-- **wl-clipboard** — Clipboard Wayland
-- **Lsof** — List open files
-- **Nerd Fonts** (Hack + Symbols-only)
-- **Engram** — Memoria persistente para agentes (build from source, Go patched)
-- **ueberzugpp** / **poppler-utils** / **ffmpegthumbnailer** / **exiftool** — Previews para ranger
+| Componente | Detalle |
+|---|---|
+| **Terminal** | Alacritty sin bordes, 95% opacidad, padding 8px, Hack Nerd Font Mono |
+| **Hyprland** | Bordes teal (`#7daea3`), redondeo 10px, blur 5px/2 passes |
+| **Waybar** | Flotante, bordes redondeados 12px, workspaces con iconos Nerd Font, JetBrainsMono NF |
+| **Tmux** | Gruvbox Material, powerline symbols (), pane-active-border verde |
+| **Dunst** | Notificaciones oscuras con bordes, highlights por urgencia (teal/verde/rojo) |
+| **Starship** | Bloques sólidos segmentados: username → dir → git → nix → cmd_duration |
+| **Fzf** | Colores Gruvbox Material personalizados, layout reverse con borde |
+| **GTK** | Tema adw-gtk3-dark, iconos Papirus, cursores Bibata Modern Classic |
+| **Prompt** | Carácter `➜` verde en éxito, rojo en error |
+
+### Fuentes
+
+- **Hack Nerd Font Mono** — Terminal (Alacritty, Tmux, Neovim)
+- **JetBrainsMono Nerd Font** — Waybar, notificaciones Dunst
+- **Symbols-only Nerd Font** — Iconos adicionales
 
 ---
 
-## Tema & Apariencia
+## 📦 Paquetes Instalados
 
-- **Tema de colores:** Gruvbox Material oscuro (#282828 bg, #ddc7a1 fg, #7daea3 accent)
-- **Fuente principal:** Hack Nerd Font Mono (terminal), JetBrainsMono Nerd Font (barra/notificaciones)
-- **Prompt:** Starship con bloques sólidos segmentados (username → directory → git → nix → cmd_duration)
-- **Terminal:** Alacritty sin bordes, 95% opacidad, padding 8px
-- **Hyprland:** Bordes teal (#7daea3), redondeo 10px, blur activo (5px/2 passes), sombras sutiles
-- **Waybar:** Barra flotante con bordes redondeados (12px), workspaces con iconos Nerd Font
-- **Tmux:** Tema Gruvbox Material con powerline symbols (), pane-active-border verde
-- **Dunst:** Notificaciones oscuras con bordes, highlights por urgencia (teal/verde/rojo)
-- **Fzf:** Colores Gruvbox Material personalizados
-- **GTK:** Tema oscuro (adw-gtk3-dark), iconos gruvbox-plus, cursor Bibata
+Gestionados completamente por Home Manager en `home-manager/home.nix`.
+
+### 🛠️ Desarrollo
+
+| Paquete | Versión / Detalle |
+|---|---|
+| **PHP** | 8.4 con extensions: imagick, gd, pdo_sqlite, pdo_mysql, pdo_pgsql, intl, zip, bcmath, sodium, opcache, redis |
+| **Composer** | Override con PHP custom, memory_limit 512M |
+| **Node.js** | Via Fnm — gestión multi-versión por proyecto |
+| **Bun** | Runtime JS/TS alternativo |
+| **Python** | 3.13 |
+| **Rust** | Via rustup (toolchains múltiples) |
+| **Lua** | Con luarocks, luacheck, stylua |
+| **SQLite / PostgreSQL** | Motores de base de datos locales |
+| **GNU Make** | 4.2 |
+| **Biome / Prettierd / Blade Formatter** | Formateo de código |
+
+### 🖥️ Terminal & Productividad
+
+| Categoría | Paquetes |
+|---|---|
+| **Editor** | Neovim (NixCats + Lua) |
+| **Shell** | Fish, Starship, Fastfetch |
+| **Multiplexor** | Tmux, Tmux Plugin Manager |
+| **Terminal** | Alacritty (GPU-accelerated) |
+| **Herramientas** | Bat, Eza, Fzf, Fd, Ripgrep, Delta |
+| **TUI Suite** | Lazygit, Lazydocker, Lazyjournal, Lazysql, Lazyssh |
+| **Monitor** | btop |
+
+### 🪟 Wayland & UI
+
+| Categoría | Paquetes |
+|---|---|
+| **WM** | Hyprland (config Lua) |
+| **Barra** | Waybar |
+| **Launchers** | Walker, Hyprlauncher |
+| **Notificaciones** | Dunst |
+| **Wallpaper** | Swaybg |
+| **Screenshots** | Grim, Slurp, Swappy |
+| **Bloqueo** | Hyprlock, Hypridle |
+| **Utilidades** | Hyprpicker, Hyprsunset, Cliphist, Brightnessctl |
+
+### 📡 Red & Hardware
+
+| Paquete | Propósito |
+|---|---|
+| IWD | Daemon WiFi |
+| NetworkManager applet | Applet GTK para WiFi |
+| Blueman + Bluetui | Gestión Bluetooth |
+| Adw-gtk3 + Papirus + Bibata | Tema GTK, iconos, cursores |
+
+### 🎙️ Voz & AI
+
+| Paquete | Propósito |
+|---|---|
+| Handy | Asistente por voz local |
+| Whisper | Modelo de dictado STT |
+| `whisper-dictation.sh` | Script de dictado por voz |
+| `handy_ai_processor.py` | Procesador AI local |
+
+### 🧰 Utilidades
+
+| Paquete | Propósito |
+|---|---|
+| ImageMagick | Procesamiento de imágenes |
+| Jq | Procesador JSON |
+| wl-clipboard | Clipboard Wayland |
+| Lsof | Listar archivos abiertos |
+| Nerd Fonts Hack + Symbols-only | Fuentes con iconos |
+| Engram | Memoria persistente para agentes AI (build from source) |
+| ueberzugpp / poppler-utils / ffmpegthumbnailer / exiftool | Previews para Ranger |
 
 ---
 
-## Atajos de Teclado
+## ⌨️ Atajos de Teclado
 
-### Hyprland (Window Manager)
+### 🪟 Hyprland (Window Manager)
+
+#### Navegación y ventanas
 
 | Atajo | Acción |
 |---|---|
-| `SUPER + Return` | Abrir terminal (Alacritty) |
-| `SUPER + F` | Abrir gestor de archivos (nautilus) |
-| `ALT + Space` | Launcher (hyprlauncher) |
+| `SUPER + Return` | Abrir terminal (Alacritty → Tmux) |
+| `SUPER + F` | Abrir gestor de archivos |
+| `ALT + Space` | Launcher secundario (Hyprlauncher) |
 | `SUPER + Q` | Cerrar sesión de Hyprland |
 | `SUPER + W` | Cerrar ventana activa |
 | `SUPER + M` | Toggle fullscreen |
-| `SUPER + SHIFT + M` | Toggle flotante |
-| `SUPER + H/J/K/L` | Moverse entre ventanas (Vim) |
-| `SUPER + SHIFT + H/J/K/L` | Intercambiar ventanas |
-| `SUPER + SHIFT + ←/↑/↓/→` | Redimensionar ventanas |
+| `SUPER + SHIFT + M` | Toggle ventana flotante |
+| `SUPER + H / J / K / L` | Moverse entre ventanas (estilo Vim) |
+| `SUPER + SHIFT + H / J / K / L` | Intercambiar ventanas |
+| `SUPER + SHIFT + ←↑↓→` | Redimensionar ventanas (10px) |
 | `SUPER + mouse:272` | Arrastrar ventana |
 | `SUPER + mouse:273` | Redimensionar ventana |
+
+#### Workspaces
+
+| Atajo | Acción |
+|---|---|
 | `SUPER + 1-4` | Ir al workspace 1-4 |
-| `SUPER + SHIFT + 1-4` | Mover ventana al workspace 1-4 |
-| `SUPER + [ / ]` | Workspace anterior / siguiente |
-| `SUPER + SHIFT + [ / ]` | Mover ventana al workspace ant/sig |
-| `SUPER + minus` | Toggle scratchpad (workspace especial) |
+| `SUPER + SHIFT + 1-4` | Mover ventana al workspace |
+| `SUPER + [` / `SUPER + ]` | Workspace anterior / siguiente |
+| `SUPER + SHIFT + [` / `SUPER + SHIFT + ]` | Mover ventana al workspace ant/sig |
+| `SUPER + minus` | Toggle scratchpad |
 | `SUPER + SHIFT + minus` | Mover ventana al scratchpad |
-| `SUPER + SHIFT + R` | Recargar configuración |
-| `SUPER + G` / `SUPER + Tab` | Grupos de ventanas (tabs) |
-| `SUPER + Escape` | Entrar al modo sistema (submap) |
-| `— L / S / R / P` | (dentro del modo) Lock / Suspend / Reboot / Poweroff |
-| `SUPER + N` | Menú WiFi |
-| `SUPER + B` | Menú Bluetooth |
+
+#### Grupos de ventanas (tabs)
+
+| Atajo | Acción |
+|---|---|
+| `SUPER + G` | Toggle grupo |
+| `SUPER + SHIFT + G` | Lock grupo |
+| `SUPER + Tab` | Siguiente grupo |
+| `SUPER + SHIFT + Tab` | Grupo anterior |
+
+#### Herramientas y apps
+
+| Atajo | Acción |
+|---|---|
+| `SUPER + SHIFT + S` | Captura de pantalla (grim + slurp) |
+| `SUPER + N` | Menú WiFi (nmtui) |
+| `SUPER + B` | Menú Bluetooth (bluetui) |
 | `SUPER + P` | Selector de wallpaper |
-| `Print` / `Scroll_Lock` | Notificaciones: pop / close |
-| `SUPER + SHIFT + S` | Captura de pantalla |
-| `SUPER + slash` | Menú de atajos de teclado |
+| `SUPER + Escape` | Menú de sistema (sysmenu.sh) |
+| `SUPER + /` | Menú de atajos (keybinds_menu.sh) |
 | `SUPER + SHIFT + P` | Gestor de paquetes |
+| `PRINT` | Dunstctl history-pop |
+| `SCROLL_LOCK` | Dunstctl close |
+| `SUPER + SHIFT + N` | Historial de notificaciones |
+| `SUPER + SHIFT + D` | Toggle "no molestar" (dunst pause) |
+
+#### Control por voz
+
+| Atajo | Acción |
+|---|---|
 | `SUPER + C` (press) | Activar control por voz |
 | `SUPER + C` (release) | Desactivar control por voz |
-| `XF86AudioRaise/Lower` | Volumen ±5% (con repetición) |
+| `ALT + I` | Handy voice setup (normal) |
+| `ALT + SHIFT + I` | Handy voice setup (AI) |
+
+#### Multimedia
+
+| Atajo | Acción |
+|---|---|
+| `XF86AudioRaiseVolume` | Volumen +5% (con repetición) |
+| `XF86AudioLowerVolume` | Volumen -5% (con repetición) |
 | `XF86AudioMute` | Silenciar audio |
 | `XF86AudioMicMute` | Silenciar micrófono |
-| `XF86MonBrightnessUp/Down` | Brillo ±5% (con repetición) |
-| `SUPER + SHIFT + D` | Toggle "no molestar" (dunst) |
+| `XF86MonBrightnessUp` | Brillo +5% (con repetición) |
+| `XF86MonBrightnessDown` | Brillo -5% (con repetición) |
+
+#### Sistema
+
+| Atajo | Acción |
+|---|---|
+| `SUPER + SHIFT + Escape` | Bloquear pantalla (hyprlock) |
+| `SUPER + SHIFT + R` | Recargar configuración Hyprland |
 | `SUPER + SHIFT + N` | Night light toggle (hyprsunset) |
 
-### Tmux (prefix: `Ctrl+t`)
+### 🔲 Tmux (prefix: `Ctrl+t`)
 
 | Atajo | Acción |
 |---|---|
@@ -278,73 +450,155 @@ dotfiles/
 | `prefix + o` | Abrir directorio en gestor de archivos |
 | `prefix + e` | Cerrar paneles excepto el activo |
 
-### Fish Shell
+### 🐟 Fish Shell
 
 | Atajo | Acción |
 |---|---|
 | Modo Vi | Navegación y edición estilo Vim |
-| `Ctrl+r` | Búsqueda en historial (fzf) |
+| `Ctrl + r` | Búsqueda en historial (fzf) |
 
-### Neovim
+### ✏️ Neovim (referencia rápida)
 
 | Atajo | Acción |
 |---|---|
-| `leader + ff` | Telescope fuzzy finder |
-| `leader + fe` | Explorador de archivos (Oil) |
-| `leader + sg` | Búsqueda global (grep) |
-| `leader + tt` | Toggle terminal |
-| `leader + gc` | Git commit |
-| `leader + gd` | Diffview |
-| `leader + ca` | Code actions (LSP) |
+| `<leader> + ff` | Telescope fuzzy finder |
+| `<leader> + fe` | Explorador de archivos (Oil) |
+| `<leader> + sg` | Búsqueda global (grep) |
+| `<leader> + tt` | Toggle terminal |
+| `<leader> + gc` | Git commit |
+| `<leader> + gd` | Diffview |
+| `<leader> + ca` | Code actions (LSP) |
 | `K` | Hover documentation (LSP) |
 | `gd` | Go to definition (LSP) |
 
----
-
-## Scripts Personalizados
-
-Todos los scripts están en `~/.dotfiles/scripts/` y usan el namespace `org.omarchy.*` para identificarse como ventanas flotantes en Hyprland:
-
-| Script | Class (org.omarchy.*) | Descripción |
-|---|---|---|
-| `wifi_menu.sh` | `wifi` | Menú WiFi con nmtui (flotante 700×450) |
-| `bluetooth_menu.sh` | `bluetui` | Menú Bluetooth con bluetui (flotante 700×450) |
-| `package_manager.sh` | `package-manager` | Busca/instala paquetes (flotante 900×600) |
-| `keybinds_menu.sh` | `keybinds-menu` | Muestra atajos de teclado (flotante 700×500) |
-| `screenshot.sh` | `screenshot` | Captura con grim + slurp (flotante 700×450) |
-| `wallpaper_picker.sh` | `wallpaper-picker` | Selecciona wallpaper con fzf + swaybg (flotante 800×600) |
-| `btop_menu.sh` | `btop` | Monitor de recursos (flotante 900×600) |
-| `sysmenu.sh` | `sysmenu` | Menú de sistema: apagar, reiniciar, suspender (flotante 350×220) |
+> Para la lista completa de atajos de Neovim, consulta `nvim/AGENTS.md`.
 
 ---
 
-## Scripts Adicionales
+## 📜 Scripts Personalizados
+
+### 🏛️ Patrón Omarchy
+
+Todos los scripts que abren una terminal como ventana flotante usan el namespace **`org.omarchy.*`**. Hyprland detecta estas clases en `windowrules.lua` y las pone automáticamente en modo flotante, centradas y con el tamaño adecuado.
+
+Esto permite que los scripts lancen Alacritty como si fueran aplicaciones nativas, pero manteniendo toda la flexibilidad de la terminal.
+
+### Los 8 scripts Omarchy
+
+| Clase (org.omarchy.*) | Script | Descripción | Tamaño flotante |
+|---|---|---|---|
+| `wifi` | `wifi_menu.sh` | Menú WiFi con nmtui | 700×450 |
+| `bluetui` | `bluetooth_menu.sh` | Gestión Bluetooth con bluetui | 700×450 |
+| `package-manager` | `package_manager.sh` | Busca/instala paquetes | 900×600 |
+| `keybinds-menu` | `keybinds_menu.sh` | Muestra atajos de teclado | 700×500 |
+| `screenshot` | `screenshot.sh` | Captura con grim + slurp | 700×450 |
+| `wallpaper-picker` | `wallpaper_picker.sh` | Selecciona wallpaper con fzf + swaybg | 800×600 |
+| `btop` | `btop_menu.sh` | Monitor de recursos | 900×600 |
+| `sysmenu` | `sysmenu.sh` | Menú del sistema (apagar, reiniciar, etc.) | 350×220 |
+
+### Scripts adicionales
 
 | Script | Descripción |
 |---|---|
-| `wallpaper_carousel.sh` | Rota wallpapers automáticamente cada N tiempo |
-| `voice_control.sh` | Control por voz (Handy) — start/stop |
-| `handy_voice_setup.sh` | Configuración del asistente Handy (normal/AI) |
-| `whisper-dictation.sh` | Dictado por voz usando Whisper |
-| `ranger_scope.sh` | Previsualizaciones para ranger |
+| `wallpaper_carousel.sh` | Rota wallpapers automáticamente cada N minutos |
+| `voice_control.sh` | Inicia/para el control por voz (Handy) |
+| `handy_voice_setup.sh` | Configuración del asistente Handy (modo normal o AI) |
+| `handy_ai_processor.py` | Procesador AI del asistente Handy |
+| `handy_ai_processor.sh` | Shell wrapper del procesador AI |
+| `voice_control_handy.sh` | Proxy de control por voz Handy |
+| `whisper-dictation.sh` | Dictado por voz usando Whisper STT |
+| `ranger_scope.sh` | Previsualizaciones avanzadas para Ranger |
 
 ---
 
-## Notas
+## 🖼️ Galería
 
-- **Nix + Home Manager** es la espina dorsal. Un solo comando (`uhm`) despliega toda la configuración.
-- **El alias `uhm`** (definido en `.bashrc`) equivale a: `home-manager switch -b backup --impure --flake ~/.dotfiles/home-manager#alejandrocabeza`
-- **La configuración de PHP** incluye un memory limit de 512M y extensiones comunes para Laravel.
-- **Engram** se compila desde source con un patch para Go 1.25.
-- **Fish** detecta si está en Warp Terminal y desactiva fastfetch/starship para evitar conflictos.
-- **Los keybindings de Tmux** usan `Ctrl+t` como prefix (en lugar de `Ctrl+b`).
-- **Todo el clipboard** está configurado para Wayland (wl-copy, cliphist).
-- **El patrón Omarchy**: los scripts de terminal usan `--class org.omarchy.*` para que Hyprland los reconozca y los ponga en modo flotante automáticamente.
-- **El README.md** puede quedar desactualizado. La fuente de verdad es `AGENTS.md` para convenciones y el código fuente para implementación.
-- **Neovim** tiene su propia guía en `nvim/AGENTS.md`.
+*(Aquí van las capturas de pantalla — próximamente)*
+
+<details>
+<summary>🖥️ Vista del escritorio</summary>
+
+<!-- ![Desktop](screenshots/desktop.png) -->
+<!-- ![Neovim](screenshots/neovim.png) -->
+<!-- ![Waybar](screenshots/waybar.png) -->
+
+</details>
+
+<details>
+<summary>📸 Capturas pendientes</summary>
+
+- [ ] Escritorio completo con Hyprland + Waybar
+- [ ] Neovim con varios buffers
+- [ ] Walker launcher en acción
+- [ ] Tmux con paneles múltiples
+- [ ] Menú Omarchy (sysmenu)
+- [ ] Dunst notificaciones
+
+</details>
 
 ---
 
-## Licencia
+## 📝 Notas
 
-MIT — Haz lo que quieras con esto. Si te sirve, me alegra. 🇻🇪
+### Arquitectura y decisiones
+
+- **`uhm` es el corazón del sistema** — sin él, los cambios no toman efecto. Siempre ejecutar después de modificar configuraciones.
+- **El patrón Omarchy es brillante en su simplicidad**: los scripts no necesitan saber que son flotantes. Solo lanzan Alacritty con `--class org.omarchy.*` y Hyprland hace el resto.
+- **Fish detecta Warp Terminal** y desactiva fastfetch/starship para evitar conflictos si estás en ese entorno.
+- **Engram** (memoria persistente para agentes) se compila desde source con un patch para Go 1.25.
+- **Todo el clipboard** está configurado para Wayland nativo — wl-copy + cliphist.
+- **PHP tiene memory_limit 512M** y extensiones optimizadas para Laravel.
+- **Tmux usa `Ctrl+t`** como prefix (en lugar de `Ctrl+b`), liberando `Ctrl+b` para scroll nativo.
+
+### Archivos no linkeados aún
+
+Los siguientes directorios existen pero **no están en `home.nix`** — necesitan ser añadidos a `home.file`:
+
+| Directorio | Estado |
+|---|---|
+| `dunst/` | ✅ Ahora linkeado |
+| `gtk-3.0/` | ✅ Ahora linkeado |
+| `gtk-4.0/` | ✅ Ahora linkeado |
+| `swappy/` | ✅ Ahora linkeado |
+| `walker/` | ✅ Ahora linkeado |
+| `tmux/` | ✅ Linkeado |
+| `fish/` | ✅ Linkeado |
+| `ranger/` | ✅ Linkeado |
+| `lazygit/` | ✅ Linkeado |
+| `opencode/` | ✅ Linkeado |
+
+### Ambiente de desarrollo
+
+Este entorno está diseñado para desarrollo **Back-End** (PHP, Laravel, Node.js, Python, Rust) pero es perfectamente usable para cualquier tipo de trabajo en terminal. El LAMP stack en Docker (`utils/lamp/`) incluye Apache + MySQL + PHPMyAdmin para desarrollo web tradicional.
+
+---
+
+## 🤝 Contribuir / Fork
+
+¿Te gusta algo de esto? ¡Adelante!
+
+1. **Haz fork** del repositorio
+2. **Cambia las referencias personales** (`alejandrocabeza` → tu usuario, rutas absolutas en scripts)
+3. **Ajusta el flake** en `home-manager/flake.nix` para tu username
+4. **Ejecuta `uhm`** y disfruta
+
+Si encuentras bugs, mejoras, o ideas, abre un issue o PR. Toda contribución es bienvenida.
+
+### Convenciones del proyecto
+
+- **Commits**: Conventional Commits (`feat:`, `fix:`, `docs:`, `refactor:`, etc.)
+- **Rama por defecto**: `Master`
+- **Idioma**: Español (código, commits, documentación)
+- **Para agentes OpenCode**: La fuente de verdad es `AGENTS.md` y el código fuente
+
+---
+
+## 📄 Licencia
+
+**MIT** — Haz lo que quieras con esto. Si te sirve, me alegra. Si lo mejoras, compártelo. 🇻🇪
+
+---
+
+<p align="center">
+  <sub>Hecho con ☕, Nix y mucha paciencia • Alejandro Cabeza • 2025</sub>
+</p>
