@@ -205,9 +205,9 @@ apply_theme() {
     # ============================================================
     echo "$theme_id" > "$STATE_FILE"
 
-    notify-send "Theme Switcher" "Tema aplicado: $theme_name
+    notify-send "Theme Switcher" "✓ Tema aplicado: $theme_name
 
-⚠️  Ejecuta 'uhm' para hacer los cambios permanentes." -u low
+Los cambios ya están activos. Para hacerlos permanentes tras reinicio, ejecuta: uhm" -u low
 }
 
 # --- Main ---
