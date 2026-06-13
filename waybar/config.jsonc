@@ -15,7 +15,6 @@
 
     "hyprland/workspaces": {
         "format": "{icon}",
-        "on-click": "activate",
         "format-icons": {
             "1": "󰎯",
             "2": "󰎲",
@@ -32,7 +31,8 @@
         "persistent-workspaces": {
             "*": 4
         },
-        "all-outputs": false
+        "all-outputs": false,
+        "move-to-monitor": true
     },
 
     "hyprland/window": {
