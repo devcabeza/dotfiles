@@ -9,5 +9,6 @@ hl.config({
         hotspot_padding = 2,
         min_refresh_rate = 24,
         sync_gsettings_theme = true,
+        hide_on_key_press = true,
     },
 })

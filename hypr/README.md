@@ -109,23 +109,23 @@ hypr/
 | Módulo | Archivo | Propósito |
 |--------|---------|-----------|
 | **monitors** | `monitors.lua` | Configuración de monitores: resolución 1920×1080@60, escala 1x, posición 0x0 |
-| **input** | `input.lua` | Teclado: layout `us` variante `altgr-intl`, compose:menu, terminate_ctrl_alt_bksp. Touchpad: natural_scroll desactivado |
+| **input** | `input.lua` | Teclado: layout `us` variante `altgr-intl`, compose:menu, terminate_ctrl_alt_bksp, repeat_rate=40, repeat_delay=250, numlock_by_default. Touchpad: natural_scroll desactivado, clickfinger_behavior, scroll_factor=0.4 |
 
 ### 🎨 Apariencia Visual
 
 | Módulo | Archivo | Propósito |
 |--------|---------|-----------|
-| **general** | `general.lua` | Gaps (5px internos, 10px externos), bordes 2px teal `#7daea3`, layout dwindle, preserve_split |
-| **decorations** | `decorations.lua` | Redondeo 10px, opacidad (activa 1.0, inactiva 0.92), blur 5px/2 passes, sombras suaves `#1a1a1aee` |
+| **general** | `general.lua` | Gaps (5px internos, 10px externos), bordes 2px teal `#7daea3`, layout dwindle, preserve_split, resize_on_border=false, force_split |
+| **decorations** | `decorations.lua` | Redondeo 10px, opacidad (activa 1.0, inactiva 0.92), blur 5px/2 passes, sombras suaves `#1a1a1aee`, groupbar visual personalizado |
 | **animations** | `animations.lua` | 10 hojas de animación, curva bezier personalizada `myBezier(0.05,0.9,0.1,1.05)`, popin 80% en salidas |
-| **cursor** | `cursor.lua` | Sin hardware cursors, timeout 5s inactive, sync gsettings, hotspot_padding 2. Tema Bibata vía env vars |
+| **cursor** | `cursor.lua` | Sin hardware cursors, timeout 5s inactive, hide_on_key_press, sync gsettings, hotspot_padding 2. Tema Bibata vía env vars |
 
 ### 🎭 Comportamiento & UX
 
 | Módulo | Archivo | Propósito |
 |--------|---------|-----------|
 | **gestures** | `gestures.lua` | Swipe de 3 dedos entre workspaces, distance 300px, direction lock, creación automática de nuevos workspaces |
-| **misc** | `misc.lua` | Sin logo ni splash de Hyprland, VRR desactivado, DPMS al mover mouse o teclear, background `#1D2021`, close_special_on_empty |
+| **misc** | `misc.lua` | Sin logo, splash ni scale_notification, VRR desactivado, DPMS, background `#1D2021`, focus_on_activate, anr_missed_pings=3, close_special_on_empty, hide_special_workspace |
 
 ### ⚡ Render & GPU
 
@@ -145,14 +145,14 @@ hypr/
 
 | Módulo | Archivo | Propósito |
 |--------|---------|-----------|
-| **windowrules** | `windowrules.lua` | 20 reglas: apps Omarchy flotantes, asignación a workspaces (Firefox→1, Alacritty→2, VS Code→3) |
+| **windowrules** | `windowrules.lua` | 22 reglas: apps Omarchy flotantes, asignación a workspaces (Firefox→1, Alacritty→2, VS Code→3), suppress_event, XWayland fix |
 | **layerrules** | `layerrules.lua` | Blur en waybar, notificaciones (dunst) y gtk-layer-shell. Sin blur en hyprlauncher para máxima legibilidad |
 
 ### 🚀 Servicios & Atajos
 
 | Módulo | Archivo | Propósito |
 |--------|---------|-----------|
-| **autostart** | `autostart.lua` | Servicios que arrancan con Hyprland: dbus, hyprlauncher, swaybg, waybar, handy, dunst, hyprpolkitagent |
+| **autostart** | `autostart.lua` | Servicios que arrancan con Hyprland: dbus, systemd env import, hyprlauncher, swaybg, waybar, handy, dunst, hyprpolkitagent |
 | **binds** | `binds.lua` | ~40 keybindings: apps, navegación, workspaces, multimedia, sistema, grupos |
 
 ---
@@ -174,6 +174,7 @@ Sombra    → #1a1a1aee    Background → #1D2021
 | **Gaps internos** | 5px | Espacio entre ventanas |
 | **Gaps externos** | 10px | Margen al borde del monitor |
 | **Borde activo** | 2px, `#7daea3` | Teal Gruvbox |
+| **Borde grupo** | `#7daea3` / `#504945` | Mismos colores en groupbar de tabs |
 | **Borde inactivo** | 2px, `#504945` | Gris oscuro |
 | **Redondeo** | 10px | Esquinas suaves en ventanas |
 | **Opacidad activa** | 1.0 | 100% |
@@ -182,6 +183,8 @@ Sombra    → #1a1a1aee    Background → #1D2021
 | **Sombras** | offset 3×3, range 4 | Sutil profundidad |
 | **Layout** | Dwindle | Dividido recursivo |
 | **Sin gaps when only** | ✅ | Una ventana ocupa toda la pantalla |
+| **Groupbar** | height=20, font_size=10 | Barra visual con colores en grupos de ventanas |
+| **Resize on border** | Desactivado | Evita redimensionar ventanas al arrastrar el borde accidentalmente |
 
 ### Animaciones
 
@@ -208,7 +211,7 @@ hl.curve("myBezier", { type = "bezier", points = { {0.05, 0.9}, {0.1, 1.05} } })
 
 ## 🪟 Window Rules & Layer Rules
 
-### Window Rules (20 reglas en `windowrules.lua`)
+### Window Rules (22 reglas en `windowrules.lua`)
 
 Todas las apps **Omarchy** flotan automáticamente con tamaño y centrado predefinido:
 
@@ -232,6 +235,14 @@ Además, flotan automáticamente: `pavucontrol`, `org.gnome.Calculator` (galcula
 | `firefox` (excepto PiP) | 1 |
 | `Alacritty` | 2 |
 | `code-oss` / `Code` | 3 |
+
+
+**Reglas de sistema:**
+
+| Regla | Propósito |
+|-------|-----------|
+| `suppress_event = "maximize"` | Evita comportamientos erráticos en apps al maximizar |
+| `no_focus` en XWayland vacías | Ignora ventanas XWayland sin clase/título que aparecen al conectar monitores |
 
 ### Layer Rules (4 reglas en `layerrules.lua`)
 
@@ -290,6 +301,8 @@ Además, flotan automáticamente: `pavucontrol`, `org.gnome.Calculator` (galcula
 | `SUPER + click derecho` | Redimensionar ventana |
 
 ### Grupos de Ventanas (Tabs)
+
+Los grupos permiten agrupar ventanas como pestañas (tabs). Al agrupar, aparece un **groupbar** visual en la parte superior con el nombre de las ventanas y colores Gruvbox Material.
 
 | Atajo | Acción |
 |-------|--------|
@@ -360,6 +373,7 @@ Al iniciar Hyprland, `autostart.lua` ejecuta en orden:
 | Servicio | Propósito |
 |----------|-----------|
 | `dbus-update-activation-environment` | Propagar variables Wayland a systemd |
+| `systemctl import-environment` | Propaga todas las variables de entorno a systemd (evita apps lentas al iniciar) |
 | `hyprlauncher -d` | Daemon del launcher secundario (sin ventana) |
 | `swaybg` | Wallpaper inicial (primera imagen del directorio) |
 | `wallpaper_carousel.sh` | Carrusel automático de wallpapers |

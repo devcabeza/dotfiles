@@ -129,3 +129,26 @@ hl.window_rule({
     match = { class = "^Code$" },
     workspace = 3,
 })
+
+-- ============================
+-- Reglas de sistema (estilo Omarchy)
+-- ============================
+
+-- Suprimir maximize event para evitar comportamientos erráticos en apps
+hl.window_rule({
+    match = { class = ".*" },
+    suppress_event = "maximize",
+})
+
+-- Fix XWayland: evitar foco en ventanas sin clase/título (ventanas fantasma)
+hl.window_rule({
+    match = {
+        class = "^$",
+        title = "^$",
+        xwayland = 1,
+        floating = 1,
+        fullscreen = 0,
+        pinned = 0,
+    },
+    no_focus = true,
+})

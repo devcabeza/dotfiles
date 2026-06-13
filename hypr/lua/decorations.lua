@@ -36,3 +36,30 @@ hl.config({
         },
     },
 })
+
+-- Groupbar (tabs visuales para ventanas agrupadas)
+-- Colores Gruvbox Material
+hl.config({
+    group = {
+        col = {
+            border_active = "rgba(7daea3ff)",
+            border_inactive = "rgba(504945aa)",
+        },
+        groupbar = {
+            font_size = 10,
+            font_family = "monospace",
+            height = 20,
+            gaps_in = 3,
+            gaps_out = 0,
+            text_color = "rgba(ddc7a1ff)",
+            text_color_inactive = "rgba(ddc7a190)",
+            col = {
+                active = "rgba(282828ee)",
+                inactive = "rgba(28282866)",
+            },
+            gradients = true,
+            indicator_height = 0,
+            indicator_gap = 5,
+        },
+    },
+})
