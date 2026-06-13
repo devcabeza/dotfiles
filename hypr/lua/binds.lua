@@ -8,7 +8,7 @@ local m = _G.hypr
 -- ============================
 hl.bind(m.mainMod .. " + F",        hl.dsp.exec_cmd(m.filemanager))
 hl.bind(m.altMod .. " + SPACE",     hl.dsp.exec_cmd("hyprlauncher --dmenu"))
-hl.bind(m.mainMod .. " + SPACE",     hl.dsp.exec_cmd("hyprlauncher --dmenu"))
+hl.bind(m.mainMod .. " + SPACE",     hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/sysmenu.sh"))
 hl.bind(m.altMod .. " + I",         hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/handy_voice_setup.sh normal"))
 hl.bind(m.altMod .. " + SHIFT + I", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/handy_voice_setup.sh ai"))
 hl.bind(m.mainMod .. " + RETURN",   hl.dsp.exec_cmd(m.terminal))
