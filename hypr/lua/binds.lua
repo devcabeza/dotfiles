@@ -62,6 +62,19 @@ hl.bind(m.mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("dunstctl history"))
 hl.bind(m.mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/screenshot.sh"))
 
 -- ============================
+-- Screen recording & OCR
+-- ============================
+hl.bind(m.mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/screenrecord.sh"))
+hl.bind(m.mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/text_extraction.sh"))
+
+-- ============================
+-- Audio & Ventanas
+-- ============================
+hl.bind(m.mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/audio_output_switch.sh"))
+hl.bind(m.mainMod .. " + ALT + G",   hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/gaps_toggle.sh"))
+hl.bind(m.mainMod .. " + ALT + W",   hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/close_all_windows.sh"))
+
+-- ============================
 -- Multimedia (Audio)
 -- ============================
 hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })

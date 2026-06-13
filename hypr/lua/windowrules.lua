@@ -58,6 +58,44 @@ hl.window_rule({
 })
 
 -- ============================
+-- Nuevos scripts estilo Omarchy
+-- ============================
+hl.window_rule({
+    match = { class = "^org\\.omarchy\\.text-extraction$" },
+    float = true,
+    size = { 700, 450 },
+    center = true,
+})
+
+hl.window_rule({
+    match = { class = "^org\\.omarchy\\.audio-output$" },
+    float = true,
+    size = { 500, 300 },
+    center = true,
+})
+
+hl.window_rule({
+    match = { class = "^org\\.omarchy\\.screenrecord$" },
+    float = true,
+    size = { 700, 450 },
+    center = true,
+})
+
+hl.window_rule({
+    match = { class = "^org\\.omarchy\\.gaps-toggle$" },
+    float = true,
+    size = { 400, 200 },
+    center = true,
+})
+
+hl.window_rule({
+    match = { class = "^org\\.omarchy\\.close-all$" },
+    float = true,
+    size = { 400, 200 },
+    center = true,
+})
+
+-- ============================
 -- Apps comunes que deben flotar
 -- ============================
 hl.window_rule({

@@ -26,6 +26,11 @@ Cada script Omarchy usa el namespace `org.omarchy.<nombre>` como clase de ventan
 | wallpaper_picker.sh | `org.omarchy.wallpaper-picker` | 800×600 |
 | btop_menu.sh | `org.omarchy.btop` | 900×600 |
 | sysmenu.sh | `org.omarchy.sysmenu` | 350×220 |
+| text_extraction.sh | `org.omarchy.text-extraction` | 700×450 |
+| audio_output_switch.sh | `org.omarchy.audio-output` | 500×300 |
+| screenrecord.sh | `org.omarchy.screenrecord` | 700×450 |
+| gaps_toggle.sh | `org.omarchy.gaps-toggle` | 400×200 |
+| close_all_windows.sh | `org.omarchy.close-all` | 400×200 |
 
 ### Cómo crear un nuevo script Omarchy
 
@@ -68,10 +73,15 @@ Cada script Omarchy usa el namespace `org.omarchy.<nombre>` como clase de ventan
 | `org.omarchy.bluetui` — `bluetooth_menu.sh` | Gestión Bluetooth (bluetui) | `SUPER + B` | bluetui |
 | `org.omarchy.package-manager` — `package_manager.sh` | Buscar e instalar paquetes Nix (fzf) | `SUPER + SHIFT + P` | nix, fzf |
 | `org.omarchy.keybinds-menu` — `keybinds_menu.sh` | Mostrar atajos de teclado | `SUPER + /` | — |
-| `org.omarchy.screenshot` — `screenshot.sh` | Captura de pantalla (grim + slurp + swappy) | `SUPER + SHIFT + S` | grim, slurp, swappy, wl-clipboard |
+| `org.omarchy.screenshot` — `screenshot.sh` | Captura de pantalla smart (grim + slurp + swappy) | `SUPER + SHIFT + S` | grim, slurp, swappy, wl-clipboard, hyprpicker |
 | `org.omarchy.wallpaper-picker` — `wallpaper_picker.sh` | Selector de wallpapers (fzf + swaybg) | `SUPER + P` | fzf, swaybg, killall |
 | `org.omarchy.btop` — `btop_menu.sh` | Monitor de recursos (btop) | — | btop |
 | `org.omarchy.sysmenu` — `sysmenu.sh` | Menú de sistema (lock, suspend, reboot, poweroff) | `SUPER + Escape` | hyprlock, systemd |
+| `org.omarchy.text-extraction` — `text_extraction.sh` | OCR de pantalla (tesseract + grim + slurp) | `SUPER + SHIFT + T` | grim, slurp, tesseract, wl-clipboard |
+| `org.omarchy.screenrecord` — `screenrecord.sh` | Grabación de pantalla (wf-recorder) | `SUPER + SHIFT + R` | wf-recorder, slurp, hyprpicker |
+| `org.omarchy.audio-output` — `audio_output_switch.sh` | Cambiar entre salidas de audio | `SUPER + SHIFT + A` | pactl, wpctl, jq |
+| `org.omarchy.gaps-toggle` — `gaps_toggle.sh` | Quitar/restaurar gaps entre ventanas | `SUPER + ALT + G` | hyprctl |
+| `org.omarchy.close-all` — `close_all_windows.sh` | Cerrar todas las ventanas del workspace | `SUPER + ALT + W` | hyprctl, jq |
 | — `wallpaper_carousel.sh` | Carrusel automático de wallpapers (~30 min) | *(autostart)* | swaybg, coreutils |
 | — `voice_control.sh` | Iniciar/detener Handy (control por voz) | `SUPER + C` (start/release stop) | handy |
 | — `voice_control_handy.sh` | Proxy de voz para Handy | — | handy |
@@ -101,6 +111,9 @@ Cada script Omarchy usa el namespace `org.omarchy.<nombre>` como clase de ventan
 | `handy` | Asistente de voz |
 | `whisper.cpp` | Speech-to-text local |
 | `ffmpegthumbnailer` | Miniaturas de vídeo (Ranger) |
+| `tesseract` | OCR para extracción de texto de pantalla |
+| `wf-recorder` | Grabación de pantalla en Wayland |
+| `ffmpeg` | Procesamiento de vídeo (screen recording) |
 | `pandoc` | Previsualización de documentos (Ranger) |
 
 ---

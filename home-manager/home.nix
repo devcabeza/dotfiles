@@ -137,6 +137,12 @@ in
     pkgs.hyprsunset
     pkgs.cliphist
     pkgs.swappy
+
+    # Omarchy-style scripts dependencies
+    pkgs.tesseract
+    pkgs.wf-recorder
+    pkgs.ffmpeg
+
     pkgs.bibata-cursors
 
     # GTK theme support
