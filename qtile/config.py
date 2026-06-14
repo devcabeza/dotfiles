@@ -39,6 +39,7 @@ C = {
     "bg0_h":         "#1d2021",
     "bg0_s":         "#32302f",
     "fg":            "#ddc7a1",
+    "fg_dim":        "#bdae93",
     "accent":        "#7daea3",
     "border_off":    "#504945",
     "red":           "#ea6962",
