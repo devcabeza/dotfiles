@@ -212,16 +212,16 @@ apply_solo_externo() {
                 error_no_external
                 return 1
             fi
-            # Apagar laptop
+            # PRIMERO encender externo (laptop aún encendido como respaldo)
+            if ! configure_output_wlr "$external" "on"; then
+                notify "critical" "Monitor" "❌ Error al configurar $external"
+                return 1
+            fi
+            # LUEGO apagar laptop
             local laptop
             laptop=$(get_outputs_wlr | grep -i 'eDP' | head -1)
             if [ -n "$laptop" ]; then
                 configure_output_wlr "$laptop" "off" || true
-            fi
-            # Encender externo
-            if ! configure_output_wlr "$external" "on"; then
-                notify "critical" "Monitor" "❌ Error al configurar $external"
-                return 1
             fi
             ;;
         x11)
