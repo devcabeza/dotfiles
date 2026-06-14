@@ -78,17 +78,28 @@ get_outputs_xrandr() {
     xrandr 2>/dev/null | grep ' connected' | awk '{print $1}'
 }
 
-get_external() {
-    local outputs
-    case "$BACKEND" in
-        wayland-wlr) outputs=$(get_outputs_wlr) ;;
-        x11) outputs=$(get_outputs_xrandr) ;;
-        *) return 1 ;;
-    esac
+# Obtiene el modo actual (resolución@refresco) para un output en wlr-randr.
+# Ejemplo de output de wlr-randr:
+#   DP-1 "Monitor" (connected)
+#     1920x1080@60.000 Hz (preferred, current)
+# Esta función devuelve: 1920x1080@60
+get_mode_wlr() {
+    local output="$1"
+    wlr-randr 2>/dev/null | grep -A10 "^${output}" | grep -oP '\d+x\d+@\d+' | head -1
+}
 
-    for name in "$outputs"; do
-        printf '%s\n' "$name"
-    done | grep -v -i 'eDP' | head -1 || echo ""
+get_external() {
+    case "$BACKEND" in
+        wayland-wlr)
+            get_outputs_wlr | grep -v -i 'eDP' | head -1 || echo ""
+            ;;
+        x11)
+            get_outputs_xrandr | grep -v -i 'eDP' | head -1 || echo ""
+            ;;
+        *)
+            echo ""
+            ;;
+    esac
 }
 
 error_no_external() {
@@ -107,11 +118,12 @@ apply_solo_laptop() {
                     wlr-randr --output "$out" --off 2>/dev/null || true
                 fi
             done
-            # Asegurar que eDP esté encendido
-            local laptop
+            local laptop mode
             laptop=$(get_outputs_wlr | grep -i 'eDP' | head -1)
             if [ -n "$laptop" ]; then
-                wlr-randr --output "$laptop" --on --mode preferred 2>/dev/null || true
+                mode=$(get_mode_wlr "$laptop")
+                [ -z "$mode" ] && mode="1920x1080@60"
+                wlr-randr --output "$laptop" --on --mode "$mode" 2>/dev/null || true
             fi
             ;;
         x11)
@@ -135,10 +147,9 @@ apply_solo_laptop() {
 }
 
 apply_solo_externo() {
-    local external
     case "$BACKEND" in
         wayland-wlr)
-            external=$(get_outputs_wlr | grep -v -i 'eDP' | head -1)
+            external=$(get_external)
             if [ -z "$external" ]; then
                 error_no_external
                 return 1
@@ -146,22 +157,32 @@ apply_solo_externo() {
             # Apagar laptop
             local laptop
             laptop=$(get_outputs_wlr | grep -i 'eDP' | head -1)
-            [ -n "$laptop" ] && wlr-randr --output "$laptop" --off 2>/dev/null || true
-            # Encender externo
-            wlr-randr --output "$external" --on --mode preferred 2>/dev/null || {
+            if [ -n "$laptop" ]; then
+                wlr-randr --output "$laptop" --off 2>/dev/null || true
+            fi
+            # Encender externo con su modo actual
+            local mode
+            mode=$(get_mode_wlr "$external")
+            if [ -z "$mode" ]; then
+                notify "critical" "Monitor" "❌ No se pudo detectar el modo para $external"
+                return 1
+            fi
+            wlr-randr --output "$external" --on --mode "$mode" 2>/dev/null || {
                 notify "critical" "Monitor" "❌ Error al configurar $external"
                 return 1
             }
             ;;
         x11)
-            external=$(get_outputs_xrandr | grep -v -i 'eDP' | head -1)
+            external=$(get_external)
             if [ -z "$external" ]; then
                 error_no_external
                 return 1
             fi
             local laptop
             laptop=$(get_outputs_xrandr | grep -i 'eDP' | head -1)
-            [ -n "$laptop" ] && xrandr --output "$laptop" --off 2>/dev/null || true
+            if [ -n "$laptop" ]; then
+                xrandr --output "$laptop" --off 2>/dev/null || true
+            fi
             xrandr --output "$external" --auto --primary 2>/dev/null || {
                 notify "critical" "Monitor" "❌ Error al configurar $external"
                 return 1
@@ -176,24 +197,36 @@ apply_solo_externo() {
 }
 
 apply_extendido() {
-    local external laptop
     case "$BACKEND" in
         wayland-wlr)
+            local laptop external mode_lap mode_ext
             laptop=$(get_outputs_wlr | grep -i 'eDP' | head -1)
-            external=$(get_outputs_wlr | grep -v -i 'eDP' | head -1)
+            external=$(get_external)
             if [ -z "$external" ]; then
                 error_no_external
                 return 1
             fi
-            wlr-randr --output "$laptop" --on --mode preferred --pos 0,0 2>/dev/null || true
-            wlr-randr --output "$external" --on --mode preferred --pos 1920,0 2>/dev/null || {
+            # Obtener modos
+            mode_lap=$(get_mode_wlr "$laptop")
+            [ -z "$mode_lap" ] && mode_lap="1920x1080@60"
+            mode_ext=$(get_mode_wlr "$external")
+            [ -z "$mode_ext" ] && mode_ext="1920x1080@60"
+
+            # Obtener ancho del laptop para posicionar externo a la derecha
+            local lap_width
+            lap_width=$(wlr-randr 2>/dev/null | grep -A10 "^${laptop}" | grep -oP '\d+(?=x\d+@)' | head -1)
+            [ -z "$lap_width" ] && lap_width=1920
+
+            wlr-randr --output "$laptop" --on --mode "$mode_lap" --pos 0,0 2>/dev/null || true
+            wlr-randr --output "$external" --on --mode "$mode_ext" --pos "${lap_width},0" 2>/dev/null || {
                 notify "critical" "Monitor" "❌ Error al configurar $external"
                 return 1
             }
             ;;
         x11)
+            local laptop external
             laptop=$(get_outputs_xrandr | grep -i 'eDP' | head -1)
-            external=$(get_outputs_xrandr | grep -v -i 'eDP' | head -1)
+            external=$(get_external)
             if [ -z "$external" ]; then
                 error_no_external
                 return 1
@@ -213,17 +246,17 @@ apply_extendido() {
 }
 
 apply_mirror() {
-    local external laptop mode
     case "$BACKEND" in
         wayland-wlr)
+            local laptop external mode
             laptop=$(get_outputs_wlr | grep -i 'eDP' | head -1)
-            external=$(get_outputs_wlr | grep -v -i 'eDP' | head -1)
+            external=$(get_external)
             if [ -z "$external" ]; then
                 error_no_external
                 return 1
             fi
-            # Obtener modo del laptop
-            mode=$(wlr-randr 2>/dev/null | grep -A5 "$laptop" | grep -oP '\d+x\d+@\d+' | head -1)
+            # Usar el modo del laptop para ambos (misma resolución = espejo)
+            mode=$(get_mode_wlr "$laptop")
             [ -z "$mode" ] && mode="1920x1080@60"
             wlr-randr --output "$laptop" --on --mode "$mode" --pos 0,0 2>/dev/null || true
             wlr-randr --output "$external" --on --mode "$mode" --pos 0,0 2>/dev/null || {
@@ -232,8 +265,9 @@ apply_mirror() {
             }
             ;;
         x11)
+            local laptop external
             laptop=$(get_outputs_xrandr | grep -i 'eDP' | head -1)
-            external=$(get_outputs_xrandr | grep -v -i 'eDP' | head -1)
+            external=$(get_external)
             if [ -z "$external" ]; then
                 error_no_external
                 return 1
