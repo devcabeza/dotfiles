@@ -5,7 +5,7 @@
 ![Flake](https://img.shields.io/badge/Flake-✓-7daea3?style=flat)
 ![x86_64](https://img.shields.io/badge/Arch-x86__64--linux-5294e2?style=flat)
 
-> **El corazón del sistema.** Todo lo demás — Hyprland, Neovim, Waybar, scripts — existe porque esto lo orquesta.
+> **El corazón del sistema.** Neovim, Alacritty, Fish y todo el stack existe porque esto lo orquesta.
 
 ---
 
@@ -53,16 +53,13 @@ home-manager/
 
 ### Cómo se relaciona con el resto de dotfiles
 
-Este directorio es el **orquestador**. Cada directorio de configuración (`hypr/`, `waybar/`, `nvim/`, `fish/`, etc.) es *source* en `home.nix` y se symlinkea a `~/.config/` durante el `switch`.
+Este directorio es el **orquestador**. Cada directorio de configuración (`nvim/`, `fish/`, etc.) es *source* en `home.nix` y se symlinkea a `~/.config/` durante el `switch`.
 
 ```
 dotfiles/
 ├── home-manager/  ← 🧠 Orquesta TODO
-├── hypr/          ←  Source, linkeado por home-manager
-├── waybar/        ←  Source, linkeado por home-manager
 ├── nvim/          ←  Source, linkeado por home-manager
 ├── ...
-└── scripts/       ←  Adjuntos al repo (no linkeados, se usan desde ~/.dotfiles/scripts)
 ```
 
 ---
@@ -106,7 +103,7 @@ El `flake.lock` congela las versiones de `nixpkgs` y `home-manager` para que cad
 
 ## 📦 Categorías de Paquetes
 
-Un total de ~50 paquetes gestionados declarativamente en `home.nix`. Agrupados por propósito:
+Un total de ~35 paquetes gestionados declarativamente en `home.nix`. Agrupados por propósito:
 
 ### 🛠️ Desarrollo Back-End
 
@@ -133,19 +130,6 @@ Un total de ~50 paquetes gestionados declarativamente en `home.nix`. Agrupados p
 | **TUI Suite** | Lazygit, Lazydocker, Lazyjournal, Lazysql, Lazyssh |
 | **Monitor** | Btop |
 
-### 🪟 Wayland & Hyprland Ecosystem
-
-| Categoría | Paquetes |
-|---|---|
-| **WM** | Hyprland (config linkeada) |
-| **Barra** | Waybar (config linkeada) |
-| **Launcher** | Walker (config linkeada) |
-| **Notificaciones** | Dunst (config linkeada) |
-| **Wallpaper** | Swaybg, librsvg |
-| **Screenshots** | Grim, Slurp, Swappy (config linkeada) |
-| **Bloqueo / Idle** | Hyprlock, Hypridle |
-| **Utilidades** | Hyprpicker, Hyprsunset, Cliphist, Brightnessctl |
-
 ### 📡 Red & Hardware
 
 | Paquete | Propósito |
@@ -165,6 +149,8 @@ Un total de ~50 paquetes gestionados declarativamente en `home.nix`. Agrupados p
 | Lsof | Listar archivos abiertos |
 | Ranger + ueberzugpp | File manager con previsualizaciones |
 | Poppler-utils, xlsx2csv, glow, ffmpegthumbnailer, exiftool, odt2txt | Previews para Ranger |
+| Grim + Slurp | Screenshots CLI para Wayland |
+| Tesseract + FFmpeg | OCR y procesamiento multimedia |
 | Bibata-cursors, adw-gtk3, Papirus-icon-theme | Tema GTK, cursores, iconos |
 
 ### 🤖 Memoria Persistente
@@ -202,16 +188,6 @@ Cada entrada en `home.file` de `home.nix` crea un symlink desde `~/.dotfiles/<di
 | `fish/config.fish` | `~/.config/fish/config.fish` |
 | `fish/functions` | `~/.config/fish/functions` |
 
-### WM & UI
-
-| Source | Destino |
-|---|---|
-| `hypr` | `~/.config/hypr` |
-| `waybar` | `~/.config/waybar` |
-| `dunst/dunstrc` | `~/.config/dunst/dunstrc` |
-| `walker/config.toml` | `~/.config/walker/config.toml` |
-| `walker/themes/default.css` | `~/.config/walker/themes/default.css` |
-
 ### TUI Apps
 
 | Source | Destino |
@@ -227,7 +203,6 @@ Cada entrada en `home.file` de `home.nix` crea un symlink desde `~/.dotfiles/<di
 |---|---|
 | `gtk-3.0/settings.ini` | `~/.config/gtk-3.0/settings.ini` |
 | `gtk-4.0/settings.ini` | `~/.config/gtk-4.0/settings.ini` |
-| `swappy/config` | `~/.config/swappy/config` |
 
 ### OpenCode
 

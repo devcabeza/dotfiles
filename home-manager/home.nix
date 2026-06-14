@@ -103,21 +103,18 @@ in
     pkgs.nerd-fonts.symbols-only
     pkgs.bluetui
 
-    # WiFi, Bluetooth, Notifications
-    pkgs.dunst
+    # WiFi & Bluetooth
     pkgs.blueman
     pkgs.iwd
     pkgs.jq
     pkgs.networkmanagerapplet
-    pkgs.walker
 
     # Tools
     pkgs.brightnessctl
     pkgs.grim
     pkgs.slurp
 
-    # Wallpaper daemon (Wayland)
-    pkgs.swaybg
+    # SVG rendering
     pkgs.librsvg
 
     # Ranger & Previews
@@ -130,25 +127,8 @@ in
     pkgs.exiftool
     pkgs.odt2txt
 
-    # Hyprland ecosystem
-    pkgs.hyprlock
-    pkgs.hypridle
-    pkgs.hyprpicker
-    pkgs.hyprsunset
-    pkgs.cliphist
-    pkgs.swappy
-    pkgs.kanshi
-
-    # Qtile ecosystem
-    pkgs.python3Packages.qtile
-    pkgs.picom
-    pkgs.i3lock
-    pkgs.rofi
-    pkgs.wlr-randr
-
-    # Omarchy-style scripts dependencies
+    # Utilities
     pkgs.tesseract
-    pkgs.wf-recorder
     pkgs.ffmpeg
 
     # Voice Chat
@@ -188,10 +168,6 @@ in
     ".config/opencode/skills".source = ../opencode/skills;
     ".config/opencode/commands".source = ../opencode/commands;
 
-    # Hyprland
-    ".config/hypr".source = ../hypr;
-    ".config/waybar".source = ../waybar;
-
     # Tmux Config
     ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
 
@@ -202,31 +178,9 @@ in
     ".config/ranger/rc.conf".source = ../ranger/rc.conf;
     ".config/ranger/scope.sh".source = ../ranger/scope.sh;
 
-    # Dunst Config
-    ".config/dunst/dunstrc".source = ../dunst/dunstrc;
-
     # GTK Theme Config
     ".config/gtk-3.0/settings.ini".source = ../gtk-3.0/settings.ini;
     ".config/gtk-4.0/settings.ini".source = ../gtk-4.0/settings.ini;
-
-    # Swappy Config
-    ".config/swappy/config".source = ../swappy/config;
-
-    # Walker Config
-    ".config/walker/config.toml".source = ../walker/config.toml;
-    ".config/walker/themes/default.css".source = ../walker/themes/default.css;
-
-    # Kanshi Config (automatic monitor profiles)
-    ".config/kanshi/config".source = ../kanshi/config;
-
-    # Qtile Config
-    ".config/qtile".source = ../qtile;
-
-    # Rofi Config
-    ".config/rofi".source = ../rofi;
-
-    # Picom Config (compositor X11 para blur/sombras)
-    ".config/picom/picom.conf".source = ../picom/picom.conf;
   };
 
 
