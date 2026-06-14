@@ -6,13 +6,13 @@
 #   qtile start                    # X11 (recomendado + picom)
 #   qtile start -b wayland         # Wayland experimental
 #
-# Dependencias (a añadir en home.nix):
-#   pkgs.qtile, pkgs.picom (para blur/sombras en X11)
-# Opcional: pkgs.rofi (≈ hyprlauncher), pkgs.i3lock (≈ hyprlock)
+# Dependencias (añadidas en home.nix):
+#   pkgs.qtile, pkgs.picom, pkgs.i3lock, pkgs.rofi, pkgs.wlr-randr
+# Wayland: qtile start -b wayland  |  X11: qtile start + picom
 
 import os
 import subprocess
-from libqtile import bar, layout, hook
+from libqtile import bar, layout, hook, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Rule, Screen
 from libqtile.lazy import lazy
 
@@ -242,7 +242,7 @@ keys = [
     Key([mod, alt], "w", lazy.spawn(f"{scripts}/close_all_windows.sh"),  desc="Cerrar todo"),
 
     # ── Monitores ──
-    Key([mod], "o", lazy.spawn(f"{scripts}/monitor_menu.sh"), desc="Monitores"),
+    Key([mod], "o", lazy.spawn(f"{scripts}/monitor_qtile.sh"), desc="Monitores"),
 
     # ── Sistema y Sesión ──
     Key([mod], "Escape",
@@ -372,53 +372,57 @@ groups[-1].dropdowns = {
 
 
 # ═══════════════════════════════════════════
-# BARRA (opcional — si prefieres Waybar, no definas screens)
+# BARRA NATIVA DE QTILE
+# Reemplaza a Waybar — muestra workspaces (GroupBox),
+# layout actual, bandeja del sistema y reloj
 # ═══════════════════════════════════════════
-# Qtile tiene su propia barra en Python.
-# Si quieres seguir usando Waybar (tu config actual),
-# simplemente DEJA ESTO COMENTADO y Waybar se lanzará desde autostart.
-#
-# Para usar la barra nativa de Qtile, descomenta:
 
-# widget_defaults = dict(
-#     font="monospace",
-#     fontsize=13,
-#     padding=3,
-#     foreground=C["fg"],
-#     background=C["bg"],
-# )
+widget_defaults = dict(
+    font="monospace",
+    fontsize=13,
+    padding=3,
+    foreground=C["fg"],
+    background=C["bg"],
+)
 
-# screens = [
-#     Screen(
-#         top=bar.Bar(
-#             [
-#                 widget.GroupBox(
-#                     active=C["fg"],
-#                     inactive=C["gray"],
-#                     highlight_method="block",
-#                     highlight_color=C["bg0_s"],
-#                     urgent_border=C["red"],
-#                     this_current_screen_border=C["accent"],
-#                     this_screen_border=C["border_off"],
-#                     rounded=False,
-#                     spacing=4,
-#                     padding_x=4,
-#                 ),
-#                 widget.Spacer(),
-#                 widget.CurrentLayout(foreground=C["accent"]),
-#                 widget.Spacer(),
-#                 widget.Systray(),
-#                 widget.Clock(format="%a %d %b  %H:%M", foreground=C["fg"]),
-#             ],
-#             28,
-#             background=C["bg"],
-#         ),
-#     ),
-# ]
-
-# Dejamos screens vacío para que no cargue barra nativa
-# y uses Waybar (lanzado desde autostart)
-screens = [Screen()]
+screens = [
+    Screen(
+        top=bar.Bar(
+            [
+                # Workspaces (≈ waybar hyprland/workspaces)
+                widget.GroupBox(
+                    active=C["fg"],
+                    inactive=C["gray"],
+                    highlight_method="block",
+                    highlight_color=C["bg0_s"],
+                    urgent_border=C["red"],
+                    this_current_screen_border=C["accent"],
+                    this_screen_border=C["border_off"],
+                    rounded=False,
+                    spacing=4,
+                    padding_x=4,
+                    fontsize=14,
+                ),
+                widget.Spacer(),
+                # Layout actual
+                widget.CurrentLayout(foreground=C["accent"]),
+                widget.Spacer(length=10),
+                # Título de la ventana activa
+                widget.WindowName(foreground=C["fg_dim"], max_chars=60),
+                widget.Spacer(),
+                # Bandeja del sistema
+                widget.Systray(icon_size=18),
+                widget.Spacer(length=5),
+                # Reloj
+                widget.Clock(format="%a %d %b  %H:%M", foreground=C["fg"]),
+                widget.Spacer(length=5),
+            ],
+            28,
+            background=C["bg"],
+            border_width=[0, 0, 0, 0],
+        ),
+    ),
+]
 
 
 # ═══════════════════════════════════════════
@@ -433,8 +437,8 @@ def autostart():
         f"{nix_bin}/swaybg -i {wallpaper_dir}/$(ls {wallpaper_dir}/ | head -1) -m fill",
         f"{scripts}/wallpaper_carousel.sh",
 
-        # Waybar (si prefieres la barra de Qtile, comenta esto)
-        f"waybar --config {home}/.dotfiles/waybar/config.jsonc --style {home}/.dotfiles/waybar/styles.css",
+        # Waybar se reemplazó por la barra nativa de Qtile
+        # (más arriba en este archivo)
 
         # Notificaciones
         f"{nix_bin}/dunst",

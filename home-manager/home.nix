@@ -140,9 +140,11 @@ in
     pkgs.kanshi
 
     # Qtile ecosystem
+    pkgs.python3Packages.qtile
     pkgs.picom
     pkgs.i3lock
     pkgs.rofi
+    pkgs.wlr-randr
 
     # Omarchy-style scripts dependencies
     pkgs.tesseract
