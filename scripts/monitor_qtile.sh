@@ -3,7 +3,7 @@
 # 🖥️  Monitor Qtile — Omarchy-style
 # ============================================================
 # Menú interactivo para gestionar monitores en Qtile.
-# Usa wlr-randr en Wayland, xrandr en X11.
+# Usa wlr-randr (Wayland) o xrandr (X11).
 # ============================================================
 
 set -euo pipefail
@@ -78,13 +78,6 @@ get_outputs_xrandr() {
     xrandr 2>/dev/null | grep ' connected' | awk '{print $1}'
 }
 
-# Obtiene el modo actual (resolución@refresco) para un output en wlr-randr.
-# Usa grep -oE con POSIX regex en vez de -P, que falla en algunos sistemas.
-get_mode_wlr() {
-    local output="$1"
-    wlr-randr 2>/dev/null | grep -A10 "^${output}" | grep -oE '[0-9]+x[0-9]+@[0-9]+' | head -1
-}
-
 get_external() {
     case "$BACKEND" in
         wayland-wlr)
@@ -106,21 +99,88 @@ error_no_external() {
     read -rp 'Presiona Enter para continuar... '
 }
 
+# ─── Configurar output con wlr-randr (Wayland) ───
+# Usa wlr-randr --json + jq para obtener modos exactos,
+# y prueba varios formatos hasta que uno funcione.
+configure_output_wlr() {
+    local output="$1"   # nombre del output (ej: HDMI-A-1)
+    local action="$2"   # "on", "off", o "auto"
+    local pos_x="${3:-0}"
+    local pos_y="${4:-0}"
+
+    case "$action" in
+        "off")
+            wlr-randr --output "$output" --off 2>/dev/null
+            return $?
+            ;;
+        "on"|"auto")
+            # Obtener modo desde JSON (formato nativo de wlr-randr)
+            local width height refresh json_mode
+            if command -v jq &>/dev/null; then
+                width=$(wlr-randr --json 2>/dev/null | jq -r ".[] | select(.name == \"$output\") | .modes[0].width" 2>/dev/null || echo "")
+                height=$(wlr-randr --json 2>/dev/null | jq -r ".[] | select(.name == \"$output\") | .modes[0].height" 2>/dev/null || echo "")
+                refresh=$(wlr-randr --json 2>/dev/null | jq -r ".[] | select(.name == \"$output\") | .modes[0].refresh" 2>/dev/null || echo "")
+            else
+                # Fallback sin jq: parsear de wlr-randr texto
+                local mode_line
+                mode_line=$(wlr-randr 2>/dev/null | grep -A10 "^${output}" | grep -m1 'preferred\|current')
+                width=$(echo "$mode_line" | grep -oE '^[[:space:]]*[0-9]+' | tr -d ' ')
+                height=$(echo "$mode_line" | grep -oE 'x[0-9]+' | head -1 | tr -d 'x')
+                refresh=$(echo "$mode_line" | grep -oE '@[0-9]+' | tr -d '@')
+            fi
+
+            # Fallback si no se pudo detectar
+            [ -z "$width" ] && width=1920
+            [ -z "$height" ] && height=1080
+            [ -z "$refresh" ] && refresh=60000
+
+            # Construir modos a probar (de más específico a menos)
+            local modes_to_try=()
+            modes_to_try+=("${width}x${height}@${refresh}")        # formato milliHz: 1920x1080@60000
+            modes_to_try+=("${width}x${height}@$((refresh/1000))") # formato Hz: 1920x1080@60
+            modes_to_try+=("${width}x${height}@$((refresh/1000))Hz") # formato Hz con sufijo: 1920x1080@60Hz
+            modes_to_try+=("${width}x${height}")                    # solo resolución: 1920x1080
+            modes_to_try+=("preferred")                             # modo preferido del monitor
+
+            local mode
+            for mode in "${modes_to_try[@]}"; do
+                # Intentar con --custom-mode primero, luego --mode
+                if wlr-randr --output "$output" --custom-mode "${mode}" 2>/dev/null; then
+                    # Si especificamos posición, aplicarla
+                    if [ "$pos_x" -ne 0 ] || [ "$pos_y" -ne 0 ]; then
+                        wlr-randr --output "$output" --pos "${pos_x},${pos_y}" 2>/dev/null || true
+                    fi
+                    return 0
+                fi
+                if wlr-randr --output "$output" --mode "${mode}" 2>/dev/null; then
+                    if [ "$pos_x" -ne 0 ] || [ "$pos_y" -ne 0 ]; then
+                        wlr-randr --output "$output" --pos "${pos_x},${pos_y}" 2>/dev/null || true
+                    fi
+                    return 0
+                fi
+            done
+
+            # Último recurso: intentar solo --on sin modo
+            wlr-randr --output "$output" --on 2>/dev/null && return 0
+
+            return 1
+            ;;
+    esac
+}
+
 # ─── Perfiles ───
 apply_solo_laptop() {
     case "$BACKEND" in
         wayland-wlr)
             for out in $(get_outputs_wlr); do
                 if ! echo "$out" | grep -qi 'eDP'; then
-                    wlr-randr --output "$out" --off 2>/dev/null || true
+                    configure_output_wlr "$out" "off" || true
                 fi
             done
-            local laptop mode
+            local laptop
             laptop=$(get_outputs_wlr | grep -i 'eDP' | head -1)
             if [ -n "$laptop" ]; then
-                mode=$(get_mode_wlr "$laptop")
-                [ -z "$mode" ] && mode="1920x1080@60"
-                wlr-randr --output "$laptop" --on --mode "$mode" 2>/dev/null || true
+                configure_output_wlr "$laptop" "on" || true
             fi
             ;;
         x11)
@@ -146,32 +206,26 @@ apply_solo_laptop() {
 apply_solo_externo() {
     case "$BACKEND" in
         wayland-wlr)
+            local external
             external=$(get_external)
             if [ -z "$external" ]; then
                 error_no_external
                 return 1
             fi
-            # Capturar modo del externo ANTES de apagar el laptop
-            local mode
-            mode=$(get_mode_wlr "$external")
-            if [ -z "$mode" ]; then
-                # Intentar con modo por defecto
-                mode="1920x1080@60"
-                notify "low" "Monitor" "⚠️ Usando modo por defecto ${mode} para ${external}"
-            fi
             # Apagar laptop
             local laptop
             laptop=$(get_outputs_wlr | grep -i 'eDP' | head -1)
             if [ -n "$laptop" ]; then
-                wlr-randr --output "$laptop" --off 2>/dev/null || true
+                configure_output_wlr "$laptop" "off" || true
             fi
             # Encender externo
-            wlr-randr --output "$external" --on --mode "$mode" 2>/dev/null || {
-                notify "critical" "Monitor" "❌ Error al configurar $external con modo $mode"
+            if ! configure_output_wlr "$external" "on"; then
+                notify "critical" "Monitor" "❌ Error al configurar $external"
                 return 1
-            }
+            fi
             ;;
         x11)
+            local external
             external=$(get_external)
             if [ -z "$external" ]; then
                 error_no_external
@@ -198,26 +252,19 @@ apply_solo_externo() {
 apply_extendido() {
     case "$BACKEND" in
         wayland-wlr)
-            local laptop external mode_lap mode_ext
+            local laptop external
             laptop=$(get_outputs_wlr | grep -i 'eDP' | head -1)
             external=$(get_external)
             if [ -z "$external" ]; then
                 error_no_external
                 return 1
             fi
-            # Obtener modos
-            mode_lap=$(get_mode_wlr "$laptop")
-            [ -z "$mode_lap" ] && mode_lap="1920x1080@60"
-            mode_ext=$(get_mode_wlr "$external")
-            [ -z "$mode_ext" ] && mode_ext="1920x1080@60"
-
-            # Obtener ancho del laptop para posicionar externo a la derecha
+            # Obtener ancho del laptop desde JSON
             local lap_width
-            lap_width=$(wlr-randr 2>/dev/null | grep -A10 "^${laptop}" | grep -oP '\d+(?=x\d+@)' | head -1)
-            [ -z "$lap_width" ] && lap_width=1920
+            lap_width=$(wlr-randr --json 2>/dev/null | jq -r ".[] | select(.name == \"$laptop\") | .modes[0].width" 2>/dev/null || echo "1920")
 
-            wlr-randr --output "$laptop" --on --mode "$mode_lap" --pos 0,0 2>/dev/null || true
-            wlr-randr --output "$external" --on --mode "$mode_ext" --pos "${lap_width},0" 2>/dev/null || {
+            configure_output_wlr "$laptop" "on" 0 0 || true
+            configure_output_wlr "$external" "on" "$lap_width" 0 || {
                 notify "critical" "Monitor" "❌ Error al configurar $external"
                 return 1
             }
@@ -247,18 +294,16 @@ apply_extendido() {
 apply_mirror() {
     case "$BACKEND" in
         wayland-wlr)
-            local laptop external mode
+            local laptop external
             laptop=$(get_outputs_wlr | grep -i 'eDP' | head -1)
             external=$(get_external)
             if [ -z "$external" ]; then
                 error_no_external
                 return 1
             fi
-            # Usar el modo del laptop para ambos (misma resolución = espejo)
-            mode=$(get_mode_wlr "$laptop")
-            [ -z "$mode" ] && mode="1920x1080@60"
-            wlr-randr --output "$laptop" --on --mode "$mode" --pos 0,0 2>/dev/null || true
-            wlr-randr --output "$external" --on --mode "$mode" --pos 0,0 2>/dev/null || {
+            # Misma posición 0,0 para ambos = espejo
+            configure_output_wlr "$laptop" "on" 0 0 || true
+            configure_output_wlr "$external" "on" 0 0 || {
                 notify "critical" "Monitor" "❌ Error al configurar mirror"
                 return 1
             }
@@ -293,7 +338,10 @@ show_status() {
 
     case "$BACKEND" in
         wayland-wlr)
+            printf '=== wlr-randr (raw) ===\n'
             wlr-randr 2>/dev/null || printf 'Error al leer estado.\n'
+            printf '\n=== wlr-randr (JSON) ===\n'
+            wlr-randr --json 2>/dev/null | jq '.' 2>/dev/null || printf '(jq no disponible)\n'
             ;;
         x11)
             xrandr --current 2>/dev/null | head -30 || printf 'Error al leer estado.\n'
@@ -321,7 +369,7 @@ while true; do
         "📺 Solo externo" \
         "↔️  Extendido derecha" \
         "🪞  Espejo" \
-        "📋 Estado actual" \
+        "📋 Estado actual (debug)" \
         "❌ Salir" \
         | fzf \
             --prompt="Monitor > " \
@@ -341,7 +389,7 @@ while true; do
         "🪞  Espejo")
             apply_mirror && exit 0
             ;;
-        "📋 Estado actual")
+        "📋 Estado actual (debug)")
             show_status
             ;;
         "❌ Salir"|"")
