@@ -222,6 +222,9 @@ in
     # Qtile Config
     ".config/qtile".source = ../qtile;
 
+    # Rofi Config
+    ".config/rofi".source = ../rofi;
+
     # Picom Config (compositor X11 para blur/sombras)
     ".config/picom/picom.conf".source = ../picom/picom.conf;
   };

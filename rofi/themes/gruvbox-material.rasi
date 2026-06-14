@@ -1,0 +1,102 @@
+* {
+    /* Paleta Gruvbox Material */
+    bg: #282828;
+    bg-alt: #32302f;
+    bg-dark: #1d2021;
+    fg: #ddc7a1;
+    fg-dim: #bdae93;
+    accent: #7daea3;
+    red: #ea6962;
+    green: #a9b665;
+    yellow: #d8a657;
+    purple: #d3869b;
+    gray: #928374;
+}
+
+window {
+    width: 600px;
+    transparency: "real";
+    background-color: rgba(40, 40, 40, 0.88);
+    location: center;
+    border-radius: 12px;
+    border: 2px;
+    border-color: @accent;
+}
+
+mainbox {
+    spacing: 0;
+    padding: 0;
+    children: [inputbar, listview];
+}
+
+inputbar {
+    background-color: @bg-dark;
+    text-color: @fg;
+    placeholder-color: @fg-dim;
+    spacing: 10;
+    padding: 8px;
+    border-radius: 8px;
+    margin: 12px;
+    children: [prompt, entry];
+}
+
+prompt {
+    text-color: @accent;
+}
+
+entry {
+    background-color: transparent;
+    text-color: @fg;
+    placeholder-color: @fg-dim;
+    cursor-color: @accent;
+}
+
+listview {
+    background-color: transparent;
+    spacing: 4;
+    padding: 0 12px 12px 12px;
+    columns: 2;
+    lines: 10;
+    cycle: true;
+    dynamic: true;
+}
+
+element {
+    background-color: transparent;
+    text-color: @fg;
+    padding: 6px;
+    border-radius: 8px;
+}
+
+element selected {
+    background-color: @bg-alt;
+    text-color: @accent;
+    border: 0px;
+}
+
+element-icon {
+    size: 24px;
+    padding: 0 8px;
+}
+
+element-text {
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
+button {
+    background-color: transparent;
+    text-color: @fg-dim;
+}
+
+button selected {
+    background-color: @accent;
+    text-color: @bg;
+}
+
+scrollbar {
+    handle-color: @accent;
+    background-color: @bg-alt;
+    width: 6px;
+    border-radius: 3px;
+}
