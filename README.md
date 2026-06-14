@@ -198,7 +198,6 @@ Elegí Gruvbox Material porque tiene **alto contraste sin ser agresivo**, funcio
 | **Tmux** | Gruvbox Material, powerline symbols (), pane-active-border verde |
 | **Starship** | Bloques sólidos segmentados: username → dir → git → nix → cmd_duration |
 | **Fzf** | Colores Gruvbox Material personalizados, layout reverse con borde |
-| **GTK** | Tema adw-gtk3-dark, iconos Papirus, cursores Bibata Modern Classic |
 | **Prompt** | Carácter `➜` verde en éxito, rojo en error |
 
 ### Fuentes
@@ -246,7 +245,6 @@ Gestionados completamente por Home Manager en `home-manager/home.nix`.
 | IWD | Daemon WiFi |
 | NetworkManager applet | Applet GTK para WiFi |
 | Blueman + Bluetui | Gestión Bluetooth |
-| Adw-gtk3 + Papirus + Bibata | Tema GTK, iconos, cursores |
 | Brightnessctl | Control de brillo CLI |
 
 ### 🧰 Utilidades

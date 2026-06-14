@@ -23,8 +23,6 @@ home-manager switch -b backup --impure --flake ~/.dotfiles/home-manager#alejandr
 |-----|-----------|-------------------------|
 | `alacritty/` | Terminal (toml) | ✅ sí |
 | `nvim/` | Neovim config (NixCats + Lua) — ver `nvim/AGENTS.md` | ✅ sí |
-| `gtk-3.0/` | GTK3 theme settings | ✅ sí |
-| `gtk-4.0/` | GTK4 theme settings | ✅ sí |
 | `tmux/` | Tmux config (prefix `Ctrl+t`) | ✅ sí |
 | `fish/` | Fish shell (Vi mode, Starship) | ✅ sí |
 | `ranger/` | File manager | ✅ sí |

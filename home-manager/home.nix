@@ -134,12 +134,6 @@ in
     # Voice Chat
     pkgs.piper-tts
     pkgs.curl
-
-    pkgs.bibata-cursors
-
-    # GTK theme support
-    pkgs.adw-gtk3
-    pkgs.papirus-icon-theme
   ];
 
   fonts.fontconfig.enable = true;
@@ -177,10 +171,6 @@ in
     # Ranger Config
     ".config/ranger/rc.conf".source = ../ranger/rc.conf;
     ".config/ranger/scope.sh".source = ../ranger/scope.sh;
-
-    # GTK Theme Config
-    ".config/gtk-3.0/settings.ini".source = ../gtk-3.0/settings.ini;
-    ".config/gtk-4.0/settings.ini".source = ../gtk-4.0/settings.ini;
   };
 
 

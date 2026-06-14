@@ -151,7 +151,7 @@ Un total de ~35 paquetes gestionados declarativamente en `home.nix`. Agrupados p
 | Poppler-utils, xlsx2csv, glow, ffmpegthumbnailer, exiftool, odt2txt | Previews para Ranger |
 | Grim + Slurp | Screenshots CLI para Wayland |
 | Tesseract + FFmpeg | OCR y procesamiento multimedia |
-| Bibata-cursors, adw-gtk3, Papirus-icon-theme | Tema GTK, cursores, iconos |
+
 
 ### 🤖 Memoria Persistente
 
@@ -196,13 +196,6 @@ Cada entrada en `home.file` de `home.nix` crea un symlink desde `~/.dotfiles/<di
 | `lazygit` | `~/.config/lazygit` |
 | `ranger/rc.conf` | `~/.config/ranger/rc.conf` |
 | `ranger/scope.sh` | `~/.config/ranger/scope.sh` |
-
-### GTK & Herramientas
-
-| Source | Destino |
-|---|---|
-| `gtk-3.0/settings.ini` | `~/.config/gtk-3.0/settings.ini` |
-| `gtk-4.0/settings.ini` | `~/.config/gtk-4.0/settings.ini` |
 
 ### OpenCode
 
