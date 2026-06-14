@@ -445,6 +445,20 @@ def set_wallpaper():
 @hook.subscribe.startup_once
 def autostart():
     """≈ autostart.lua — Servicios al arrancar (una sola vez)"""
+    # Propagar variables de entorno Wayland a todos los procesos
+    subprocess.Popen(
+        "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP",
+        shell=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    subprocess.Popen(
+        "systemctl --user import-environment",
+        shell=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
     commands = [
         f"{scripts}/wallpaper_carousel.sh",
 

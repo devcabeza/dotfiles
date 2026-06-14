@@ -7,6 +7,18 @@
 # ============================================================
 
 set -euo pipefail
+
+# ─── Auto-detectar WAYLAND_DISPLAY ───
+# Si wlr-randr no encuentra el display, buscar el socket manualmente
+if [ "${XDG_SESSION_TYPE:-}" = "wayland" ] && [ -z "${WAYLAND_DISPLAY:-}" ]; then
+    for sock in "$XDG_RUNTIME_DIR"/wayland-* "$XDG_RUNTIME_DIR"/*wayland*; do
+        if [ -S "$sock" ] 2>/dev/null; then
+            export WAYLAND_DISPLAY="$(basename "$sock")"
+            break
+        fi
+    done
+fi
+
 export PATH="$HOME/.nix-profile/bin:/usr/bin:/usr/local/bin:$PATH"
 
 APP_ID="org.omarchy.monitor-menu"
