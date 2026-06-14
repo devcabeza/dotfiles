@@ -139,6 +139,11 @@ in
     pkgs.swappy
     pkgs.kanshi
 
+    # Qtile ecosystem
+    pkgs.picom
+    pkgs.i3lock
+    pkgs.rofi
+
     # Omarchy-style scripts dependencies
     pkgs.tesseract
     pkgs.wf-recorder
@@ -211,6 +216,12 @@ in
 
     # Kanshi Config (automatic monitor profiles)
     ".config/kanshi/config".source = ../kanshi/config;
+
+    # Qtile Config
+    ".config/qtile".source = ../qtile;
+
+    # Picom Config (compositor X11 para blur/sombras)
+    ".config/picom/picom.conf".source = ../picom/picom.conf;
   };
 
 
