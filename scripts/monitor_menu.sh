@@ -45,7 +45,7 @@ FZF_OPTS=(
 get_external() {
     for name in HDMI-A-1 DP-1 DP-2 DP-3; do
         if hyprctl monitors -j | jq -e --arg name "$name" \
-            '.[] | select(.name == $name and .disabled == false)' >/dev/null 2>&1; then
+            '.[] | select(.name == $name)' >/dev/null 2>&1; then
             echo "$name"
             return 0
         fi
