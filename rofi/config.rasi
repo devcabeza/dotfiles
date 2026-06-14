@@ -1,5 +1,5 @@
 configuration {
-    modi: "drun,run,window";
+    modes: [ drun, run, window ];
     font: "monospace 12";
     terminal: "alacritty";
     show-icons: true;
@@ -14,4 +14,4 @@ configuration {
     columns: 2;
 }
 
-@theme "themes/gruvbox-material";
+@theme "themes/gruvbox-material"
