@@ -1,0 +1,30 @@
+# ============================================================
+# Kanshi — Perfiles automáticos de monitor
+# ============================================================
+# Se evalúan en orden (primer match gana).
+# Los perfiles son mutuamente excluyentes según outputs conectados.
+#
+# Matching:
+#   - extendido:    eDP-1 conectado + HDMI-A-1 conectado
+#   - solo_externo: eDP-1 desconectado + HDMI-A-1 conectado
+#   - solo_laptop:  solo eDP-1 conectado
+#
+# NOTA: Ajusta las resoluciones según tus monitores.
+# ============================================================
+
+profile extendido {
+    output eDP-1 enable mode 1920x1080@60 position 0,0 scale 1.0
+    output HDMI-A-1 enable mode 1920x1080@60 position 1920,0 scale 1.0
+}
+
+profile solo_externo {
+    output eDP-1 disable
+    output HDMI-A-1 enable mode 1920x1080@60 position 0,0 scale 1.0
+}
+
+profile solo_laptop {
+    output eDP-1 enable mode 1920x1080@60 position 0,0 scale 1.0
+    output HDMI-A-1 disable
+    output DP-1 disable
+    output DP-2 disable
+}

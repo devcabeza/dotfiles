@@ -137,11 +137,16 @@ in
     pkgs.hyprsunset
     pkgs.cliphist
     pkgs.swappy
+    pkgs.kanshi
 
     # Omarchy-style scripts dependencies
     pkgs.tesseract
     pkgs.wf-recorder
     pkgs.ffmpeg
+
+    # Voice Chat
+    pkgs.piper-tts
+    pkgs.curl
 
     pkgs.bibata-cursors
 
@@ -203,6 +208,9 @@ in
     # Walker Config
     ".config/walker/config.toml".source = ../walker/config.toml;
     ".config/walker/themes/default.css".source = ../walker/themes/default.css;
+
+    # Kanshi Config (automatic monitor profiles)
+    ".config/kanshi/config".source = ../kanshi/config;
   };
 
 
@@ -238,6 +246,18 @@ in
       mkdir -p "$HOME/.config/tmux/plugins"
       if [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
         $DRY_RUN_CMD /usr/bin/git clone https://github.com/tmux-plugins/tpm "$HOME/.config/tmux/plugins/tpm"
+      fi
+    '';
+
+    downloadPiperModel = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      if [ ! -f "$HOME/.local/share/piper-tts/es_MX-claude-x_low.onnx" ]; then
+        $DRY_RUN_CMD mkdir -p "$VERBOSE_ARG" "$HOME/.local/share/piper-tts"
+        $DRY_RUN_CMD ${pkgs.curl}/bin/curl -fL --progress-bar \
+          -o "$HOME/.local/share/piper-tts/es_MX-claude-x_low.onnx" \
+          "https://huggingface.co/rhasspy/piper-voices/resolve/main/es/es_MX/claude/low/es_MX-claude-x_low.onnx"
+        $DRY_RUN_CMD ${pkgs.curl}/bin/curl -fL --progress-bar \
+          -o "$HOME/.local/share/piper-tts/es_MX-claude-x_low.onnx.json" \
+          "https://huggingface.co/rhasspy/piper-voices/resolve/main/es/es_MX/claude/low/es_MX-claude-x_low.onnx.json"
       fi
     '';
   };

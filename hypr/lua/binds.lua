@@ -9,8 +9,9 @@ local m = _G.hypr
 hl.bind(m.mainMod .. " + F",        hl.dsp.exec_cmd(m.filemanager))
 hl.bind(m.altMod .. " + SPACE",     hl.dsp.exec_cmd("hyprlauncher --dmenu"))
 hl.bind(m.mainMod .. " + SPACE",     hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/sysmenu.sh"))
-hl.bind(m.altMod .. " + I",         hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/handy_voice_setup.sh normal"))
-hl.bind(m.altMod .. " + SHIFT + I", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/handy_voice_setup.sh ai"))
+-- ALT+I: Asistente de voz conversacional (push-to-talk)
+hl.bind(m.altMod .. " + I", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/voice_chat.sh start"))
+hl.bind(m.altMod .. " + I", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/voice_chat.sh stop"), { release = true })
 hl.bind(m.mainMod .. " + RETURN",   hl.dsp.exec_cmd(m.terminal))
 hl.bind(m.mainMod .. " + SHIFT + Q", hl.dsp.exit())
 hl.bind(m.mainMod .. " + W",        hl.dsp.window.close())
@@ -74,6 +75,11 @@ hl.bind(m.mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("/home/alejandrocabeza/.dot
 hl.bind(m.mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/audio_output_switch.sh"))
 hl.bind(m.mainMod .. " + ALT + G",   hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/gaps_toggle.sh"))
 hl.bind(m.mainMod .. " + ALT + W",   hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/close_all_windows.sh"))
+
+-- ============================
+-- Monitores
+-- ============================
+hl.bind(m.mainMod .. " + O", hl.dsp.exec_cmd("/home/alejandrocabeza/.dotfiles/scripts/monitor_menu.sh"))
 
 -- ============================
 -- Multimedia (Audio)

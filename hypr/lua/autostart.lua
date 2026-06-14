@@ -22,6 +22,9 @@ hl.on("hyprland.start", function()
     -- Agente de autenticación Polkit (Requerido para conectar WiFi y Bluetooth)
     hl.exec_cmd("/usr/lib/hyprpolkitagent")
 
+    -- Kanshi: perfiles automáticos de monitor (detecta plug/unplug y tapa cerrada)
+    hl.exec_cmd(nix_bin .. "kanshi")
+
     -- hl.exec_cmd(nix_bin .. "blueman-applet")
     -- hl.exec_cmd(nix_bin .. "nm-applet")
 end)

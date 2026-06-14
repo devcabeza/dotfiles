@@ -1,6 +1,6 @@
 # 🧰 Scripts de Automatización — dotfiles
 
-Este directorio contiene **todos los scripts de automatización** del sistema, incluyendo los 8 scripts con namespace **Omarchy** que se lanzan como ventanas flotantes en Hyprland.
+Este directorio contiene **todos los scripts de automatización** del sistema, incluyendo los scripts con namespace **Omarchy** que se lanzan como ventanas flotantes en Hyprland.
 
 ---
 
@@ -31,6 +31,7 @@ Cada script Omarchy usa el namespace `org.omarchy.<nombre>` como clase de ventan
 | screenrecord.sh | `org.omarchy.screenrecord` | 700×450 |
 | gaps_toggle.sh | `org.omarchy.gaps-toggle` | 400×200 |
 | close_all_windows.sh | `org.omarchy.close-all` | 400×200 |
+| monitor_menu.sh | `org.omarchy.monitor-menu` | 900×650 |
 
 | mic_toggle.sh | `org.omarchy.mic-toggle` | 400×200 |
 
@@ -84,6 +85,7 @@ Cada script Omarchy usa el namespace `org.omarchy.<nombre>` como clase de ventan
 | `org.omarchy.audio-output` — `audio_output_switch.sh` | Cambiar entre salidas de audio | `SUPER + SHIFT + A` | pactl, wpctl, jq |
 | `org.omarchy.gaps-toggle` — `gaps_toggle.sh` | Quitar/restaurar gaps entre ventanas | `SUPER + ALT + G` | hyprctl |
 | `org.omarchy.close-all` — `close_all_windows.sh` | Cerrar todas las ventanas del workspace | `SUPER + ALT + W` | hyprctl, jq |
+| `org.omarchy.monitor-menu` — `monitor_menu.sh` | Gestión interactiva de monitores (perfiles, escala, resolución, estado) | `SUPER + O` | hyprctl, jq, fzf, alacritty |
 
 | `org.omarchy.mic-toggle` — `mic_toggle.sh` | Silenciar/activar micrófono con notificación | `SUPER + SHIFT + M` | wpctl, dunst |
 | — `battery_present.sh` | Detectar si hay batería presente (exit 0/1) | — | /sys/class/power_supply |
@@ -117,7 +119,7 @@ Cada script Omarchy usa el namespace `org.omarchy.<nombre>` como clase de ventan
 |---|---|
 | `nmtui` | Interfaz TUI para NetworkManager (WiFi) |
 | `bluetui` | Interfaz TUI para Bluetooth |
-| `fzf` | Navegación difusa en menús (paquetes, wallpapers) |
+| `fzf` | Navegación difusa en menús (paquetes, wallpapers, monitores) |
 | `grim` / `slurp` | Captura de pantalla en Wayland |
 | `swappy` | Anotación de capturas |
 | `swaybg` | Gestión de fondos de pantalla |
@@ -133,6 +135,8 @@ Cada script Omarchy usa el namespace `org.omarchy.<nombre>` como clase de ventan
 | `pandoc` | Previsualización de documentos (Ranger) |
 | `socat` | Escucha de sockets (monitor_watch, opcional) |
 | `upower` | Información de batería |
+| `hyprctl` | Cambiar configuración de monitores en caliente |
+| `kanshi` | Gestión automática de perfiles de monitor |
 
 ---
 

@@ -51,6 +51,13 @@ hl.window_rule({
 })
 
 hl.window_rule({
+    match = { class = "^org\\.omarchy\\.monitor-menu$" },
+    float = true,
+    size = { 900, 650 },
+    center = true,
+})
+
+hl.window_rule({
     match = { class = "^org\\.omarchy\\.sysmenu$" },
     float = true,
     size = { 350, 220 },
