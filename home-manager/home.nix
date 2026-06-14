@@ -251,13 +251,15 @@ in
 
     downloadPiperModel = lib.hm.dag.entryAfter ["writeBoundary"] ''
       if [ ! -f "$HOME/.local/share/piper-tts/es_MX-claude-x_low.onnx" ]; then
-        $DRY_RUN_CMD mkdir -p "$VERBOSE_ARG" "$HOME/.local/share/piper-tts"
+        $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "$HOME/.local/share/piper-tts"
         $DRY_RUN_CMD ${pkgs.curl}/bin/curl -fL --progress-bar \
           -o "$HOME/.local/share/piper-tts/es_MX-claude-x_low.onnx" \
-          "https://huggingface.co/rhasspy/piper-voices/resolve/main/es/es_MX/claude/low/es_MX-claude-x_low.onnx"
+          "https://huggingface.co/rhasspy/piper-voices/resolve/main/es/es_MX/claude/low/es_MX-claude-x_low.onnx" \
+          || true
         $DRY_RUN_CMD ${pkgs.curl}/bin/curl -fL --progress-bar \
           -o "$HOME/.local/share/piper-tts/es_MX-claude-x_low.onnx.json" \
-          "https://huggingface.co/rhasspy/piper-voices/resolve/main/es/es_MX/claude/low/es_MX-claude-x_low.onnx.json"
+          "https://huggingface.co/rhasspy/piper-voices/resolve/main/es/es_MX/claude/low/es_MX-claude-x_low.onnx.json" \
+          || true
       fi
     '';
   };
