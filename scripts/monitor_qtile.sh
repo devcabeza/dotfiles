@@ -79,13 +79,10 @@ get_outputs_xrandr() {
 }
 
 # Obtiene el modo actual (resolución@refresco) para un output en wlr-randr.
-# Ejemplo de output de wlr-randr:
-#   DP-1 "Monitor" (connected)
-#     1920x1080@60.000 Hz (preferred, current)
-# Esta función devuelve: 1920x1080@60
+# Usa grep -oE con POSIX regex en vez de -P, que falla en algunos sistemas.
 get_mode_wlr() {
     local output="$1"
-    wlr-randr 2>/dev/null | grep -A10 "^${output}" | grep -oP '\d+x\d+@\d+' | head -1
+    wlr-randr 2>/dev/null | grep -A10 "^${output}" | grep -oE '[0-9]+x[0-9]+@[0-9]+' | head -1
 }
 
 get_external() {
@@ -154,21 +151,23 @@ apply_solo_externo() {
                 error_no_external
                 return 1
             fi
+            # Capturar modo del externo ANTES de apagar el laptop
+            local mode
+            mode=$(get_mode_wlr "$external")
+            if [ -z "$mode" ]; then
+                # Intentar con modo por defecto
+                mode="1920x1080@60"
+                notify "low" "Monitor" "⚠️ Usando modo por defecto ${mode} para ${external}"
+            fi
             # Apagar laptop
             local laptop
             laptop=$(get_outputs_wlr | grep -i 'eDP' | head -1)
             if [ -n "$laptop" ]; then
                 wlr-randr --output "$laptop" --off 2>/dev/null || true
             fi
-            # Encender externo con su modo actual
-            local mode
-            mode=$(get_mode_wlr "$external")
-            if [ -z "$mode" ]; then
-                notify "critical" "Monitor" "❌ No se pudo detectar el modo para $external"
-                return 1
-            fi
+            # Encender externo
             wlr-randr --output "$external" --on --mode "$mode" 2>/dev/null || {
-                notify "critical" "Monitor" "❌ Error al configurar $external"
+                notify "critical" "Monitor" "❌ Error al configurar $external con modo $mode"
                 return 1
             }
             ;;

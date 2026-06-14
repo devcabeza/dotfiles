@@ -430,16 +430,23 @@ screens = [
 # AUTOSTART (≈ autostart.lua)
 # ═══════════════════════════════════════════
 
+# Hook para wallpaper independiente (se ejecuta también en recargas)
+@hook.subscribe.startup
+def set_wallpaper():
+    """Fondo de pantalla — se ejecuta en cada reload también"""
+    subprocess.Popen(
+        f"{nix_bin}/swaybg -i {wallpaper_dir}/$(ls {wallpaper_dir}/ | head -1) -m fill",
+        shell=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+
 @hook.subscribe.startup_once
 def autostart():
-    """≈ autostart.lua — Servicios al arrancar"""
+    """≈ autostart.lua — Servicios al arrancar (una sola vez)"""
     commands = [
-        # Fondo de pantalla
-        f"{nix_bin}/swaybg -i {wallpaper_dir}/$(ls {wallpaper_dir}/ | head -1) -m fill",
         f"{scripts}/wallpaper_carousel.sh",
-
-        # Waybar se reemplazó por la barra nativa de Qtile
-        # (más arriba en este archivo)
 
         # Notificaciones
         f"{nix_bin}/dunst",
