@@ -21,11 +21,6 @@ return {
 			name = "snacks_picker",
 		},
 
-		-- Completado usando blink.cmp
-		completion = {
-			blink = true,
-		},
-
 		-- Configuración de notas diarias
 		daily_notes = {
 			enabled = true,
@@ -44,7 +39,9 @@ return {
 
 		-- Configuración de enlaces (nueva API)
 		-- wiki_link_func ahora es parte de 'link'
-		preferred_link_style = "wiki",
+		link = {
+			style = "wiki",
+		},
 
 		-- Propiedades (Obsidian format)
 		properties = {

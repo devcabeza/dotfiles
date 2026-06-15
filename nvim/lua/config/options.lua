@@ -84,7 +84,7 @@ vim.schedule(function()
 
 	if has_uc then
 		-- universal-clipboard.nvim handles everything
-		vim.notify("Universal Clipboard enabled", vim.log.levels.INFO)
+
 	elseif vim.fn.has("clipboard") == 1 then
 		-- Use X11 clipboard explicitly (xclip) when DISPLAY is set
 		-- This avoids issues with Wayland when both X11 and Wayland vars are set
