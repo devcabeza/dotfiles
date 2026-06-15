@@ -1,6 +1,5 @@
 return { -- Highlight, edit, and navigate code
 	"nvim-treesitter/nvim-treesitter",
-	tag = "v0.9.3",
 	build = require("nixCatsUtils").lazyAdd(":TSUpdate"),
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-textobjects",
@@ -103,8 +102,42 @@ return { -- Highlight, edit, and navigate code
 		})
 
 		require("nvim-treesitter.install").prefer_git = true
-		---@diagnostic disable-next-line: missing-fields
-		require("nvim-treesitter.configs").setup(opts)
+
+		-- Envolver setup en pcall para evitar que errores de parsers rompan la UI
+		local setup_ok, setup_err = pcall(function()
+			---@diagnostic disable-next-line: missing-fields
+			require("nvim-treesitter.configs").setup(opts)
+		end)
+		if not setup_ok then
+			vim.notify(
+				"nvim-treesitter: Error en setup - " .. tostring(setup_err),
+				vim.log.levels.WARN
+			)
+		end
+
+		-- Neovim 0.12+: Registrar parsers explícitamente para evitar errores de ABI
+		-- Los parsers vienen de nixpkgs via nvim-treesitter.withPlugins
+		vim.schedule(function()
+			local parsers_installed = {
+				"bash", "lua", "vimdoc", "vim",
+				"javascript", "typescript", "tsx",
+				"json", "html", "css", "python",
+				"markdown", "markdown_inline", "php",
+				"regex", "toml", "yaml", "xml",
+				"dockerfile", "diff", "sql",
+				"astro", "vue", "svelte", "prisma",
+				"query", "luadoc", "luap", "c",
+			}
+
+			-- Si existe el módulo language.add, registrar parsers
+			local language_ok, language = pcall(require, "vim.treesitter.language")
+			if language_ok and language.add then
+				for _, parser_name in ipairs(parsers_installed) do
+					pcall(language.add, parser_name)
+				end
+			end
+		end)
+
 		-- No instalar automáticamente blade y prisma, ya están instalados manualmente
 		-- require("nvim-treesitter.install").ensure_installed({ "blade", "prisma" })
 	end,
