@@ -115,28 +115,53 @@ return { -- Highlight, edit, and navigate code
 			)
 		end
 
-		-- Neovim 0.12+: Registrar parsers explícitamente para evitar errores de ABI
-		-- Los parsers vienen de nixpkgs via nvim-treesitter.withPlugins
-		vim.schedule(function()
-			local parsers_installed = {
-				"bash", "lua", "vimdoc", "vim",
-				"javascript", "typescript", "tsx",
-				"json", "html", "css", "python",
-				"markdown", "markdown_inline", "php",
-				"regex", "toml", "yaml", "xml",
-				"dockerfile", "diff", "sql",
-				"astro", "vue", "svelte", "prisma",
-				"query", "luadoc", "luap", "c",
-			}
+		-- Neovim 0.12+: Registrar parsers explícitamente
+		-- NOTA: No usar vim.schedule aquí - debe ejecutarse antes de cualquier highlight
+		local parsers_installed = {
+			"bash", "lua", "vimdoc", "vim",
+			"javascript", "typescript", "tsx",
+			"json", "html", "css", "python",
+			"markdown", "markdown_inline", "php",
+			"regex", "toml", "yaml", "xml",
+			"dockerfile", "diff", "sql",
+			"astro", "vue", "svelte", "prisma",
+			"query", "luadoc", "luap", "c",
+		}
 
-			-- Si existe el módulo language.add, registrar parsers
-			local language_ok, language = pcall(require, "vim.treesitter.language")
-			if language_ok and language.add then
-				for _, parser_name in ipairs(parsers_installed) do
-					pcall(language.add, parser_name)
+		-- Registrar parsers si el módulo language está disponible
+		local language_ok, language = pcall(require, "vim.treesitter.language")
+		if language_ok and language.add then
+			for _, parser_name in ipairs(parsers_installed) do
+				-- pcall para que un parser que falle no rompa los demás
+				pcall(language.add, parser_name)
+			end
+		end
+
+		-- Monkey-patch: Atrapar errores de ABI en LanguageTree._parse
+		-- Esto evita que parsers con ABI incompatible (range nil) rompan la UI
+		-- cuando el highlighter hace parseo asíncrono (vim.schedule)
+		local ok_lt, LanguageTree = pcall(require, "vim.treesitter.languagetree")
+		if ok_lt and LanguageTree then
+			local orig_parse = LanguageTree._parse
+			if orig_parse then
+				LanguageTree._parse = function(self, range, thread_state)
+					local ok, result1, result2 = pcall(orig_parse, self, range, thread_state)
+					if not ok then
+						vim.notify(
+							string.format(
+								"Treesitter: parser '%s' ABI mismatch - %s",
+								self:lang(),
+								tostring(result1):gsub("\n.*", "")
+							),
+							vim.log.levels.WARN
+						)
+						-- Devolver árboles actuales como "finished" para parar el loop asíncrono
+						return self._trees, true
+					end
+					return result1, result2
 				end
 			end
-		end)
+		end
 
 		-- No instalar automáticamente blade y prisma, ya están instalados manualmente
 		-- require("nvim-treesitter.install").ensure_installed({ "blade", "prisma" })
