@@ -137,24 +137,49 @@ return { -- Highlight, edit, and navigate code
 			end
 		end
 
+		-- Cache de parsers con ABI incompatible (para no repetir warnings)
+		local broken_parsers = {}
+		local warned_parsers = {}
+
 		-- Monkey-patch: Atrapar errores de ABI en LanguageTree._parse
-		-- Esto evita que parsers con ABI incompatible (range nil) rompan la UI
-		-- cuando el highlighter hace parseo asíncrono (vim.schedule)
+		-- Cuando un parser tiene ABI incompatible (range nil en Neovim 0.12+),
+		-- se marca como roto y se salta en futuros intentos de parseo.
 		local ok_lt, LanguageTree = pcall(require, "vim.treesitter.languagetree")
 		if ok_lt and LanguageTree then
 			local orig_parse = LanguageTree._parse
 			if orig_parse then
 				LanguageTree._parse = function(self, range, thread_state)
+					local lang = self:lang()
+
+					-- Si este parser ya se sabe roto, saltear sin intentar parsear
+					if broken_parsers[lang] then
+						return self._trees, true
+					end
+
 					local ok, result1, result2 = pcall(orig_parse, self, range, thread_state)
 					if not ok then
-						vim.notify(
-							string.format(
-								"Treesitter: parser '%s' ABI mismatch - %s",
-								self:lang(),
-								tostring(result1):gsub("\n.*", "")
-							),
-							vim.log.levels.WARN
-						)
+						-- Marcar como roto para no volver a intentar
+						broken_parsers[lang] = true
+
+						-- Advertir solo UNA VEZ por lenguaje
+						if not warned_parsers[lang] then
+							warned_parsers[lang] = true
+							vim.notify(
+								string.format(
+									"Treesitter: parser '%s' incompatible (ABI mismatch) - desactivado",
+									lang
+								),
+								vim.log.levels.WARN
+							)
+						end
+
+						-- Detener treesitter en buffers existentes con este filetype
+						for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+							if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].filetype == lang then
+								pcall(vim.treesitter.stop, buf)
+							end
+						end
+
 						-- Devolver árboles actuales como "finished" para parar el loop asíncrono
 						return self._trees, true
 					end
