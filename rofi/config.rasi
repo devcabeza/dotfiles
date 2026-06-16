@@ -1,3 +1,5 @@
+@theme "/home/alejandrocabeza/.config/rofi/themes/gruvbox-material.rasi"
+
 * {
     font: "Hack Nerd Font Mono 12";
 }
@@ -5,9 +7,9 @@
 configuration {
     modi: "drun,run,window";
     show-icons: true;
-    display-drun: " Apps";
-    display-run: " Run";
-    display-window: " Ventanas";
+    display-drun: "Apps";
+    display-run: "Run";
+    display-window: "Ventanas";
     drun-display-format: "{name}";
     window-format: "{w} · {c} · {t}";
     icon-theme: "Papirus";
@@ -15,5 +17,3 @@ configuration {
     kb-mode-next: "Shift+Tab";
     kb-mode-previous: "Tab";
 }
-
-@theme "/home/alejandrocabeza/.config/rofi/themes/gruvbox-material"

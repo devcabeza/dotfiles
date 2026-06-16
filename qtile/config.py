@@ -54,8 +54,8 @@ keys = [
     Key([mod], "b", lazy.spawn("firefox"), desc="Lanzar navegador"),
     Key([mod, "shift"], "b", lazy.spawn("thunar"), desc="Lanzar gestor de archivos"),
     # Lanzador
-    Key([mod], "space", lazy.spawn("rofi -show drun -theme ~/.config/rofi/themes/gruvbox-material"), desc="Lanzar rofi"),
-    Key([mod, "shift"], "space", lazy.spawn("rofi -show window -theme ~/.config/rofi/themes/gruvbox-material"), desc="Selector de ventanas"),
+    Key([mod], "space", lazy.spawn("rofi -show drun"), desc="Lanzar rofi"),
+    Key([mod, "shift"], "space", lazy.spawn("rofi -show window"), desc="Selector de ventanas"),
     # Gestión de ventanas
     Key([mod], "Tab", lazy.next_layout(), desc="Alternar entre layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Cerrar ventana enfocada"),
