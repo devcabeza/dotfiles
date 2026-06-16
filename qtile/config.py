@@ -185,7 +185,7 @@ screens = [
             border_width=[0, 0, 2, 0],
             border_color=[colors["bg1"], colors["bg1"], colors["blue"], colors["bg1"]],
         ),
-        wallpaper=WALLPAPER_PATH,
+        wallpaper=None,
         wallpaper_mode="fill",
     ),
 ]
