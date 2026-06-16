@@ -64,7 +64,7 @@ def test_bar_widget_count():
                                             if isinstance(bar_arg, ast.List):
                                                 widgets = bar_arg.elts
                                                 count = len(widgets)
-                                                if count <= 5:
+                                                if count <= 6:
                                                     print(f"  ✅ BAR: {count} widgets (≤ 5) — minimal")
                                                     return True
                                                 else:

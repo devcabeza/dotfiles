@@ -6,7 +6,7 @@ from libqtile.lazy import lazy
 
 mod = "mod4"
 terminal = "alacritty"
-WALLPAPER_PATH = os.path.expanduser("~/.dotfiles/wallpapers/anime-girl-dream-happy-girl-moon-crescent-moon-girly-3840x2160-8360.jpg")
+
 
 colors = {
     "bg": "#282828",
@@ -113,21 +113,21 @@ for i in groups:
 # --- Layouts ---
 layouts = [
     layout.MonadTall(
-        margin=8,
+        margin=12,
         border_width=2,
         border_focus=colors["blue"],
         border_normal=colors["bg1"],
         single_border_width=0,
-        single_margin=8,
+        single_margin=12,
     ),
-    layout.Max(margin=8),
+    layout.Max(margin=12),
 ]
 
 # --- Widgets y barra ---
 widget_defaults = dict(
     font="Hack Nerd Font Mono",
     fontsize=12,
-    padding=3,
+    padding=5,
 )
 extension_defaults = widget_defaults.copy()
 
@@ -147,16 +147,16 @@ screens = [
                     fontsize=12,
                     margin_y=3,
                     margin_x=0,
-                    padding_y=6,
-                    padding_x=5,
+                    padding_y=8,
+                    padding_x=8,
                     borderwidth=0,
                     active=colors["fg"],
                     inactive=colors["gray"],
                     rounded=False,
-                    highlight_color=colors["bg1"],
-                    highlight_method="line",
+                    highlight_color=colors["bg2"],
+                    highlight_method="block",
                     this_current_screen_border=colors["blue"],
-                    this_screen_border=colors["bg2"],
+                    this_screen_border=colors["bg1"],
                     other_current_screen_border=colors["bg2"],
                     other_screen_border=colors["bg1"],
                     foreground=colors["fg"],
@@ -165,6 +165,7 @@ screens = [
                     urgent_text=colors["red"],
                     urgent_border=colors["red"],
                 ),
+                widget.Spacer(length=4, background=colors["bg0"]),
                 widget.WindowName(
                     foreground=colors["fg"],
                     background=colors["bg0"],
@@ -173,7 +174,7 @@ screens = [
                 widget.Spacer(background=colors["bg0"]),
                 widget.Clock(
                     format="%H:%M",
-                    foreground=colors["fg"],
+                    foreground=colors["fg_bright"],
                     background=colors["bg0"],
                     padding=10,
                 ),
@@ -243,8 +244,9 @@ wmname = "LG3D"
 
 @hook.subscribe.startup_once
 def autostart():
-    # Wallpaper
-    if os.path.exists(WALLPAPER_PATH):
-        subprocess.Popen(["feh", "--bg-fill", WALLPAPER_PATH])
+    # Carrusel de wallpapers
+    wallpaper_script = os.path.expanduser("~/.dotfiles/scripts/wallpaper-carousel.sh")
+    if os.path.exists(wallpaper_script):
+        subprocess.Popen(["bash", wallpaper_script])
     # NetworkManager applet
     subprocess.Popen(["nm-applet"])
