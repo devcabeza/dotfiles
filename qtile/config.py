@@ -146,12 +146,12 @@ screens = [
                     margin_x=0,
                     padding_y=8,
                     padding_x=8,
-                    borderwidth=0,
+                    borderwidth=2,
                     active=colors["fg"],
                     inactive=colors["gray"],
                     rounded=False,
-                    highlight_color=colors["bg2"],
-                    highlight_method="block",
+                    highlight_color=colors["bg1"],
+                    highlight_method="line",
                     this_current_screen_border=colors["blue"],
                     this_screen_border=colors["bg1"],
                     other_current_screen_border=colors["bg1"],
@@ -255,7 +255,6 @@ wmname = "LG3D"
 
 @hook.subscribe.startup_once
 def autostart():
-    # Carrusel de wallpapers
     wallpaper_script = os.path.expanduser("~/.dotfiles/scripts/wallpaper-carousel.sh")
     if os.path.exists(wallpaper_script):
         subprocess.Popen(["bash", wallpaper_script])
