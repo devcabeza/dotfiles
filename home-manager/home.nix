@@ -174,6 +174,9 @@ in
 
     # qtile
     ".config/qtile".source = ../qtile;
+
+    # rofi
+    ".config/rofi".source = ../rofi;
   };
 
 
