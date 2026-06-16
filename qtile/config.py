@@ -93,15 +93,10 @@ for vt in range(1, 8):
 
 # --- Grupos ---
 groups = [
-    Group("1", label="\ue795", layout="monadtall"),
-    Group("2", label="\ued59", layout="monadtall"),
-    Group("3", label="\ued1e", layout="monadtall"),
-    Group("4", label="\uf086", layout="monadtall"),
-    Group("5", label="\ued86", layout="monadtall"),
-    Group("6", label="\uf001", layout="monadtall"),
-    Group("7", label="\ued0b", layout="monadtall"),
-    Group("8", label="\uf6ed", layout="max"),
-    Group("9", label="\uedc6", layout="monadtall"),
+    Group("1", label="\uf120", layout="monadtall"),  #  terminal - dev
+    Group("2", label="\uf0ac", layout="monadtall"),  #  globe - web
+    Group("3", label="\uf086", layout="monadtall"),  #  comments - chat
+    Group("4", label="\uf013", layout="monadtall"),  #  cog - system
 ]
 
 for i in groups:
@@ -135,6 +130,7 @@ screens = [
     Screen(
         top=bar.Bar(
             [
+                # --- Left section ---
                 widget.CurrentLayout(
                     custom_icon_paths=[],
                     foreground=colors["blue"],
@@ -142,6 +138,7 @@ screens = [
                     padding=0,
                     scale=0.7,
                 ),
+                widget.Spacer(length=4, background=colors["bg0"]),
                 widget.GroupBox(
                     font="Hack Nerd Font Mono",
                     fontsize=12,
@@ -157,7 +154,7 @@ screens = [
                     highlight_method="block",
                     this_current_screen_border=colors["blue"],
                     this_screen_border=colors["bg1"],
-                    other_current_screen_border=colors["bg2"],
+                    other_current_screen_border=colors["bg1"],
                     other_screen_border=colors["bg1"],
                     foreground=colors["fg"],
                     background=colors["bg0"],
@@ -165,18 +162,32 @@ screens = [
                     urgent_text=colors["red"],
                     urgent_border=colors["red"],
                 ),
-                widget.Spacer(length=4, background=colors["bg0"]),
-                widget.WindowName(
-                    foreground=colors["fg"],
-                    background=colors["bg0"],
-                    width=bar.CALCULATED,
-                ),
+                # --- Center section ---
                 widget.Spacer(background=colors["bg0"]),
                 widget.Clock(
-                    format="%H:%M",
+                    format="%Y-%m-%d %a %H:%M",
                     foreground=colors["fg_bright"],
                     background=colors["bg0"],
                     padding=10,
+                ),
+                widget.Spacer(background=colors["bg0"]),
+                # --- Right section ---
+                widget.Volume(
+                    foreground=colors["fg"],
+                    background=colors["bg0"],
+                    padding=5,
+                ),
+                widget.Spacer(length=4, background=colors["bg0"]),
+                widget.Battery(
+                    foreground=colors["fg"],
+                    background=colors["bg0"],
+                    padding=5,
+                ),
+                widget.Spacer(length=4, background=colors["bg0"]),
+                widget.Systray(
+                    foreground=colors["fg"],
+                    background=colors["bg0"],
+                    padding=5,
                 ),
             ],
             28,

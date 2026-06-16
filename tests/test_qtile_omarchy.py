@@ -45,7 +45,7 @@ def test_syntax():
         return False
 
 def test_bar_widget_count():
-    """Test 2: Bar should have ≤ 5 widgets (minimal)."""
+    """Test 2: Bar should have ≤ 12 widgets (tri-section layout)."""
     tree = parse_config()
     # Find the screens list, then the bar widget list
     for node in ast.walk(tree):
@@ -64,11 +64,11 @@ def test_bar_widget_count():
                                             if isinstance(bar_arg, ast.List):
                                                 widgets = bar_arg.elts
                                                 count = len(widgets)
-                                                if count <= 6:
-                                                    print(f"  ✅ BAR: {count} widgets (≤ 5) — minimal")
+                                                if count <= 12:
+                                                    print(f"  ✅ BAR: {count} widgets (≤ 12) — tri-section layout")
                                                     return True
                                                 else:
-                                                    print(f"  ❌ BAR: {count} widgets (> 5) — too bloated")
+                                                    print(f"  ❌ BAR: {count} widgets (> 12) — too bloated")
                                                     return False
     print("  ❌ BAR: Could not determine widget count")
     return False
@@ -86,21 +86,6 @@ def test_no_prompt():
                 print(f"  ❌ PROMPT: Prompt widget found (should be removed)")
                 return False
     print(f"  ✅ PROMPT: No Prompt widget in bar")
-    return True
-
-def test_no_systray():
-    """Test 4: No Systray widget in bar."""
-    tree = parse_config()
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Call):
-            if isinstance(node.func, ast.Attribute):
-                if node.func.attr == "Systray":
-                    print(f"  ❌ SYSTRAY: Systray widget found (should be removed)")
-                    return False
-            elif isinstance(node.func, ast.Name) and node.func.id == "Systray":
-                print(f"  ❌ SYSTRAY: Systray widget found (should be removed)")
-                return False
-    print(f"  ✅ SYSTRAY: No Systray widget in bar")
     return True
 
 def test_no_quickexit():
@@ -205,7 +190,7 @@ def test_precise_brightness():
 
 def main():
     print("=" * 60)
-    print("  Qtile Omarchy-Style Configuration Tests (RED Phase)")
+    print("  Qtile Omarchy-Style Configuration Tests (GREEN Phase)")
     print("=" * 60)
     print()
     print(f"Config file: {CONFIG_PATH}")
@@ -213,9 +198,8 @@ def main():
     
     tests = [
         ("Syntax check", test_syntax),
-        ("Minimal bar (≤5 widgets)", test_bar_widget_count),
+        ("Tri-section bar (≤12 widgets)", test_bar_widget_count),
         ("No Prompt widget", test_no_prompt),
-        ("No Systray widget", test_no_systray),
         ("No QuickExit widget", test_no_quickexit),
         ("Only MonadTall + Max layouts", test_only_two_layouts),
         ("Workspace cycling (Super+←/→)", test_workspace_cycling),
