@@ -1,9 +1,3 @@
-@theme "/home/alejandrocabeza/.config/rofi/themes/gruvbox-material.rasi"
-
-* {
-    font: "Hack Nerd Font Mono 12";
-}
-
 configuration {
     modi: "drun,run,window";
     show-icons: true;
@@ -16,4 +10,8 @@ configuration {
     terminal: "alacritty";
     kb-mode-next: "Shift+Tab";
     kb-mode-previous: "Tab";
+}
+
+* {
+    font: "Hack Nerd Font Mono 12";
 }
