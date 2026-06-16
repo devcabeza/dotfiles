@@ -109,7 +109,7 @@ for i in groups:
 layouts = [
     layout.MonadTall(
         margin=12,
-        border_width=2,
+        border_width=3,
         border_focus=colors["blue"],
         border_normal=colors["bg1"],
         single_border_width=0,
