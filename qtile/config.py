@@ -75,6 +75,7 @@ keys = [
     # Capturas de pantalla
     Key([], "Print", lazy.spawn("~/.dotfiles/scripts/screenshot.sh full"), desc="Captura de pantalla completa"),
     Key(["shift"], "Print", lazy.spawn("~/.dotfiles/scripts/screenshot.sh area"), desc="Captura de área"),
+    Key([mod, "shift"], "s", lazy.spawn("~/.dotfiles/scripts/screenshot.sh area"), desc="Captura de área (Super+Shift+S)"),
     # Sistema Qtile
     Key([mod, "control"], "r", lazy.reload_config(), desc="Recargar configuración"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Apagar Qtile"),
