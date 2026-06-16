@@ -70,7 +70,7 @@ return { -- Highlight, edit, and navigate code
 		local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 		parser_config.blade = {
 			install_info = {
-				url = "git@github.com:EmranMR/tree-sitter-blade",
+				url = "https://github.com/EmranMR/tree-sitter-blade",
 				files = { "src/parser.c" },
 				branch = "main",
 			},
@@ -79,7 +79,7 @@ return { -- Highlight, edit, and navigate code
 		-- Configuración de Prisma parser
 		parser_config.prisma = {
 			install_info = {
-				url = "git@github.com:victorhqc/tree-sitter-prisma",
+				url = "https://github.com/victorhqc/tree-sitter-prisma",
 				files = { "src/parser.c" },
 				branch = "main",
 			},

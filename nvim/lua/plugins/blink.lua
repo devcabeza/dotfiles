@@ -18,6 +18,13 @@ return {
 					-- PERFORMANCE: Cargar snippets bajo demanda
 					require("luasnip.loaders.from_vscode").lazy_load({ lazy = true })
 					require("luasnip.loaders.from_snipmate").lazy_load()
+
+					-- Cargar snippets personalizados de Blade
+					local ok_snippets, blade_snippets = pcall(require, "config.snippets.blade")
+					if ok_snippets and blade_snippets and type(blade_snippets) == "table" then
+						local ls = require("luasnip")
+						ls.add_snippets("blade", blade_snippets)
+					end
 				end,
 			},
 			{ "echasnovski/mini.icons", opts = {} },
