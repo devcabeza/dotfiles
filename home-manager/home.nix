@@ -171,6 +171,9 @@ in
     # Ranger Config
     ".config/ranger/rc.conf".source = ../ranger/rc.conf;
     ".config/ranger/scope.sh".source = ../ranger/scope.sh;
+
+    # qtile
+    ".config/qtile".source = ../qtile;
   };
 
 

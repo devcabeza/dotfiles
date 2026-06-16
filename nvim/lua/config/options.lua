@@ -23,7 +23,7 @@ vim.g.loaded_rrhelper = 1
 -- Disable slower features
 vim.g.ruler = false -- Don't show ruler (lualine handles this)
 vim.g.showcmd = false -- Don't show command (lualine handles this)
-vim.g.cmdheight = 0 -- No command line height (use built-in)
+vim.g.cmdheight = 1 -- Mínimo necesario para evitar E565 en floating windows
 
 -- Faster redraws
 vim.opt.redrawtime = 1500 -- Allow longer redraw for syntax
