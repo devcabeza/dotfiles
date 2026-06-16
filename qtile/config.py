@@ -135,7 +135,7 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.CurrentLayoutIcon(
+                widget.CurrentLayout(
                     custom_icon_paths=[],
                     foreground=colors["blue"],
                     background=colors["bg0"],
