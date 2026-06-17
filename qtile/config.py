@@ -53,6 +53,9 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Lanzar terminal"),
     Key([mod], "b", lazy.spawn("firefox"), desc="Lanzar navegador"),
     Key([mod, "shift"], "b", lazy.spawn("thunar"), desc="Lanzar gestor de archivos"),
+    # Herramientas de sistema (flotantes)
+    Key([mod, "shift"], "h", lazy.spawn("alacritty --title htop -e htop"), desc="Monitor del sistema (flotante)"),
+    Key([mod, "shift"], "m", lazy.spawn("alacritty --title pulsemixer -e pulsemixer"), desc="Mezclador de audio (flotante)"),
     # Lanzador
     Key([mod], "space", lazy.spawn("rofi -show drun"), desc="Lanzar rofi"),
     Key([mod, "shift"], "space", lazy.spawn("rofi -show window"), desc="Selector de ventanas"),
@@ -231,6 +234,9 @@ floating_layout = layout.Floating(
         Match(wm_class="org.gnome.Nautilus"),
         Match(title="Open File"),
         Match(title="Save As"),
+        # Terminales de sistema — flotantes automáticos
+        Match(title="htop"),
+        Match(title="pulsemixer"),
     ],
     border_width=2,
     border_focus=colors["blue"],
@@ -251,6 +257,18 @@ idle_timers = []
 idle_inhibitors = []
 
 wmname = "LG3D"
+
+
+@hook.subscribe.client_new
+def set_floating(window):
+    """Auto-flota diálogos, notificaciones, toolbars y pantallas de carga."""
+    if window.window is None:
+        return
+    if (
+        window.window.get_wm_transient_for()
+        or window.window.get_wm_type() in ["notification", "toolbar", "splash", "dialog"]
+    ):
+        window.floating = True
 
 
 @hook.subscribe.startup_once
