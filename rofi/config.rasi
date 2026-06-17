@@ -8,8 +8,7 @@ configuration {
     display-window: "Ventanas";
     icon-theme: "Papirus";
     terminal: "alacritty";
-    kb-mode-next: "Shift+Tab";
-    kb-mode-previous: "Tab";
+    kb-mode-next: "Control+Tab";
     window-format: "{w} · {c} · {t}";
     drun-display-format: "{name}";
 }
