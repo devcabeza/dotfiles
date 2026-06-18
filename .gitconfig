@@ -61,5 +61,6 @@
     line-numbers = true
 [pull]
     rebase = false
-[credential "helperselector"]
-    selected = wincred
+
+[credential "https://github.com"]
+    helper = !gh auth git-credential

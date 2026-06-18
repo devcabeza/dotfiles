@@ -39,7 +39,7 @@ let
       owner = "Gentleman-Programming";
       repo = "engram";
       rev = "main";
-      sha256 = "sha256-HwYq6wmE3O47ZC8gWE8ZamCVim5F2KHGVJs9wVTLdXw=";
+      sha256 = "sha256-2wJEl004dFjlO7SXn8isAVHsH2rxhTgoCRyDOUWCrS8=";
     };
 
     # Hack para saltar la restricción de Go 1.25.10
@@ -50,10 +50,37 @@ let
     # Hash obtenido de tu error anterior (Verificado)
     vendorHash = "sha256-O+pC4x4DKNUWr7Sx9iZOjK6a64wrQA4/lnjvkNLBX64="; 
 
-    subPackages = [ "." ];
+    subPackages = [ "cmd/engram" ];
+
+    # Los tests requieren git y red; se deshabilitan en el sandbox de Nix
+    doCheck = false;
+  };
+
+  # --- PHP Debug Adapter (inlineado porque Nix no copia archivos sueltos al store) ---
+  phpDebugAdapter = pkgs.stdenv.mkDerivation {
+    name = "php-debug-adapter";
+    version = "1.33.1";
+    src = pkgs.fetchurl {
+      url = "https://github.com/xdebug/vscode-php-debug/releases/download/v1.33.1/php-debug-1.33.1.vsix";
+      sha256 = "sha256-oN9xhG8BkK/jLS9aRV4Ff+EHsLcWe60Z2GDlvgkh5HM=";
+    };
+    buildInputs = [ pkgs.unzip ];
+    phases = [ "unpackPhase" "installPhase" ];
+    unpackPhase = ''
+      mkdir -p $out/extracted
+      unzip $src -d $out/extracted
+    '';
+    installPhase = ''
+      mkdir -p $out/bin
+      echo '#!/bin/sh' > $out/bin/php-debug-adapter
+      echo 'export LD_LIBRARY_PATH=$out/extracted' >> $out/bin/php-debug-adapter
+      echo 'exec ${pkgs.nodejs}/bin/node ''${placeholder "out"}/extracted/extension/out/phpDebug.js "$@"' >> $out/bin/php-debug-adapter
+      chmod +x "$out/bin/php-debug-adapter"
+    '';
   };
 
 in
+
 {
   # --- Configuración básica de Home Manager ---
   home.username = "alejandrocabeza";
@@ -79,6 +106,7 @@ in
     pkgs.lazysql
     pkgs.lazyjournal
     pkgs.lazyssh
+    pkgs.neovim
     pkgs.xclip
     pkgs.xsel
     pkgs.wl-clipboard
@@ -102,6 +130,7 @@ in
     pkgs.nerd-fonts.hack
     pkgs.nerd-fonts.symbols-only
     pkgs.bluetui
+    pkgs.gh
 
     # WiFi & Bluetooth
     pkgs.blueman
@@ -134,6 +163,48 @@ in
     # Voice Chat
     pkgs.piper-tts
     pkgs.curl
+
+    # ══════════════════════════════════════════════════════
+    # LSPs (Language Servers) — provistos por Nix, no Mason
+    # ══════════════════════════════════════════════════════
+    pkgs.phpactor                          # PHP
+    pkgs.lua-language-server               # Lua
+    pkgs.nixd                              # Nix
+    pkgs.gopls                             # Go
+    pkgs.gotools                           # Go tools
+    pkgs.typescript-language-server        # JS/TS
+    pkgs.tailwindcss-language-server       # Tailwind CSS
+    pkgs.emmet-language-server             # Emmet
+    pkgs.vscode-langservers-extracted      # HTML/CSS/JSON/ESLint
+    pkgs.astro-language-server             # Astro
+    pkgs.vue-language-server               # Vue
+    pkgs.svelte-language-server            # Svelte
+    pkgs.dockerfile-language-server         # Docker
+    pkgs.sqls                              # SQL
+    pkgs.clang-tools                       # C/C++
+    pkgs.python312Packages.python-lsp-server # Python
+    pkgs.golangci-lint-langserver          # Go lint LSP
+
+    # ══════════════════════════════════════════════════════
+    # Formatters adicionales
+    # ══════════════════════════════════════════════════════
+    pkgs.nixfmt                            # Nix
+    pkgs.php83Packages.php-cs-fixer        # PHP
+    pkgs.shfmt                             # Shell
+
+    # ══════════════════════════════════════════════════════
+    # Linters adicionales
+    # ══════════════════════════════════════════════════════
+    pkgs.markdownlint-cli                  # Markdown
+    pkgs.eslint_d                          # JS/TS
+    pkgs.golangci-lint                     # Go
+    pkgs.phpstan                           # PHP
+    pkgs.sqlfluff                          # SQL
+    pkgs.hadolint                          # Docker
+    # ══════════════════════════════════════════════════════
+    # Debug
+    # ══════════════════════════════════════════════════════
+    phpDebugAdapter
   ];
 
   fonts.fontconfig.enable = true;
@@ -171,12 +242,6 @@ in
     # Ranger Config
     ".config/ranger/rc.conf".source = ../ranger/rc.conf;
     ".config/ranger/scope.sh".source = ../ranger/scope.sh;
-
-    # qtile
-    ".config/qtile".source = ../qtile;
-
-    # rofi
-    ".config/rofi".source = ../rofi;
   };
 
 
@@ -232,7 +297,7 @@ in
 
   # --- Programas ---
   programs.home-manager.enable = true;
-  programs.neovim.enable = true;
+  programs.neovim.enable = false;
   programs.ripgrep = { enable = true; arguments = [ "--smart-case" ]; };
 
   programs.fzf = {
