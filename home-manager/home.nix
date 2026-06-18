@@ -99,6 +99,9 @@ in
     pkgs.fastfetch
     pkgs.eza
     pkgs.fzf
+    pkgs.gcc              # compilador C para tree-sitter parsers
+    pkgs.gnumake          # make para build steps de plugins
+    pkgs.tree-sitter      # CLI de tree-sitter
     pkgs.fd
     pkgs.tmux
     pkgs.lazygit
@@ -125,7 +128,6 @@ in
     pkgs.libgcc
     pkgs.bun
     pkgs.python313
-    pkgs.gnumake42
     pkgs.libcdada
     pkgs.nerd-fonts.hack
     pkgs.nerd-fonts.symbols-only

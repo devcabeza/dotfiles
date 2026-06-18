@@ -15,10 +15,38 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json",
   spec = {
-    -- add LazyVim and import its plugins
+    -- LazyVim base
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- import/override with your plugins
+
+    -- Extras de lenguaje (importados aquí, NO en extras.lua)
+    { import = "lazyvim.plugins.extras.lang.php" },
+    { import = "lazyvim.plugins.extras.lang.typescript" },
+    { import = "lazyvim.plugins.extras.lang.rust" },
+    { import = "lazyvim.plugins.extras.lang.go" },
+    { import = "lazyvim.plugins.extras.lang.python" },
+    { import = "lazyvim.plugins.extras.lang.docker" },
+    { import = "lazyvim.plugins.extras.lang.sql" },
+    { import = "lazyvim.plugins.extras.lang.json" },
+    { import = "lazyvim.plugins.extras.lang.yaml" },
+    { import = "lazyvim.plugins.extras.lang.markdown" },
+    { import = "lazyvim.plugins.extras.lang.nix" },
+    { import = "lazyvim.plugins.extras.lang.astro" },
+    { import = "lazyvim.plugins.extras.lang.svelte" },
+    { import = "lazyvim.plugins.extras.lang.vue" },
+
+    -- Extras de herramientas
+    { import = "lazyvim.plugins.extras.dap.core" },
+    { import = "lazyvim.plugins.extras.test.core" },
+    { import = "lazyvim.plugins.extras.editor.inc-rename" },
+    { import = "lazyvim.plugins.extras.coding.blink" },
+
+    -- Linting & Formatting extras
+    { import = "lazyvim.plugins.extras.linting.eslint" },
+    { import = "lazyvim.plugins.extras.formatting.prettier" },
+
+    -- Tus plugins de usuario (siempre al final para que sobreescriban los defaults)
     { import = "plugins" },
   },
   defaults = {

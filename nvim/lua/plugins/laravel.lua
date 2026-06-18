@@ -24,12 +24,14 @@ return {
     "EmranMR/tree-sitter-blade",
     build = "make",
     config = function()
-      vim.treesitter.language.register("blade", "blade")
-      vim.filetype.add({
-        pattern = {
-          { ".*%.blade%.php", "blade" },
-        },
-      })
+      local ok, _ = pcall(vim.treesitter.language.register, "blade", "blade")
+      if ok then
+        vim.filetype.add({
+          pattern = {
+            [".*%.blade%.php"] = "blade",
+          },
+        })
+      end
     end,
   },
 

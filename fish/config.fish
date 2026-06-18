@@ -54,3 +54,14 @@ fish_add_path $ANDROID_HOME/platform-tools
 # Bun global commands
 fish_add_path "/home/alejandrocabeza/.bun/bin"
 
+# ══════════════════════════════════════════════════════
+# Variables locales (NO versionadas - ~/.local.fish)
+# Crea este archivo con tus tokens personales:
+#   set -gx CONTEXT7_API_KEY "tu-api-key"
+#   set -gx VERCEL_TOKEN "tu-token"
+# ══════════════════════════════════════════════════════
+set -l local_file "$HOME/.local.fish"
+if test -f $local_file
+    source $local_file
+end
+
