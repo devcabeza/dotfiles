@@ -1,38 +1,42 @@
--- oil.nvim - Editor de archivos como buffer (alternativa a neo-tree)
 return {
-  {
-    "stevearc/oil.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    cmd = { "Oil" },
-    keys = {
-      { "<leader>-", "<cmd>Oil<cr>", desc = "Open parent directory (oil)" },
-      { "<leader>o", "<cmd>Oil --float<cr>", desc = "Oil (float)" },
+  "stevearc/oil.nvim",
+  event = "VimEnter",
+  opts = {
+    keymaps = {
+      ["g?"] = "actions.show_help",
+      ["<CR>"] = "actions.select",
+      ["<C-M-s>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
+      ["<C-d>"] = {
+        "actions.select",
+        opts = { horizontal = true },
+        desc = "Open the entry in a horizontal split",
+      },
+      ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
+      ["<C-p>"] = "actions.preview", -- Preview entry
+      ["q"] = "actions.close", -- Close oil.nvim
+      ["<C-r>"] = "actions.refresh", -- Refresh oil.nvim
+      ["-"] = "actions.parent", -- Go to parent directory
+      ["_"] = "actions.open_cwd", -- Open current working directory
+      ["`"] = "actions.cd", -- Change directory
+      ["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory" }, -- Change directory for the current tab
+      ["gs"] = "actions.change_sort", -- Change sorting method
+      ["gx"] = "actions.open_external", -- Open entry with external application
+      ["g."] = "actions.toggle_hidden", -- Toggle hidden files
+      ["g\\"] = "actions.toggle_trash", -- Toggle trash
     },
-    opts = {
-      default_file_explorer = false,
-      watch_for_events = { "BufEnter" },
-      keymaps = {
-        ["g?"] = "actions.show_help",
-        ["<CR>"] = "actions.select",
-        ["<C-s>"] = "actions.select_vsplit",
-        ["<C-h>"] = "actions.select_split",
-        ["<C-t>"] = "actions.select_tab",
-        ["<C-p>"] = "actions.preview",
-        ["<C-c>"] = "actions.close",
-        ["<C-r>"] = "actions.refresh",
-        ["-"] = "actions.parent",
-        ["_"] = "actions.open_cwd",
-        ["`"] = "actions.cd",
-        ["~"] = "actions.tcd",
-        ["g."] = "actions.toggle_hidden",
-      },
-      view_options = {
-        show_hidden = true,
-      },
-      float = {
-        max_width = 90,
-        max_height = 40,
-      },
+    use_default_keymaps = false, -- Do not use default key mappings
+    float = {
+      border = "rounded",
+    },
+    view_options = {
+      show_hidden = true,
+    },
+    keymaps_help = {
+      border = "rounded",
     },
   },
+  keys = {
+    { "-", "<cmd>Oil --float<cr>", desc = "Open oil.nvim in float mode" },
+  },
+  dependencies = { { "echasnovski/mini.icons", opts = {} } },
 }

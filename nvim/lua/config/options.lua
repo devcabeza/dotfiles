@@ -4,9 +4,9 @@
 vim.g.lazyvim_mason = false
 
 -- ══════════════════════════════════════════════════════
--- PHP: usar phpactor como LSP
+-- PHP: usar intelephense como LSP (mejor para Laravel/Symfony)
 -- ══════════════════════════════════════════════════════
-vim.g.lazyvim_php_lsp = "phpactor"
+vim.g.lazyvim_php_lsp = "intelephense"
 
 -- ══════════════════════════════════════════════════════
 -- Overrides sobre los defaults de LazyVim
@@ -93,3 +93,39 @@ vim.g.loaded_perl_provider = 0
 vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
 vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
 vim.cmd([[au BufNewFile,BufRead .env* setf sh]])
+
+-- Usar Snacks como picker (compatible con laravel.nvim)
+vim.g.lazyvim_picker = "snacks"
+
+-- ══════════════════════════════════════════════════════
+-- intelephense: configuración específica
+-- ══════════════════════════════════════════════════════
+-- Aumentar maxSize para proyectos grandes con muchos modelos
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "php" },
+  desc = "Intelephense: max file size for large projects",
+  group = vim.api.nvim_create_augroup("intelephense-settings", { clear = true }),
+  callback = function()
+    vim.lsp.config("intelephense", {
+      settings = {
+        intelephense = {
+          files = { maxSize = 2000000 },
+        },
+      },
+    })
+  end,
+})
+
+-- ══════════════════════════════════════════════════════
+-- Filetypes adicionales para frameworks PHP
+-- ══════════════════════════════════════════════════════
+vim.filetype.add({
+  extension = {
+    blade = "blade",
+    twig = "twig",
+  },
+  filename = {
+    ["composer.json"] = "json",
+    ["artisan"] = "php",
+  },
+})

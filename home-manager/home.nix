@@ -1,11 +1,18 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   # --- Configuración de PHP ---
   phpBase = pkgs.php;
 
   phpWithMyExtensions = phpBase.withExtensions (
-    { all, enabled }: enabled ++ [
+    { all, enabled }:
+    enabled
+    ++ [
       all.imagick
       all.gd
       all.pdo_sqlite
@@ -48,7 +55,7 @@ let
     '';
 
     # Hash obtenido de tu error anterior (Verificado)
-    vendorHash = "sha256-O+pC4x4DKNUWr7Sx9iZOjK6a64wrQA4/lnjvkNLBX64="; 
+    vendorHash = "sha256-O+pC4x4DKNUWr7Sx9iZOjK6a64wrQA4/lnjvkNLBX64=";
 
     subPackages = [ "cmd/engram" ];
 
@@ -65,17 +72,21 @@ let
       sha256 = "sha256-oN9xhG8BkK/jLS9aRV4Ff+EHsLcWe60Z2GDlvgkh5HM=";
     };
     buildInputs = [ pkgs.unzip ];
-    phases = [ "unpackPhase" "installPhase" ];
+    phases = [
+      "unpackPhase"
+      "installPhase"
+    ];
     unpackPhase = ''
       mkdir -p $out/extracted
       unzip $src -d $out/extracted
     '';
     installPhase = ''
-      mkdir -p $out/bin
-      echo '#!/bin/sh' > $out/bin/php-debug-adapter
-      echo 'export LD_LIBRARY_PATH=$out/extracted' >> $out/bin/php-debug-adapter
-      echo 'exec ${pkgs.nodejs}/bin/node ''${placeholder "out"}/extracted/extension/out/phpDebug.js "$@"' >> $out/bin/php-debug-adapter
-      chmod +x "$out/bin/php-debug-adapter"
+            mkdir -p $out/bin
+            cat > $out/bin/php-debug-adapter << 'SCRIPT'
+      #!/bin/sh
+      exec ${pkgs.nodejs}/bin/node ${placeholder "out"}/extracted/extension/out/phpDebug.js "$@"
+      SCRIPT
+            chmod +x "$out/bin/php-debug-adapter"
     '';
   };
 
@@ -99,9 +110,9 @@ in
     pkgs.fastfetch
     pkgs.eza
     pkgs.fzf
-    pkgs.gcc              # compilador C para tree-sitter parsers
-    pkgs.gnumake          # make para build steps de plugins
-    pkgs.tree-sitter      # CLI de tree-sitter
+    pkgs.gcc # compilador C para tree-sitter parsers
+    pkgs.gnumake # make para build steps de plugins
+    pkgs.tree-sitter # CLI de tree-sitter
     pkgs.fd
     pkgs.tmux
     pkgs.lazygit
@@ -133,6 +144,7 @@ in
     pkgs.nerd-fonts.symbols-only
     pkgs.bluetui
     pkgs.gh
+    pkgs.symfony-cli # Symfony CLI
 
     # WiFi & Bluetooth
     pkgs.blueman
@@ -169,40 +181,41 @@ in
     # ══════════════════════════════════════════════════════
     # LSPs (Language Servers) — provistos por Nix, no Mason
     # ══════════════════════════════════════════════════════
-    pkgs.phpactor                          # PHP
-    pkgs.lua-language-server               # Lua
-    pkgs.nixd                              # Nix
-    pkgs.gopls                             # Go
-    pkgs.gotools                           # Go tools
-    pkgs.typescript-language-server        # JS/TS
-    pkgs.tailwindcss-language-server       # Tailwind CSS
-    pkgs.emmet-language-server             # Emmet
-    pkgs.vscode-langservers-extracted      # HTML/CSS/JSON/ESLint
-    pkgs.astro-language-server             # Astro
-    pkgs.vue-language-server               # Vue
-    pkgs.svelte-language-server            # Svelte
-    pkgs.dockerfile-language-server         # Docker
-    pkgs.sqls                              # SQL
-    pkgs.clang-tools                       # C/C++
+    pkgs.phpactor # PHP
+    pkgs.intelephense # PHP Framework LSP (Laravel/Symfony)
+    pkgs.lua-language-server # Lua
+    pkgs.nixd # Nix
+    pkgs.gopls # Go
+    pkgs.gotools # Go tools
+    pkgs.typescript-language-server # JS/TS
+    pkgs.tailwindcss-language-server # Tailwind CSS
+    pkgs.emmet-language-server # Emmet
+    pkgs.vscode-langservers-extracted # HTML/CSS/JSON/ESLint
+    pkgs.astro-language-server # Astro
+    pkgs.vue-language-server # Vue
+    pkgs.svelte-language-server # Svelte
+    pkgs.dockerfile-language-server # Docker
+    pkgs.sqls # SQL
+    pkgs.clang-tools # C/C++
     pkgs.python312Packages.python-lsp-server # Python
-    pkgs.golangci-lint-langserver          # Go lint LSP
+    pkgs.golangci-lint-langserver # Go lint LSP
 
     # ══════════════════════════════════════════════════════
     # Formatters adicionales
     # ══════════════════════════════════════════════════════
-    pkgs.nixfmt                            # Nix
-    pkgs.php83Packages.php-cs-fixer        # PHP
-    pkgs.shfmt                             # Shell
+    pkgs.nixfmt # Nix
+    pkgs.php83Packages.php-cs-fixer # PHP
+    pkgs.shfmt # Shell
 
     # ══════════════════════════════════════════════════════
     # Linters adicionales
     # ══════════════════════════════════════════════════════
-    pkgs.markdownlint-cli                  # Markdown
-    pkgs.eslint_d                          # JS/TS
-    pkgs.golangci-lint                     # Go
-    pkgs.phpstan                           # PHP
-    pkgs.sqlfluff                          # SQL
-    pkgs.hadolint                          # Docker
+    pkgs.markdownlint-cli # Markdown
+    pkgs.eslint_d # JS/TS
+    pkgs.golangci-lint # Go
+    pkgs.phpstan # PHP
+    pkgs.sqlfluff # SQL
+    pkgs.hadolint # Docker
     # ══════════════════════════════════════════════════════
     # Debug
     # ══════════════════════════════════════════════════════
@@ -218,7 +231,7 @@ in
     "utils".source = ../utils;
     ".bashrc".source = ../.bashrc;
 
-    # Neovim Config
+    # neovim
     ".config/nvim".source = ../nvim;
 
     # Alacritty Config
@@ -228,7 +241,7 @@ in
     ".config/fish/conf.d".source = ../fish/conf.d;
     ".config/fish/config.fish".source = ../fish/config.fish;
     ".config/fish/functions".source = ../fish/functions;
-    
+
     # Opencode Config
     ".config/opencode/opencode.jsonc".source = ../opencode/opencode.jsonc;
     ".config/opencode/agents".source = ../opencode/agents;
@@ -245,7 +258,6 @@ in
     ".config/ranger/rc.conf".source = ../ranger/rc.conf;
     ".config/ranger/scope.sh".source = ../ranger/scope.sh;
   };
-
 
   # --- Variables de entorno ---
   home.sessionVariables = {
@@ -271,18 +283,18 @@ in
 
   # --- Crear directorio de base de datos ---
   home.activation = {
-    createEngramDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    createEngramDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       $DRY_RUN_CMD mkdir -p $VERBOSE_ARG /home/alejandrocabeza/.local/share/engram
     '';
 
-    installTpm = lib.hm.dag.entryAfter ["linkGeneration"] ''
+    installTpm = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
       mkdir -p "$HOME/.config/tmux/plugins"
       if [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
         $DRY_RUN_CMD /usr/bin/git clone https://github.com/tmux-plugins/tpm "$HOME/.config/tmux/plugins/tpm"
       fi
     '';
 
-    downloadPiperModel = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    downloadPiperModel = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       if [ ! -f "$HOME/.local/share/piper-tts/es_MX-claude-x_low.onnx" ]; then
         $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "$HOME/.local/share/piper-tts"
         $DRY_RUN_CMD ${pkgs.curl}/bin/curl -fL --progress-bar \
@@ -300,7 +312,10 @@ in
   # --- Programas ---
   programs.home-manager.enable = true;
   programs.neovim.enable = false;
-  programs.ripgrep = { enable = true; arguments = [ "--smart-case" ]; };
+  programs.ripgrep = {
+    enable = true;
+    arguments = [ "--smart-case" ];
+  };
 
   programs.fzf = {
     enable = true;
@@ -320,7 +335,9 @@ in
       format = "[](#a89984)$username[](bg:#d8a657 fg:#a89984)$directory[](fg:#d8a657 bg:#a9b665)$git_branch$git_status[](fg:#a9b665 bg:#7daea3)$nix_shell[](fg:#7daea3 bg:#32302f)$cmd_duration[ ](fg:#32302f)$character";
 
       add_newline = true;
-      line_break = { disabled = true; };
+      line_break = {
+        disabled = true;
+      };
 
       # El carácter de entrada simple y elegante
       character = {
@@ -350,7 +367,7 @@ in
       git_status = {
         style = "bg:#a9b665 fg:#282828";
         format = "([$all_status$ahead_behind]($style))";
-        ahead = "⇡\${count}"; 
+        ahead = "⇡\${count}";
         behind = "⇣\${count}";
       };
 
