@@ -1,11 +1,11 @@
 # Docker/Apache/Dockerfile.apache
 FROM php:8.3-apache
 
-# ── 1. Dependencias del sistema (necesarias para compilar extensiones) ──
+# ── 1. Dependencias del sistema ──
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
-    # Para gd (manipulación de imágenes)
+    # Para gd (imágenes)
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
@@ -13,22 +13,27 @@ RUN set -eux; \
     libzip-dev \
     # Para mbstring
     libonig-dev \
+    # 🆕 Para pdo_pgsql (¡este faltaba!)
+    libpq-dev \
     ; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
 
-# ── 2. Configurar y compilar extensiones PHP ──
+# ── 2. Extensiones PHP (compilación en 2 lotes para evitar race conditions) ──
 RUN set -eux; \
-    # GD debe configurarse antes de instalarse
+    # Lote 1: extensiones con dependencias externas
     docker-php-ext-configure gd --with-freetype --with-jpeg; \
+    docker-php-ext-install -j$(nproc) \
+    gd \
+    zip \
+    mbstring \
+    pdo_pgsql \
+    ; \
+    # Lote 2: extensiones ligeras (sin deps externas, paralelizan bien)
     docker-php-ext-install -j$(nproc) \
     mysqli \
     pdo \
     pdo_mysql \
-    pdo_pgsql \
-    mbstring \
-    gd \
-    zip \
     exif \
     bcmath \
     calendar \
