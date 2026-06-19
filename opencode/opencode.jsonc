@@ -8,14 +8,14 @@
       "type": "remote",
       "url": "https://mcp.context7.com/mcp",
       "headers": {
-        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}",
       },
-      "enabled": true
+      "enabled": true,
     },
     "playwright": {
       "type": "local",
       "command": ["npx", "@playwright/mcp@latest"],
-      "enabled": true
+      "enabled": true,
     },
     "engram": {
       "type": "local",
@@ -23,21 +23,8 @@
       "enabled": true,
       "environment": {
         "ENGRAM_DB_PATH": "/home/alejandrocabeza/.local/share/engram/engram.db",
-        "LOG_LEVEL": "info"
-      }
+        "LOG_LEVEL": "info",
+      },
     },
-    "supabase": {
-      "type": "remote",
-      "url": "https://mcp.supabase.com/mcp",
-      "enabled": true
-    },
-    "vercel": {
-      "type": "local",
-      "command": ["npx", "-y", "@robinson_ai_systems/vercel-mcp"],
-      "enabled": true,
-      "environment": {
-        "VERCEL_TOKEN": "{env:VERCEL_TOKEN}"
-      }
-    }
-  }
+  },
 }
