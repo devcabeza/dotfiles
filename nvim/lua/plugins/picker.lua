@@ -104,14 +104,6 @@ return {
         end,
         desc = "Find Icon",
       },
-      {
-        "<c-i>",
-        function()
-          Snacks.picker.icons()
-        end,
-        desc = "Find Icon",
-        mode = "i",
-      },
       -- Explorer
       {
         "<F6>",
