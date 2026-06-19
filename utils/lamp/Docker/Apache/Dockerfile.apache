@@ -1,0 +1,48 @@
+# Docker/Apache/Dockerfile.apache
+FROM php:8.3-apache
+
+# ── Extensiones PHP ──
+RUN set -eux; \
+    docker-php-ext-install -j$(nproc) \
+    mysqli \
+    pdo \
+    pdo_mysql \
+    pdo_pgsql \
+    mbstring \
+    gd \
+    zip \
+    exif \
+    bcmath \
+    calendar \
+    gettext \
+    ;\
+    a2enmod rewrite
+
+# ── 🆕 Módulos Apache para virtual hosting dinámico ──
+RUN a2enmod vhost_alias headers
+
+# ── PHP dev.ini (🐛 corregido: data.timezone → date.timezone) ──
+RUN { \
+    echo 'upload_max_filesize = 100M'; \
+    echo 'post_max_size = 120M'; \
+    echo 'memory_limit = 512M'; \
+    echo 'max_execution_time = 300'; \
+    echo 'display_errors = On'; \
+    echo 'display_startup_errors = On'; \
+    echo 'error_reporting = E_ALL'; \
+    echo 'date.timezone = America/Caracas'; \
+    echo 'opcache.enable = 0'; \
+    } > /usr/local/etc/php/conf.d/dev.ini
+
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+RUN a2enmod ssl && a2ensite default-ssl
+
+# ── 🆕 Configuración de virtual hosts dinámicos ──
+COPY vhost.conf /etc/apache2/sites-available/010-dynamic-vhosts.conf
+RUN a2ensite 010-dynamic-vhosts
+
+# ── 🆕 Composer (copiado de la imagen oficial, sin peso extra) ──
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+
+# ── Workdir por defecto al montar el volumen ──
+WORKDIR /var/www/html

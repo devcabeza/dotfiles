@@ -109,11 +109,31 @@ services:
     restart: "no"
 
   mailpit:
-      image: axllent/mailpit
-      container_name: mailpit
-      ports:
-        - "1025:1025"
-        - "8025:8025"
+    image: axllent/mailpit
+    container_name: mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+  apache:
+    build:
+      context: Docker/Apache
+      dockerfile: Dockerfile.apache
+    container_name: lamp-apache
+    restart: always
+    depends_on:
+      - mariadb
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ~/workspace/http:/var/www/html
+      - ./certs/localhost.crt:/etc/ssl/certs/server.crt:ro
+      - ./certs/localhost.key:/etc/ssl/private/server.key:ro
+    environment:
+      MYSQL_HOST: lamp-mysql
+      REDIS_HOST: lamp-redis
+    networks:
+      - lamp-network
 
 volumes:
   mariadb-lamp-data: {}
