@@ -56,7 +56,6 @@ RUN { \
     } > /usr/local/etc/php/conf.d/dev.ini
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-RUN a2enmod ssl && a2ensite default-ssl
 
 # ── 4. Virtual hosts dinámicos ──
 RUN a2enmod vhost_alias headers
