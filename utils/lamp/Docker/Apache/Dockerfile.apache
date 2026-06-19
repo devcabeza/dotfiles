@@ -1,8 +1,26 @@
 # Docker/Apache/Dockerfile.apache
 FROM php:8.3-apache
 
-# ── Extensiones PHP ──
+# ── 1. Dependencias del sistema (necesarias para compilar extensiones) ──
 RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+    # Para gd (manipulación de imágenes)
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    # Para zip
+    libzip-dev \
+    # Para mbstring
+    libonig-dev \
+    ; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*
+
+# ── 2. Configurar y compilar extensiones PHP ──
+RUN set -eux; \
+    # GD debe configurarse antes de instalarse
+    docker-php-ext-configure gd --with-freetype --with-jpeg; \
     docker-php-ext-install -j$(nproc) \
     mysqli \
     pdo \
@@ -15,13 +33,11 @@ RUN set -eux; \
     bcmath \
     calendar \
     gettext \
-    ;\
+    ; \
+    # Módulo rewrite de Apache
     a2enmod rewrite
 
-# ── 🆕 Módulos Apache para virtual hosting dinámico ──
-RUN a2enmod vhost_alias headers
-
-# ── PHP dev.ini (🐛 corregido: data.timezone → date.timezone) ──
+# ── 3. PHP dev.ini ──
 RUN { \
     echo 'upload_max_filesize = 100M'; \
     echo 'post_max_size = 120M'; \
@@ -37,12 +53,12 @@ RUN { \
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN a2enmod ssl && a2ensite default-ssl
 
-# ── 🆕 Configuración de virtual hosts dinámicos ──
+# ── 4. Virtual hosts dinámicos ──
+RUN a2enmod vhost_alias headers
 COPY vhost.conf /etc/apache2/sites-available/010-dynamic-vhosts.conf
 RUN a2ensite 010-dynamic-vhosts
 
-# ── 🆕 Composer (copiado de la imagen oficial, sin peso extra) ──
+# ── 5. Composer ──
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
-# ── Workdir por defecto al montar el volumen ──
 WORKDIR /var/www/html
