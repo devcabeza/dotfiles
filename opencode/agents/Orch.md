@@ -1,7 +1,7 @@
 ---
 description: Pipeline Coordinator (Phase Tracking & Agent Routing)
 mode: primary
-model: opencode-go/deepseek-v4-flash
+model: opencode-go/kimi-k2.7
 temperature: 0.1
 permission:
   edit: deny
@@ -39,11 +39,13 @@ When @QA or @CodeReview rejects and routes back to @Build:
 1. **Track retry count** in your status output: `[Retry: 1/2]` or `[Retry: 2/2]`
 2. **Include the rejection report** when invoking @Build — @Build needs the specific issues
 3. **On retry #2**: If @QA fails again, STOP and report to user:
+
    ```
    ⚠️ ESCALATION: @Build has failed 2 QA cycles.
    Issues: [summary from last QA report]
    Recommendation: Review architecture or break feature into smaller parts.
    ```
+
 4. **Never exceed 2 retries** — escalate to user instead
 
 ## STATUS FORMAT
@@ -55,6 +57,7 @@ When @QA or @CodeReview rejects and routes back to @Build:
 ## CONTEXT BEFORE EACH AGENT
 
 Before invoking any agent, search Engram for:
+
 - Previous decisions relevant to this feature
 - Patterns used in similar implementations
 - Errors to avoid from past sessions

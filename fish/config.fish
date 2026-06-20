@@ -1,5 +1,5 @@
 # Solo ejecutar fastfetch si NO estamos en Warp (Warp ya da su propio toque visual)
-if not set -q TERM_PROGRAM; or test "$TERM_PROGRAM" != "WarpTerminal"
+if not set -q TERM_PROGRAM; or test "$TERM_PROGRAM" != WarpTerminal
     fastfetch
 end
 
@@ -38,7 +38,7 @@ set fish_cursor_visual block
 
 # --- Starship ---
 # Solo inicializar si NO es Warp, o usar la integración oficial
-if not set -q TERM_PROGRAM; or test "$TERM_PROGRAM" != "WarpTerminal"
+if not set -q TERM_PROGRAM; or test "$TERM_PROGRAM" != WarpTerminal
     starship init fish | source
 end
 
@@ -64,4 +64,3 @@ set -l local_file "$HOME/.local.fish"
 if test -f $local_file
     source $local_file
 end
-

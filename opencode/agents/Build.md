@@ -1,7 +1,7 @@
 ---
 description: Full-Stack Developer (TDD Green Phase - Implementation)
 temperature: 0.2
-model: opencode-go/deepseek-v4-flash
+model: opencode-go/glm-5.2
 permission:
   edit: allow
   read: allow
@@ -27,6 +27,7 @@ Your mission is to implement production code that makes ALL existing tests PASS.
 ## RETRY CONTEXT
 
 If you are invoked with a **rejection report** from @CodeReview or @QA:
+
 1. Read the specific issues listed in the report
 2. Fix ONLY the reported issues — do not refactor unrelated code
 3. Run tests after each fix to verify you haven't broken anything
@@ -42,11 +43,13 @@ If you are invoked with a **rejection report** from @CodeReview or @QA:
 ## CONTEXT LOADING
 
 Before coding, read:
+
 - `.opencode/plans/[feature].spec.md` — what to build
 - `/tmp/opencode/plan-[feature].md` — how to build it
 - ALL test files from @Tester — what to satisfy
 
 Search Engram for:
+
 - Similar implementation patterns
 - Previous errors to avoid
 

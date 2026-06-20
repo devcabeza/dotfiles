@@ -46,7 +46,7 @@ let
       owner = "Gentleman-Programming";
       repo = "engram";
       rev = "main";
-      sha256 = "sha256-2wJEl004dFjlO7SXn8isAVHsH2rxhTgoCRyDOUWCrS8=";
+      sha256 = "sha256-zsly4YyziaOdVqeV+wdRbIXUeQN9iz1Z9D4OMfGWBa4=";
     };
 
     # Hack para saltar la restricción de Go 1.25.10
@@ -128,7 +128,6 @@ in
     pkgs.btop
     pkgs.fnm
     pkgs.rustup
-    pkgs.sqlite
     pkgs.postgresql
     pkgs.delta
     pkgs.luaPackages.luacheck
@@ -145,18 +144,6 @@ in
     pkgs.bluetui
     pkgs.gh
     pkgs.symfony-cli # Symfony CLI
-
-    # WiFi & Bluetooth
-    pkgs.blueman
-    pkgs.iwd
-    pkgs.jq
-    pkgs.networkmanagerapplet
-
-    # Tools
-    pkgs.brightnessctl
-    pkgs.grim
-    pkgs.slurp
-    pkgs.swww
 
     # SVG rendering
     pkgs.librsvg
@@ -234,9 +221,6 @@ in
 
     # neovim
     ".config/nvim".source = ../nvim;
-
-    # Alacritty Config
-    ".config/alacritty".source = ../alacritty;
 
     # Fish Config
     ".config/fish/conf.d".source = ../fish/conf.d;
