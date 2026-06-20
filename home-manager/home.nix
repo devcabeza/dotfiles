@@ -156,6 +156,7 @@ in
     pkgs.brightnessctl
     pkgs.grim
     pkgs.slurp
+    pkgs.swww
 
     # SVG rendering
     pkgs.librsvg

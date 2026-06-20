@@ -1,0 +1,97 @@
+/* Waybar — Estilo glassmorphic Omarchy adaptado a Gruvbox */
+@define-color bg #282828;
+@define-color bg-alt #32302f;
+@define-color fg #ddc7a1;
+@define-color fg-alt #a89984;
+@define-color accent #7daea3;
+@define-color red #ea6962;
+@define-color green #a9b665;
+@define-color yellow #d8a657;
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: @bg;
+  border-bottom: 1px solid @bg-alt;
+  color: @fg;
+  transition: background-color 0.3s ease;
+}
+
+/* --- Módulos --- */
+#workspaces {
+  margin-left: 8px;
+}
+
+#workspaces button {
+  padding: 0 5px;
+  margin: 0 2px;
+  color: @fg-alt;
+  min-width: 20px;
+}
+
+#workspaces button.active {
+  color: @accent;
+}
+
+#workspaces button.urgent {
+  color: @red;
+}
+
+#workspaces button.empty {
+  color: #665c54;
+}
+
+#clock {
+  color: @fg;
+  font-weight: bold;
+  padding: 0 15px;
+}
+
+#custom-wallpaper {
+  margin-right: 8px;
+  color: @green;
+  font-size: 15px;
+}
+
+#custom-power {
+  margin: 0 12px 0 4px;
+  color: @red;
+  font-size: 16px;
+}
+
+#cpu,
+#memory {
+  margin: 0 8px;
+  color: @yellow;
+}
+
+#network {
+  margin: 0 8px;
+  color: @accent;
+}
+
+#pulseaudio {
+  margin: 0 8px;
+  color: @fg;
+}
+
+#tray {
+  margin: 0 8px;
+}
+
+tooltip {
+  background: @bg;
+  border: 1px solid @bg-alt;
+  border-radius: 6px;
+  padding: 6px;
+}
+
+tooltip label {
+  color: @fg;
+}

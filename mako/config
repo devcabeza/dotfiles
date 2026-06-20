@@ -1,0 +1,26 @@
+# Mako - Notificaciones estilo Omarchy
+# https://github.com/emersion/mako
+
+sort = -time
+anchor = top-right
+margin = 10
+padding = 12,16
+border-size = 2
+border-color = #7daea3
+background-color = #282828ee
+text-color = #ddc7a1
+width = 350
+height = 200
+font = JetBrainsMono Nerd Font 11
+
+[urgency=low]
+border-color = #665c54
+default-timeout = 5000
+
+[urgency=normal]
+border-color = #7daea3
+default-timeout = 10000
+
+[urgency=high]
+border-color = #ea6962
+default-timeout = 0

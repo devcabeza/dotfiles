@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# DEPRECATED: usa feh (X11) - no funcionará en Hyprland (Wayland)
+# Usar swww-random.sh o wallpaper-rotate.sh en su lugar
 # Carrusel de wallpapers - cambia el fondo cada 10 minutos
 # Usa imágenes del directorio wallpapers/
 
