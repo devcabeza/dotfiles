@@ -6,6 +6,9 @@ add_newline = true
 
 line_break = { disabled = true }
 
+# Formato principal (usa las referencias de paleta)
+format = "[](fg:@noctalia.overlay2)$username[](fg:@noctalia.yellow bg:@noctalia.overlay2)$directory[](fg:@noctalia.green bg:@noctalia.yellow)$git_branch$git_status[](fg:@noctalia.blue bg:@noctalia.green)$nix_shell[](fg:@noctalia.surface0 bg:@noctalia.blue)$cmd_duration[ ](fg:@noctalia.surface0)$character"
+
 [character]
 success_symbol = "[➜](bold @noctalia.green)"
 error_symbol = "[➜](bold @noctalia.red)"
@@ -29,8 +32,8 @@ format = "[ $symbol$branch ]($style)"
 [git_status]
 style = "bg:@noctalia.green fg:@noctalia.crust"
 format = "([$all_status$ahead_behind]($style))"
-ahead = "⇡\${count}"
-behind = "⇣\${count}"
+ahead = "⇡${count}"
+behind = "⇣${count}"
 
 [nix_shell]
 symbol = " "
@@ -40,9 +43,6 @@ format = "[ $symbol]($style)"
 [cmd_duration]
 style = "bg:@noctalia.surface0 fg:@noctalia.yellow"
 format = "[  $duration ]($style)"
-
-# Formato principal (usa las referencias de paleta)
-format = "[](fg:@noctalia.overlay2)$username[](fg:@noctalia.yellow bg:@noctalia.overlay2)$directory[](fg:@noctalia.green bg:@noctalia.yellow)$git_branch$git_status[](fg:@noctalia.blue bg:@noctalia.green)$nix_shell[](fg:@noctalia.surface0 bg:@noctalia.blue)$cmd_duration[ ](fg:@noctalia.surface0)$character"
 
 # >>> NOCTALIA STARSHIP PALETTE >>>
 # Noctalia inyectará aquí la definición de [palettes.noctalia]
