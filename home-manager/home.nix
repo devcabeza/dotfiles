@@ -235,6 +235,7 @@ in
 
     # Tmux Config
     ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
+    ".config/tmux/current-theme.conf".source = ../tmux/current-theme.conf;
 
     # Noctalia User Templates (inputs para generar temas dinámicos)
     ".config/noctalia/templates/tmux-template.conf".source = ../noctalia/templates/tmux-template.conf;
