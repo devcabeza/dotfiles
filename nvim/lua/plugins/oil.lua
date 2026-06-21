@@ -38,5 +38,5 @@ return {
   keys = {
     { "-", "<cmd>Oil --float<cr>", desc = "Open oil.nvim in float mode" },
   },
-  dependencies = { { "echasnovski/mini.icons", opts = {} } },
+  dependencies = { { "nvim-mini/mini.icons", opts = {} } },
 }

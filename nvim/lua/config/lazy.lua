@@ -67,7 +67,7 @@ require("lazy").setup({
     lazy = false,
     version = false,
   },
-  install = { colorscheme = { "tokyonight", "habamax" } },
+  install = { colorscheme = { "base16-nvim", "tokyonight", "habamax" } },
   checker = {
     enabled = true,
     notify = false,
