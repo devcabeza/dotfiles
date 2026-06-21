@@ -12,7 +12,13 @@ return {
       -- Try to load Noctalia-generated colors if available
       local ok, matugen = pcall(require, "matugen")
       if ok and matugen.setup then
-        matugen.setup()
+        -- Defer to UIEnter to run AFTER LazyVim applies opts.colorscheme
+        vim.api.nvim_create_autocmd("UIEnter", {
+          once = true,
+          callback = function()
+            matugen.setup()
+          end,
+        })
       end
     end,
   },
