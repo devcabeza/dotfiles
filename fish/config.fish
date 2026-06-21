@@ -64,3 +64,8 @@ set -l local_file "$HOME/.local.fish"
 if test -f $local_file
     source $local_file
 end
+
+# Noctalia FZF colors (dinámicos)
+if test -f "$HOME/.local/state/noctalia/fzf-colors.fish"
+    source "$HOME/.local/state/noctalia/fzf-colors.fish"
+end

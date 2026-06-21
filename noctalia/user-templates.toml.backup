@@ -16,3 +16,8 @@ post_hook = "tmux source-file ~/.config/tmux/tmux.conf"
 input_path = "~/.config/nvim/lua/matugen-template.lua"
 output_path = "~/.local/state/nvim/matugen.lua"
 post_hook = "pkill -SIGUSR1 nvim"
+
+[templates.fzf-noctalia]
+input_path = "~/.config/noctalia/templates/fzf-template.sh"
+output_path = "~/.local/state/noctalia/fzf-colors.fish"
+post_hook = ""

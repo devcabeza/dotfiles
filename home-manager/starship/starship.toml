@@ -1,0 +1,81 @@
+palette = "noctalia"
+
+# --- Módulos ---
+
+add_newline = true
+
+line_break = { disabled = true }
+
+[character]
+success_symbol = "[➜](bold @noctalia.green)"
+error_symbol = "[➜](bold @noctalia.red)"
+
+[username]
+show_always = true
+style_user = "bg:@noctalia.overlay2 fg:@noctalia.crust"
+format = "[$user]($style)"
+
+[directory]
+style = "bg:@noctalia.yellow fg:@noctalia.crust"
+format = "[ $path ]($style)"
+truncation_length = 3
+fish_style_pwd_dir_length = 1
+
+[git_branch]
+symbol = " "
+style = "bg:@noctalia.green fg:@noctalia.crust"
+format = "[ $symbol$branch ]($style)"
+
+[git_status]
+style = "bg:@noctalia.green fg:@noctalia.crust"
+format = "([$all_status$ahead_behind]($style))"
+ahead = "⇡\${count}"
+behind = "⇣\${count}"
+
+[nix_shell]
+symbol = " "
+style = "bg:@noctalia.blue fg:@noctalia.crust"
+format = "[ $symbol]($style)"
+
+[cmd_duration]
+style = "bg:@noctalia.surface0 fg:@noctalia.yellow"
+format = "[  $duration ]($style)"
+
+# Formato principal (usa las referencias de paleta)
+format = "[](fg:@noctalia.overlay2)$username[](fg:@noctalia.yellow bg:@noctalia.overlay2)$directory[](fg:@noctalia.green bg:@noctalia.yellow)$git_branch$git_status[](fg:@noctalia.blue bg:@noctalia.green)$nix_shell[](fg:@noctalia.surface0 bg:@noctalia.blue)$cmd_duration[ ](fg:@noctalia.surface0)$character"
+
+# >>> NOCTALIA STARSHIP PALETTE >>>
+# Noctalia inyectará aquí la definición de [palettes.noctalia]
+[palettes.noctalia]
+# Fallback colors (Gruvbox Material) hasta que Noctalia los actualice
+blue      = "#7daea3"
+red       = "#e67e80"
+green     = "#a9b665"
+yellow    = "#d8a657"
+cyan      = "#83a598"
+magenta   = "#d3869b"
+white     = "#ddc7a1"
+black     = "#282828"
+rosewater = "#d8a657"
+flamingo  = "#e67e80"
+pink      = "#d3869b"
+mauve     = "#d3869b"
+maroon    = "#e67e80"
+peach     = "#d8a657"
+teal      = "#a9b665"
+sky       = "#7daea3"
+sapphire  = "#7daea3"
+lavender  = "#d3869b"
+text      = "#ddc7a1"
+subtext1  = "#bdae93"
+subtext0  = "#a89984"
+overlay2  = "#a89984"
+overlay1  = "#bdae93"
+overlay0  = "#504945"
+surface2  = "#504945"
+surface1  = "#3c3836"
+surface0  = "#32302f"
+base      = "#282828"
+mantle    = "#282828"
+crust     = "#1d2021"
+# <<< NOCTALIA STARSHIP PALETTE <<<
