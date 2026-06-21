@@ -3,6 +3,10 @@
   "theme": "system",
   "autoupdate": false,
   "default_agent": "Ask",
+  "agent": {
+    "build": { "mode": "subagent" },
+    "plan": { "mode": "subagent" },
+  },
   "mcp": {
     "context7": {
       "type": "remote",

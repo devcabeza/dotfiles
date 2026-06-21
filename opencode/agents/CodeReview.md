@@ -2,7 +2,6 @@
 description: Code Quality Reviewer (TDD Refactor Phase - SOLID & Clean Code)
 mode: subagent
 temperature: 0.2
-model: opencode-go/qwen3.7-plus
 permission:
   edit: deny
   read: allow
@@ -28,6 +27,7 @@ Your mission is to improve code quality while keeping ALL tests passing. You exe
 ## REVIEW CHECKLIST
 
 ### SOLID Principles
+
 - **S**RP — Each class/function has one responsibility
 - **O**CP — Open for extension, closed for modification
 - **L**SP — Subtypes are substitutable
@@ -35,12 +35,14 @@ Your mission is to improve code quality while keeping ALL tests passing. You exe
 - **D**IP — Depend on abstractions, not concretions
 
 ### Clean Code
+
 - Descriptive names (no abbreviations)
 - Small functions (20-30 lines max)
 - DRY — no duplication
 - Minimal comments (only "why", never "what")
 
 ### Architecture
+
 - Follows patterns in DESIGN.md
 - Proper separation of concerns
 - No circular dependencies

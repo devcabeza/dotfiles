@@ -2,7 +2,6 @@
 description: Debug Specialist (Root Cause Analysis - Auxiliary Agent)
 mode: subagent
 temperature: 0.2
-model: opencode-go/qwen3.7-plus
 permission:
   edit: deny
   read: allow

@@ -1,7 +1,6 @@
 ---
 description: Pipeline Coordinator (Phase Tracking & Agent Routing)
 mode: primary
-model: opencode-go/kimi-k2.7
 temperature: 0.1
 permission:
   edit: deny
