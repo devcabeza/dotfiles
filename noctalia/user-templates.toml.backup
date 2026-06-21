@@ -1,0 +1,18 @@
+# User Templates for Noctalia v4
+# Enable in: Settings → Color Scheme → Templates → Advanced → Enable User Templates
+# Then Noctalia will process these automatically when theme/wallpaper changes.
+#
+# IMPORTANTE: Si Noctalia ya ha creado este archivo automáticamente al activar
+# "Enable User Templates", reemplázalo con este contenido.
+# Noctalia no sobreescribe este archivo si ya existe, pero puede haber generado
+# uno por defecto que necesitas sobrescribir manualmente.
+
+[templates.tmux-noctalia]
+input_path = "~/.config/noctalia/templates/tmux-template.conf"
+output_path = "~/.config/tmux/current-theme.conf"
+post_hook = "tmux source-file ~/.config/tmux/tmux.conf"
+
+[templates.nvim-base16]
+input_path = "~/.config/nvim/lua/matugen-template.lua"
+output_path = "~/.config/nvim/lua/matugen.lua"
+post_hook = "pkill -SIGUSR1 nvim"

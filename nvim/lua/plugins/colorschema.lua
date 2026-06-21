@@ -15,7 +15,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "base16-nvim",
+      colorscheme = "base16-gruvbox-material-dark-medium",
     },
   },
 }
