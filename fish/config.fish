@@ -29,6 +29,7 @@ alias vim='nvim'
 alias g='git'
 alias cat='bat'
 alias zed='zeditor'
+alias uhm='home-manager switch -b backup --impure'
 
 # Cursores (Warp los ignora porque usa los suyos propios)
 set fish_cursor_default block
