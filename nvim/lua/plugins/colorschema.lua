@@ -5,6 +5,10 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
+      -- Add Noctalia output path (~/.local/state/nvim/) to Lua's search path
+      local state_path = vim.fn.stdpath("state")
+      package.path = package.path .. ";" .. state_path .. "/?.lua"
+
       -- Try to load Noctalia-generated colors if available
       local ok, matugen = pcall(require, "matugen")
       if ok and matugen.setup then

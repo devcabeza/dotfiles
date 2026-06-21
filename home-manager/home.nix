@@ -235,11 +235,12 @@ in
 
     # Tmux Config
     ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
-    ".config/tmux/current-theme.conf".source = ../tmux/current-theme.conf;
+    # current-theme.conf es gestionado por Noctalia (user-templates.toml)
 
     # Noctalia User Templates (inputs para generar temas dinámicos)
     ".config/noctalia/templates/tmux-template.conf".source = ../noctalia/templates/tmux-template.conf;
     ".config/noctalia/user-templates.toml".source = ../noctalia/user-templates.toml;
+    ".config/noctalia/settings.json".source = ../noctalia/settings.json;
 
     #lazygit
     ".config/lazygit".source = ../lazygit;
