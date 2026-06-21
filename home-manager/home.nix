@@ -236,6 +236,10 @@ in
     # Tmux Config
     ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
 
+    # Noctalia User Templates (inputs para generar temas dinámicos)
+    ".config/noctalia/templates/tmux-template.conf".source = ../noctalia/templates/tmux-template.conf;
+    ".config/noctalia/user-templates.toml".source = ../noctalia/user-templates.toml;
+
     #lazygit
     ".config/lazygit".source = ../lazygit;
 

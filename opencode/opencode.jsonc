@@ -4,8 +4,11 @@
   "autoupdate": false,
   "default_agent": "Ask",
   "agent": {
-    "build": { "mode": "subagent" },
-    "plan": { "mode": "subagent" },
+    "build": {
+      "mode": "subagent",
+      "hidden": true,
+    },
+    "plan": { "mode": "subagent", "hidden": true },
   },
   "mcp": {
     "context7": {
