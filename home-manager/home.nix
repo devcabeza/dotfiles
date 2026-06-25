@@ -237,6 +237,7 @@ in
     # Antigravity Cli
     ".gemini/antigravity-cli/skills".source = ../antigravity-cli/skills;
     ".gemini/antigravity-cli/mcp_config.json".source = ../antigravity-cli/mcp_config.json;
+    ".gemini/antigravity-cli/agents".source = ../antigravity-cli/agents;
 
     # Tmux Config
     ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
