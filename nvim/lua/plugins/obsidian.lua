@@ -1,9 +1,7 @@
--- plugins/obsidian.lua
--- Navegación de un vault de Obsidian usando Snacks (sin Telescope)
-
 return {
   {
-    "local/obsidian.nvim",
+    dir = vim.fn.stdpath("config"),
+    name = "obsidian.nvim",
     lazy = true,
     ft = { "markdown" },
 

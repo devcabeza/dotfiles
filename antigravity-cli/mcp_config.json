@@ -12,6 +12,14 @@
     "playwright": {
       "command": "npx",
       "args": ["@playwright/mcp@latest"]
+    },
+    "engram": {
+      "command": "/home/alejandrocabeza/.nix-profile/bin/engram",
+      "args": ["mcp"],
+      "env": {
+        "ENGRAM_DB_PATH": "/home/alejandrocabeza/.local/share/engram/engram.db",
+        "LOG_LEVEL": "info"
+      }
     }
   }
 }
