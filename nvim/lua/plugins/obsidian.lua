@@ -8,10 +8,11 @@ return {
     keys = {
       { "<leader>on", "<cmd>ObsidianOpen<cr>", desc = "Obsidian: abrir nota" },
       { "<leader>oo", "<cmd>ObsidianVault<cr>", desc = "Obsidian: abrir vault" },
+      { "<leader>oc", "<cmd>ObsidianNew<cr>", desc = "Obsidian: crear nota" },
     },
 
     config = function()
-      local vault_path = vim.fn.expand("~/ObsidianVault")
+      local vault_path = vim.fn.expand("~/Documents/Alejandro Cabeza Vault/")
 
       local M = {}
 
@@ -45,8 +46,44 @@ return {
         })
       end
 
+      function M.new_note()
+        vim.ui.input({ prompt = "Nombre de la nueva nota: " }, function(input)
+          if not input or input == "" then
+            return
+          end
+
+          local filename = input
+          if not filename:match("%.md$") then
+            filename = filename .. ".md"
+          end
+
+          local full_path = vault_path .. "/" .. filename
+
+          if vim.fn.filereadable(full_path) == 1 then
+            vim.notify("La nota ya existe: " .. filename, vim.log.levels.WARN)
+            vim.cmd("e " .. vim.fn.fnameescape(full_path))
+            return
+          end
+
+          local dir = vim.fn.fnamemodify(full_path, ":h")
+          if vim.fn.isdirectory(dir) == 0 then
+            vim.fn.mkdir(dir, "p")
+          end
+
+          vim.cmd("e " .. vim.fn.fnameescape(full_path))
+          
+          local title = vim.fn.fnamemodify(filename, ":t:r")
+          vim.api.nvim_buf_set_lines(0, 0, -1, false, {
+            "# " .. title,
+            "",
+          })
+          vim.cmd("w")
+        end)
+      end
+
       vim.api.nvim_create_user_command("ObsidianOpen",   M.pick_note, {})
       vim.api.nvim_create_user_command("ObsidianVault",  M.open_vault, {})
+      vim.api.nvim_create_user_command("ObsidianNew",    M.new_note, {})
     end,
   },
 }
