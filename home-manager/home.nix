@@ -234,11 +234,6 @@ in
     ".config/opencode/skills".source = ../opencode/skills;
     ".config/opencode/commands".source = ../opencode/commands;
 
-    # Antigravity Cli
-    ".gemini/antigravity-cli/skills".source = ../antigravity-cli/skills;
-    ".gemini/antigravity-cli/mcp_config.json".source = ../antigravity-cli/mcp_config.json;
-    ".gemini/antigravity-cli/agents".source = ../antigravity-cli/agents;
-
     # Tmux Config
     ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
     # current-theme.conf es gestionado por Noctalia (user-templates.toml)

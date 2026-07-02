@@ -19,6 +19,14 @@
       },
       "enabled": true,
     },
+    "stitch": {
+      "type": "remote",
+      "url": "https://stitch.googleapis.com/mcp",
+      "enabled": true,
+      "headers": {
+        "X-Goog-Api-Key": "{env:GOOGLE_API_KEY}"
+      },
+    },
     "playwright": {
       "type": "local",
       "command": ["npx", "@playwright/mcp@latest"],
