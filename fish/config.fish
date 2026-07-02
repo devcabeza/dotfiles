@@ -72,3 +72,5 @@ if test -f "$HOME/.local/state/noctalia/fzf-colors.fish"
 end
 
 fish_add_path /home/alejandrocabeza/.local/bin
+
+alias ldev=layout_dev
