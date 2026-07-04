@@ -1,1 +1,23 @@
-/nix/store/7xa2g2ir4jf3l1zp9vw5wwa009z3i3hx-home-manager-files/.config/noctalia/user-templates.toml
+# User Templates for Noctalia v4
+# Enable in: Settings → Color Scheme → Templates → Advanced → Enable User Templates
+# Then Noctalia will process these automatically when theme/wallpaper changes.
+#
+# IMPORTANTE: Si Noctalia ya ha creado este archivo automáticamente al activar
+# "Enable User Templates", reemplázalo con este contenido.
+# Noctalia no sobreescribe este archivo si ya existe, pero puede haber generado
+# uno por defecto que necesitas sobrescribir manualmente.
+
+[templates.tmux-noctalia]
+input_path = "~/.config/noctalia/templates/tmux-template.conf"
+output_path = "~/.config/tmux/current-theme.conf"
+post_hook = "tmux source-file ~/.config/tmux/tmux.conf"
+
+[templates.nvim-base16]
+input_path = "~/.config/nvim/lua/matugen-template.lua"
+output_path = "~/.local/state/nvim/matugen.lua"
+post_hook = "pkill -SIGUSR1 nvim"
+
+[templates.fzf-noctalia]
+input_path = "~/.config/noctalia/templates/fzf-template.sh"
+output_path = "~/.local/state/noctalia/fzf-colors.fish"
+post_hook = ""
