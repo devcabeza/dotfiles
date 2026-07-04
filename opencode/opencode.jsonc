@@ -3,6 +3,7 @@
   "theme": "system",
   "autoupdate": false,
   "default_agent": "Ask",
+  "instructions": [".agents/rules/*"],
   "agent": {
     "build": {
       "mode": "subagent",
@@ -24,7 +25,7 @@
       "url": "https://stitch.googleapis.com/mcp",
       "enabled": true,
       "headers": {
-        "X-Goog-Api-Key": "{env:GOOGLE_API_KEY}"
+        "X-Goog-Api-Key": "{env:GOOGLE_API_KEY}",
       },
     },
     "playwright": {
