@@ -4,6 +4,20 @@
   "autoupdate": false,
   "default_agent": "Ask",
   "instructions": [".agents/rules/*"],
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama Local",
+      "options": {
+        "baseURL": "http://localhost:11434/v1",
+      },
+      "models": {
+        "qwen2.5-coder:7b-16k": {
+          "name": "Qwen 2.5 Coder 7B",
+        },
+      },
+    },
+  },
   "agent": {
     "build": {
       "mode": "subagent",
