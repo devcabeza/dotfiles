@@ -236,9 +236,9 @@ in
 
     # Tmux Config
     ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
-    # current-theme.conf es gestionado por Noctalia (user-templates.toml)
 
-    # Noctalia User Templates (inputs para generar temas dinámicos)
+    # hypr
+    ".config/hypr".source = ../hypr;
     ".config/noctalia/templates/tmux-template.conf".source = ../noctalia/templates/tmux-template.conf;
     ".config/noctalia/user-templates.toml".source = ../noctalia/user-templates.toml;
     ".config/noctalia/settings.json".source = ../noctalia/settings.json;
@@ -251,7 +251,7 @@ in
     ".config/ranger/scope.sh".source = ../ranger/scope.sh;
 
     # Starship
-    ".config/starship.toml".source = ./starship/starship.toml;
+    ".config/starship.toml".source = ../starship.toml;
   };
 
   # --- Variables de entorno ---
