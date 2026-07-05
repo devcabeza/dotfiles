@@ -239,9 +239,14 @@ in
 
     # hypr
     ".config/hypr".source = ../hypr;
+
+    # Noctalia
     ".config/noctalia/templates/tmux-template.conf".source = ../noctalia/templates/tmux-template.conf;
     ".config/noctalia/user-templates.toml".source = ../noctalia/user-templates.toml;
     ".config/noctalia/settings.json".source = ../noctalia/settings.json;
+
+    # Kitty
+    ".config/kitty/kitty.conf".source = ../kitty/kitty.conf;
 
     #lazygit
     ".config/lazygit".source = ../lazygit;
