@@ -121,8 +121,10 @@ vim.api.nvim_create_autocmd("FileType", {
 -- ══════════════════════════════════════════════════════
 vim.filetype.add({
   extension = {
-    blade = "blade",
     twig = "twig",
+  },
+  pattern = {
+    [".*%.blade%.php"] = "blade",
   },
   filename = {
     ["composer.json"] = "json",
