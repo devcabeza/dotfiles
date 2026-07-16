@@ -25,9 +25,9 @@ end
 if parser_config then
   parser_config.blade = {
     install_info = {
-      url = "https://github.com/EmranMR/tree-sitter-blade",
+      url = "https://github.com/phalcon/tree-sitter-blade",
       files = { "src/parser.c" },
-      branch = "main",
+      branch = "master",
     },
     filetype = "blade",
   }
@@ -107,3 +107,7 @@ return {
     },
   },
 }
+
+-- Nota: Después del primer despliegue con uhm, ejecutar:
+--   nvim --headless "+TSInstallSync blade" +qa
+-- Esto compila e instala el parser tree-sitter para Blade.

@@ -241,7 +241,6 @@ in
     ".config/hypr".source = ../hypr;
 
     # Noctalia
-    ".config/noctalia/templates/tmux-template.conf".source = ../noctalia/templates/tmux-template.conf;
     ".config/noctalia/user-templates.toml".source = ../noctalia/user-templates.toml;
     ".config/noctalia/settings.json".source = ../noctalia/settings.json;
 

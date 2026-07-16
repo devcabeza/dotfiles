@@ -50,4 +50,21 @@ return {
       eloquent_generate_doc_blocks = true,
     },
   },
+
+  -- Snippets de Blade
+  {
+    "L3MON4D3/LuaSnip",
+    optional = true,
+    opts = function()
+      local ls = require("luasnip")
+      ls.add_snippets("blade", {
+        ls.parser.parse_snippet("if", "@if (\n\n)\n    $1\n@endif"),
+        ls.parser.parse_snippet("foreach", "@foreach ($1 as $2)\n    $3\n@endforeach"),
+        ls.parser.parse_snippet("section", "@section('$1')\n    $2\n@endsection"),
+        ls.parser.parse_snippet("extends", "@extends('$1')"),
+        ls.parser.parse_snippet("component", "<x-$1 />"),
+        ls.parser.parse_snippet("props", "@props([\n    '$1' => '$2',\n])"),
+      })
+    end,
+  },
 }

@@ -102,14 +102,28 @@ vim.g.lazyvim_picker = "snacks"
 -- ══════════════════════════════════════════════════════
 -- Aumentar maxSize para proyectos grandes con muchos modelos
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "php" },
-  desc = "Intelephense: max file size for large projects",
+  pattern = { "php", "blade" },
+  desc = "Intelephense: config for Laravel projects",
   group = vim.api.nvim_create_augroup("intelephense-settings", { clear = true }),
   callback = function()
     vim.lsp.config("intelephense", {
       settings = {
         intelephense = {
           files = { maxSize = 2000000 },
+          stubs = {
+            "apache", "bcmath", "bz2", "calendar", "com_dotnet", "Core",
+            "ctype", "curl", "date", "dba", "dom", "enchant", "exif",
+            "fileinfo", "filter", "fpm", "ftp", "gd", "gettext", "gmp",
+            "hash", "iconv", "imap", "intl", "json", "ldap", "libxml",
+            "mbstring", "mcrypt", "mysqli", "mysql", "oci8", "odbc",
+            "openssl", "pcntl", "pcre", "pdo", "pdo_mysql", "pdo_pgsql",
+            "pdo_sqlite", "pgsql", "phar", "posix", "pspell", "readline",
+            "redis", "reflection", "session", "shmop", "simplexml",
+            "snmp", "soap", "sockets", "sodium", "spl", "sqlite3",
+            "standard", "swoole", "sysvmsg", "sysvsem", "sysvshm",
+            "tidy", "tokenizer", "xml", "xmlreader", "xmlwriter",
+            "xsl", "zip", "zlib",
+          },
         },
       },
     })
