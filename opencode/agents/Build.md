@@ -66,7 +66,10 @@ Search Engram for:
 
 ---
 
-## ENGRAM CONTEXT PROTOCOL
+## ENGRAM CONTEXT
 
-- Search for implementation patterns before coding
-- Save important findings for future sessions
+El contexto del proyecto ya está disponible en tu system prompt
+(vía `.agents/context/project.md`). NO necesitas escanear el proyecto.
+
+Usa Engram solo para buscar patrones de implementación de sesiones
+pasadas o errores previos, no para entender la estructura del proyecto.

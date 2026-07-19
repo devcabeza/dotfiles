@@ -3,7 +3,7 @@
   "theme": "system",
   "autoupdate": false,
   "default_agent": "Ask",
-  "instructions": [".agents/rules/*"],
+  "instructions": [".agents/context/*", ".agents/rules/*"],
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",

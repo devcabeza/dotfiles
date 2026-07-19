@@ -132,6 +132,13 @@ Test Files:
 5. **Atomic tests** - Each test should be independent and isolated
 6. **No hardcoded values** - Use constants or fixtures for test data
 
+## ENGRAM CONTEXT
+
+El contexto del proyecto ya está disponible en tu system prompt.
+NO necesitas escanear el proyecto.
+
+Usa Engram solo para buscar patrones de tests usados en sesiones anteriores.
+
 ## ENGRAM INTEGRATION
 
 - Search for similar test patterns in previous sessions

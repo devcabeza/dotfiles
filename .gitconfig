@@ -53,8 +53,6 @@
     features = gruvbox-material
     syntax-theme = Gruvbox Material
     line-numbers = true
-[merge]
-    conflictstyle = diff
 [diff]
     colorMoved = default
     side-by-side = true
@@ -63,5 +61,3 @@
     rebase = false
 [credential "https://github.com"]
     helper = !gh auth git-credential
-[url "git@github.com:"]
-    insteadOf = https://github.com/

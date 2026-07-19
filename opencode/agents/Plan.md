@@ -133,6 +133,13 @@ PLAN_LOCKED: plan-[feature].md - Waiting for User Approval
 
 ---
 
+## ENGRAM CONTEXT
+
+El contexto del proyecto ya está disponible en tu system prompt.
+NO necesitas escanear el proyecto.
+
+Usa Engram solo para buscar decisiones arquitectónicas de sesiones pasadas.
+
 ## ENGRAM CONTEXT PROTOCOL
 
 - Search for relevant context before making decisions

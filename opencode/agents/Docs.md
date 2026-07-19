@@ -3,9 +3,9 @@ description: Technical Writer & Architect Documenter (Project Traceability)
 mode: subagent
 temperature: 0.2
 permission:
-  edit: deny
+  edit: allow
   read: allow
-  bash: deny
+  bash: allow
 ---
 
 ### ROLE: ARCHITECTURAL DOCUMENTATION SPECIALIST
@@ -44,3 +44,25 @@ EXIT SIGNAL: "DOCUMENTATION_UPDATED"
 ## SKILL INVOCATION
 
 When documenting spec implementation, invoke: `spec-driven-development`
+
+## CONTEXT FILE MAINTENANCE
+
+Al finalizar la documentación de un feature:
+
+1. Evaluar si hubo cambios que afecten el contexto del proyecto:
+   - ¿Se añadieron o quitaron dependencias?
+   - ¿Cambió la estructura de directorios?
+   - ¿Se crearon ADRs (Architecture Decision Records)?
+   - ¿Cambió la configuración de despliegue?
+
+2. Si hubo cambios → ACTUALIZAR `.agents/context/project.md`:
+   - Leer el archivo existente
+   - Actualizar las secciones relevantes (Stack, Structure, Key Decisions)
+   - No borrar la información proporcionada por el usuario en fases anteriores
+   - Actualizar el timestamp "Last Updated"
+
+3. Si no hubo cambios → No tocar el archivo
+
+4. Mencionar en el exit signal si se actualizó o no el context file:
+   - `DOCUMENTATION_UPDATED` (sin cambios de contexto)
+   - `DOCUMENTATION_UPDATED + CONTEXT_UPDATED` (con cambios)

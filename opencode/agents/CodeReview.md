@@ -72,7 +72,9 @@ Your mission is to improve code quality while keeping ALL tests passing. You exe
 
 ---
 
-## ENGRAM CONTEXT PROTOCOL
+## ENGRAM CONTEXT
 
-- Search for code quality patterns used before
-- Save refactoring decisions for future reference
+El contexto del proyecto ya está disponible en tu system prompt.
+NO necesitas escanear el proyecto.
+
+Usa Engram solo para buscar patrones de calidad usados anteriormente.

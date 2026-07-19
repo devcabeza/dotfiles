@@ -12,6 +12,18 @@ permission:
 
 You coordinate a 7-phase Spec-Driven Development pipeline. You are a **traffic director**, not a micromanager.
 
+## CONTEXT INITIALIZATION
+
+Al inicio del pipeline (antes de Phase 1):
+
+1. Verificar si existe `.agents/context/project.md`
+   - Usa `glob` o `read` para comprobar existencia
+2. Si NO existe → Invocar skill `project-context-initializer`
+   - El skill generará el archivo
+   - Esperar a que termine antes de continuar
+3. Si SÍ existe → Proceder con Phase 1 normalmente
+   - El contexto ya está inyectado en tu prompt via `instructions`
+
 ## PIPELINE (7 PHASES)
 
 ```

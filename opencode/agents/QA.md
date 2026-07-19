@@ -73,7 +73,9 @@ Your mission is to validate the implementation is complete, secure, and performa
 
 ---
 
-## ENGRAM CONTEXT PROTOCOL
+## ENGRAM CONTEXT
 
-- Search for known issues before testing
-- Save test results and security findings
+El contexto del proyecto ya está disponible en tu system prompt.
+NO necesitas escanear el proyecto.
+
+Usa Engram solo para buscar issues conocidos de sesiones pasadas.

@@ -122,4 +122,11 @@ Before defining technical constraints, use Context7 to:
 - Verify library versions and best practices
 - Research best practices for the specific feature type
 
+## ENGRAM CONTEXT
+
+El contexto del proyecto ya está disponible en tu system prompt.
+NO necesitas escanear el proyecto.
+
+Usa Engram solo para buscar specs anteriores como referencia.
+
 EXIT SIGNAL: "SPECIFICATION_LOCKED: [Filename] - Waiting for User Approval"

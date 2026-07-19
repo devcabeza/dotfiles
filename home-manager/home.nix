@@ -237,13 +237,6 @@ in
     # Tmux Config
     ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
 
-    # hypr
-    ".config/hypr".source = ../hypr;
-
-    # Noctalia
-    ".config/noctalia/user-templates.toml".source = ../noctalia/user-templates.toml;
-    ".config/noctalia/settings.json".source = ../noctalia/settings.json;
-
     # Kitty
     ".config/kitty/kitty.conf".source = ../kitty/kitty.conf;
 

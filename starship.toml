@@ -1,12 +1,12 @@
-palette = "noctalia"
+palette = "gruvbox_material"
 
 add_newline = true
 
 format = "$directory $git_branch $character"
 
 [character]
-success_symbol = "[➜](bold @noctalia.green)"
-error_symbol = "[➜](bold @noctalia.red)"
+success_symbol = "[➜](bold @gruvbox_material.green)"
+error_symbol = "[➜](bold @gruvbox_material.red)"
 
 [directory]
 truncation_length = 3
@@ -14,11 +14,11 @@ fish_style_pwd_dir_length = 1
 
 [git_branch]
 symbol = " "
-style = "fg:@noctalia.green"
+style = "fg:@gruvbox_material.green"
 format = "[$symbol$branch]($style)"
 
 # >>> NOCTALIA STARSHIP PALETTE >>>
-[palettes.noctalia]
+[palettes.gruvbox_material]
 blue      = "#7daea3"
 red       = "#e67e80"
 green     = "#a9b665"
