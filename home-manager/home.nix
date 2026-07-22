@@ -46,7 +46,7 @@ let
       owner = "Gentleman-Programming";
       repo = "engram";
       rev = "main";
-      sha256 = "sha256-zsly4YyziaOdVqeV+wdRbIXUeQN9iz1Z9D4OMfGWBa4=";
+      sha256 = "sha256-EGcxj3GVLP5080oqaNFtK1FFv5gSDDyWXX7H1Pzf5Qs=";
     };
 
     # Hack para saltar la restricción de Go 1.25.10
@@ -236,6 +236,7 @@ in
 
     # Tmux Config
     ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
+    ".config/tmux/current-theme.conf".source = ../tmux/current-theme.conf;
 
     # Kitty
     ".config/kitty/kitty.conf".source = ../kitty/kitty.conf;
