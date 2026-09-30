@@ -1,12 +1,12 @@
-palette = "gruvbox_material"
+palette = "catppuccin_mocha"
 
 add_newline = true
 
 format = "$directory $git_branch $character"
 
 [character]
-success_symbol = "[➜](bold @gruvbox_material.green)"
-error_symbol = "[➜](bold @gruvbox_material.red)"
+success_symbol = "[➜](bold @catppuccin_mocha.green)"
+error_symbol = "[➜](bold @catppuccin_mocha.red)"
 
 [directory]
 truncation_length = 3
@@ -14,39 +14,33 @@ fish_style_pwd_dir_length = 1
 
 [git_branch]
 symbol = " "
-style = "fg:@gruvbox_material.green"
+style = "fg:@catppuccin_mocha.mauve"
 format = "[$symbol$branch]($style)"
 
-# >>> NOCTALIA STARSHIP PALETTE >>>
-[palettes.gruvbox_material]
-blue      = "#7daea3"
-red       = "#e67e80"
-green     = "#a9b665"
-yellow    = "#d8a657"
-cyan      = "#83a598"
-magenta   = "#d3869b"
-white     = "#ddc7a1"
-black     = "#282828"
-rosewater = "#d8a657"
-flamingo  = "#e67e80"
-pink      = "#d3869b"
-mauve     = "#d3869b"
-maroon    = "#e67e80"
-peach     = "#d8a657"
-teal      = "#a9b665"
-sky       = "#7daea3"
-sapphire  = "#7daea3"
-lavender  = "#d3869b"
-text      = "#ddc7a1"
-subtext1  = "#bdae93"
-subtext0  = "#a89984"
-overlay2  = "#a89984"
-overlay1  = "#bdae93"
-overlay0  = "#504945"
-surface2  = "#504945"
-surface1  = "#3c3836"
-surface0  = "#32302f"
-base      = "#282828"
-mantle    = "#282828"
-crust     = "#1d2021"
-# <<< NOCTALIA STARSHIP PALETTE <<<
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo  = "#f2cdcd"
+pink      = "#f5c2e7"
+mauve     = "#cba6f7"
+red       = "#f38ba8"
+maroon    = "#eba0ac"
+peach     = "#fab387"
+yellow    = "#f9e2af"
+green     = "#a6e3a1"
+teal      = "#94e2d5"
+sky       = "#89dceb"
+sapphire  = "#74c7ec"
+blue      = "#89b4fa"
+lavender  = "#b4befe"
+text      = "#cdd6f4"
+subtext1  = "#bac2de"
+subtext0  = "#a6adc8"
+overlay2  = "#9399b2"
+overlay1  = "#7f849c"
+overlay0  = "#6c7086"
+surface2  = "#585b70"
+surface1  = "#45475a"
+surface0  = "#313244"
+base      = "#1e1e2e"
+mantle    = "#181825"
+crust     = "#11111b"

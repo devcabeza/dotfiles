@@ -11,7 +11,7 @@ function fzf_git_log
         --layout reverse \
         --ansi \
         --no-sort \
-        --preview 'git show --color=always (echo {} | grep -o "[a-f0-9]\{7,40\}" | head -1) | delta --width $FZF_PREVIEW_COLUMNS --theme="gruvbox-material"' \
+        --preview 'git show --color=always (echo {} | grep -o "[a-f0-9]\{7,40\}" | head -1) | delta --width $FZF_PREVIEW_COLUMNS --theme="Catppuccin Mocha"' \
         --header "Explorar Historial (Enter para copiar Hash, ESC para salir)")
 
     if test -n "$commit"

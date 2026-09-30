@@ -38,19 +38,19 @@ Los hooks de activación (`createEngramDir`, `installTpm`, `downloadPiperModel`)
 | Dir | Propósito | Linkeado en `home.nix` |
 |-----|-----------|------------------------|
 | `home-manager/` | Corazón: `home.nix` + `flake.nix` | — |
-| `alacritty/` | Terminal (toml, GPU, Gruvbox) | ✅ |
-| `nvim/` | Neovim (NixCats + Lua) | ✅ |
-| `tmux/` | Tmux (prefix `Ctrl+t`, Gruvbox) | ✅ |
-| `fish/` | Shell (Vi mode, Starship) | ✅ |
+| `kitty/` | Terminal (GPU, Catppuccin Mocha, opacidad 0.85) | ✅ |
+| `nvim/` | Neovim (LazyVim + Catppuccin Mocha + Snacks) | ✅ |
+| `tmux/` | Tmux (prefix `Ctrl+t`, Catppuccin Mocha Powerline) | ✅ |
+| `fish/` | Shell (Vi mode, Starship, Catppuccin Mocha) | ✅ |
 | `ranger/` | File manager (previews) | ✅ |
-| `lazygit/` | Git TUI | ✅ |
+| `lazygit/` | Git TUI (Catppuccin Mocha) | ✅ |
 | `opencode/` | Config de agentes OpenCode | ✅ en `~/.config/opencode` |
 
 - **Gestión**: Nix + Home Manager (flake en `home-manager/`)
-- **Shell**: Fish (Vi mode) → Starship (bloques sólidos Gruvbox)
-- **Terminal**: Alacritty → lanza `tmux` automáticamente
-- **DE**: GNOME (Wayland)
-- **Tema**: Gruvbox Material oscuro (#282828 bg, #ddc7a1 fg, #7daea3 accent)
+- **Shell**: Fish (Vi mode) → Starship (Catppuccin Mocha)
+- **Terminal**: Kitty → lanza `tmux` automáticamente
+- **DE/Compositor**: Hyprland (Wayland)
+- **Tema**: Catppuccin Mocha (#1e1e2e bg, #cdd6f4 fg, #cba6f7 mauve accent)
 
 ## Cómo modificar dotfiles
 

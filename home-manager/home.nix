@@ -251,6 +251,13 @@ in
 
     # Starship
     ".config/starship.toml".source = ../starship.toml;
+
+    # Btop Config & Theme
+    ".config/btop/btop.conf".source = ../btop/btop.conf;
+    ".config/btop/themes/catppuccin_mocha.theme".source = ../btop/themes/catppuccin_mocha.theme;
+
+    # Dunst Config
+    ".config/dunst/dunstrc".source = ../dunst/dunstrc;
   };
 
   # --- Variables de entorno ---
@@ -273,6 +280,9 @@ in
     _JAVA_AWT_WM_NONREPARENTING = "1";
     CLUTTER_BACKEND = "wayland";
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+
+    # Catppuccin Mocha Themes
+    BAT_THEME = "Catppuccin Mocha";
   };
 
   # --- Crear directorio de base de datos ---
@@ -324,6 +334,10 @@ in
     enable = true;
     defaultOptions = [
       "--height 40% --layout reverse --border"
+      "--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8"
+      "--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc"
+      "--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+      "--color=selected-bg:#45475a"
     ];
   };
 

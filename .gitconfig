@@ -50,8 +50,8 @@
 [interactive]
     diffFilter = delta --color-only
 [delta]
-    features = gruvbox-material
-    syntax-theme = Gruvbox Material
+    features = catppuccin-mocha
+    syntax-theme = Catppuccin Mocha
     line-numbers = true
 [diff]
     colorMoved = default
