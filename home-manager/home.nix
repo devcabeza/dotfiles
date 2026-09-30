@@ -46,7 +46,7 @@ let
       owner = "Gentleman-Programming";
       repo = "engram";
       rev = "main";
-      sha256 = "sha256-EGcxj3GVLP5080oqaNFtK1FFv5gSDDyWXX7H1Pzf5Qs=";
+      sha256 = "sha256-l02GGtp3mdWIVB2Sr8AfSaHa02fjcTOr9HFkpVdTiYo=";
     };
 
     # Hack para saltar la restricción de Go 1.25.10
@@ -55,7 +55,7 @@ let
     '';
 
     # Hash obtenido de tu error anterior (Verificado)
-    vendorHash = "sha256-O+pC4x4DKNUWr7Sx9iZOjK6a64wrQA4/lnjvkNLBX64=";
+    vendorHash = "sha256-roVQ+K9Hsz0qi61f+zzb+JvgleOmBHSMcKfhwhI0snQ=";
 
     subPackages = [ "cmd/engram" ];
 
