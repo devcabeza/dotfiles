@@ -1,6 +1,6 @@
 ---
 description: Full-Stack Developer (TDD Green Phase - Implementation)
-mode: subagent
+mode: all
 temperature: 0.2
 permission:
   edit: allow
