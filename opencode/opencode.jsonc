@@ -51,27 +51,5 @@
         "LOG_LEVEL": "info",
       },
     },
-    "notion": {
-      "type": "remote",
-      "url": "https://mcp.notion.com/mcp",
-      "enabled": true,
-      "oauth": {},
-    },
-    "coolify": {
-      "type": "remote",
-      "url": "https://coolify.alejandrocabeza.dev/mcp",
-      "enabled": true,
-      "headers": {
-        "Authorization": "Bearer {env:COOLIFY_API_TOKEN}",
-      },
-    },
-    "taskflow": {
-      "type": "remote",
-      "url": "https://task.alejandrocabeza.dev/api/mcp",
-      "headers": {
-        "Authorization": "Bearer {env:TASKFLOW_API_KEY}",
-      },
-      "enabled": true,
-    },
   },
 }
