@@ -1,0 +1,81 @@
+/* ==========================================
+ * Wofi Style - Catppuccin Mocha
+ * ========================================== */
+
+* {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 13px;
+}
+
+window {
+    margin: 0px;
+    background-color: #1e1e2e;
+    border-radius: 16px;
+    border: 2px solid #cba6f7;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+#input {
+    margin: 16px 16px 10px 16px;
+    border-radius: 10px;
+    border: 1px solid #313244;
+    background-color: #181825;
+    color: #cdd6f4;
+    padding: 10px 14px;
+    font-size: 14px;
+}
+
+#input:focus {
+    border: 1px solid #cba6f7;
+    outline: none;
+}
+
+#inner-box {
+    margin: 4px 12px 14px 12px;
+    background-color: transparent;
+}
+
+#outer-box {
+    margin: 0px;
+    background-color: transparent;
+}
+
+#scroll {
+    margin: 0px;
+    border: none;
+}
+
+#text {
+    margin: 4px;
+    border: none;
+    color: #cdd6f4;
+}
+
+#img {
+    margin-right: 12px;
+    background-color: transparent;
+}
+
+#entry {
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin: 2px 0px;
+    border: none;
+    background-color: transparent;
+    transition: all 0.15s ease-in-out;
+}
+
+#entry:selected {
+    background: linear-gradient(90deg, #cba6f7 0%, #b4befe 100%);
+    border-radius: 10px;
+    outline: none;
+}
+
+#entry:selected #text {
+    color: #11111b;
+    font-weight: bold;
+}
+
+#entry:hover:not(:selected) {
+    background-color: #313244;
+}
