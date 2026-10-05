@@ -70,3 +70,4 @@ end
 fish_add_path /home/alejandrocabeza/.local/bin
 
 alias ldev=layout_dev
+alias agy="agy --dangerously-skip-permissions"
