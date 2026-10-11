@@ -23,21 +23,18 @@ Rectangle {
         onTriggered: root.updateTime()
     }
 
-    implicitWidth: contentRow.implicitWidth + 20
-    implicitHeight: 28
-    radius: 8
-    color: mouseArea.containsMouse ? Colors.surface1 : Colors.surface0
-    border.color: mouseArea.containsMouse ? Colors.mauve : Colors.surface1
-    border.width: 1
+    implicitWidth: contentRow.implicitWidth + 14
+    implicitHeight: 26
+    radius: 7
+    color: mouseArea.containsMouse ? Colors.surface0 : "transparent"
 
     Behavior on implicitWidth { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
-    Behavior on color { ColorAnimation { duration: 150 } }
-    Behavior on border.color { ColorAnimation { duration: 150 } }
+    Behavior on color { ColorAnimation { duration: 130 } }
 
     Row {
         id: contentRow
         anchors.centerIn: parent
-        spacing: 7
+        spacing: 6
 
         Text {
             text: root.showFullDate ? "󰃭" : "󱑂"

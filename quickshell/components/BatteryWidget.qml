@@ -43,27 +43,23 @@ Rectangle {
         onTriggered: proc.running = true
     }
 
-    implicitWidth: contentRow.implicitWidth + 18
-    implicitHeight: 28
-    radius: 8
-    color: mouseArea.containsMouse ? Colors.surface1 : (isLow ? Colors.surface1 : Colors.surface0)
-    border.color: isLow ? Colors.red : (mouseArea.containsMouse ? (isCharging ? Colors.green : Colors.teal) : Colors.surface1)
-    border.width: 1
+    implicitWidth: contentRow.implicitWidth + 12
+    implicitHeight: 24
+    radius: 7
+    color: mouseArea.containsMouse ? Colors.surface0 : "transparent"
 
-    Behavior on color { ColorAnimation { duration: 150 } }
-    Behavior on border.color { ColorAnimation { duration: 150 } }
+    Behavior on color { ColorAnimation { duration: 130 } }
 
     Row {
         id: contentRow
         anchors.centerIn: parent
-        spacing: 6
+        spacing: 5
 
         Text {
             text: root.getBatteryIcon()
             font.pixelSize: 13
             color: root.isLow ? Colors.red : (root.isCharging ? Colors.green : Colors.teal)
             anchors.verticalCenter: parent.verticalCenter
-            Behavior on color { ColorAnimation { duration: 150 } }
         }
 
         Text {

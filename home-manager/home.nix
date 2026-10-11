@@ -38,30 +38,30 @@ let
   };
 
   # --- Definición de Engram con Parche de Versión ---
-  engramPackage = pkgs.buildGoModule rec {
-    pname = "engram";
-    version = "main";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "Gentleman-Programming";
-      repo = "engram";
-      rev = "main";
-      sha256 = "sha256-l02GGtp3mdWIVB2Sr8AfSaHa02fjcTOr9HFkpVdTiYo=";
-    };
-
-    # Hack para saltar la restricción de Go 1.25.10
-    postPatch = ''
-      substituteInPlace go.mod --replace "go 1.25.10" "go 1.25.0"
-    '';
-
-    # Hash obtenido de tu error anterior (Verificado)
-    vendorHash = "sha256-roVQ+K9Hsz0qi61f+zzb+JvgleOmBHSMcKfhwhI0snQ=";
-
-    subPackages = [ "cmd/engram" ];
-
-    # Los tests requieren git y red; se deshabilitan en el sandbox de Nix
-    doCheck = false;
-  };
+  # engramPackage = pkgs.buildGoModule rec {
+  #   pname = "engram";
+  #   version = "main";
+  #
+  #   src = pkgs.fetchFromGitHub {
+  #     owner = "Gentleman-Programming";
+  #     repo = "engram";
+  #     rev = "main";
+  #     sha256 = "sha256-l02GGtp3mdWIVB2Sr8AfSaHa02fjcTOr9HFkpVdTiYo=";
+  #   };
+  #
+  #   # Hack para saltar la restricción de Go 1.25.10
+  #   postPatch = ''
+  #     substituteInPlace go.mod --replace "go 1.25.10" "go 1.25.0"
+  #   '';
+  #
+  #   # Hash obtenido de tu error anterior (Verificado)
+  #   vendorHash = "sha256-roVQ+K9Hsz0qi61f+zzb+JvgleOmBHSMcKfhwhI0snQ=";
+  #
+  #   subPackages = [ "cmd/engram" ];
+  #
+  #   # Los tests requieren git y red; se deshabilitan en el sandbox de Nix
+  #   doCheck = false;
+  # };
 
   # --- PHP Debug Adapter (inlineado porque Nix no copia archivos sueltos al store) ---
   phpDebugAdapter = pkgs.stdenv.mkDerivation {
@@ -102,7 +102,6 @@ in
 
   # --- Paquetes a instalar ---
   home.packages = [
-    engramPackage
     phpWithMemoryLimit
     composerForMyPhp
     pkgs.imagemagick
@@ -230,10 +229,10 @@ in
     ".config/fish/functions".source = ../fish/functions;
 
     # Opencode Config
-    ".config/opencode/opencode.jsonc".source = ../opencode/opencode.jsonc;
-    ".config/opencode/agents".source = ../opencode/agents;
-    ".config/opencode/skills".source = ../opencode/skills;
-    ".config/opencode/commands".source = ../opencode/commands;
+    # ".config/opencode/opencode.jsonc".source = ../opencode/opencode.jsonc;
+    # ".config/opencode/agents".source = ../opencode/agents;
+    # ".config/opencode/skills".source = ../opencode/skills;
+    # ".config/opencode/commands".source = ../opencode/commands;
 
     # Tmux Config
     ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
@@ -268,7 +267,7 @@ in
     EDITOR = "nvim";
     COMPOSER_HOME = "${config.home.homeDirectory}/.composer";
     XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
-    ENGRAM_DB_PATH = "/home/alejandrocabeza/.local/share/engram/engram.db";
+    # ENGRAM_DB_PATH = "/home/alejandrocabeza/.local/share/engram/engram.db";
     DOCKER_API_VERSION = "1.40";
 
     # Wayland environment
@@ -290,9 +289,9 @@ in
 
   # --- Crear directorio de base de datos ---
   home.activation = {
-    createEngramDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      $DRY_RUN_CMD mkdir -p $VERBOSE_ARG /home/alejandrocabeza/.local/share/engram
-    '';
+    # createEngramDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    #   $DRY_RUN_CMD mkdir -p $VERBOSE_ARG /home/alejandrocabeza/.local/share/engram
+    # '';
 
     installTpm = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
       mkdir -p "$HOME/.config/tmux/plugins"

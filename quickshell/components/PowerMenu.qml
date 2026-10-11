@@ -7,23 +7,23 @@ Rectangle {
 
     signal openPowerMenu()
 
-    width: 34
-    height: 28
-    radius: 8
+    width: 28
+    height: 24
+    radius: 7
 
-    color: mouseArea.containsMouse ? Colors.surface1 : Colors.surface0
-    border.color: mouseArea.containsMouse ? Colors.red : Colors.surface1
-    border.width: 1
+    color: mouseArea.containsMouse ? Colors.red : "#25f38ba8"
 
-    Behavior on color { ColorAnimation { duration: 150 } }
-    Behavior on border.color { ColorAnimation { duration: 150 } }
+    Behavior on color { ColorAnimation { duration: 130 } }
 
     Text {
         anchors.centerIn: parent
         text: "⏻"
-        font.pixelSize: 14
-        color: mouseArea.containsMouse ? Colors.red : Colors.subtext1
-        Behavior on color { ColorAnimation { duration: 150 } }
+        font.pixelSize: 13
+        color: mouseArea.containsMouse ? Colors.crust : Colors.red
+        scale: mouseArea.containsMouse ? 1.1 : 1.0
+
+        Behavior on color { ColorAnimation { duration: 130 } }
+        Behavior on scale { NumberAnimation { duration: 130; easing.type: Easing.OutBack } }
     }
 
     MouseArea {

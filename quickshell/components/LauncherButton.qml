@@ -6,25 +6,22 @@ Rectangle {
 
     signal clicked()
 
-    width: 34
-    height: 28
-    radius: 8
+    width: 28
+    height: 24
+    radius: 7
     color: mouseArea.containsMouse ? Colors.surface1 : Colors.surface0
-    border.color: mouseArea.containsMouse ? Colors.mauve : Colors.surface1
-    border.width: 1
 
-    Behavior on color { ColorAnimation { duration: 150 } }
-    Behavior on border.color { ColorAnimation { duration: 150 } }
+    Behavior on color { ColorAnimation { duration: 130 } }
 
     Text {
         anchors.centerIn: parent
         text: "󰣇"
-        font.pixelSize: 16
+        font.pixelSize: 15
         color: mouseArea.containsMouse ? Colors.mauve : Colors.blue
         scale: mouseArea.containsMouse ? 1.15 : 1.0
 
-        Behavior on color { ColorAnimation { duration: 150 } }
-        Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutBack } }
+        Behavior on color { ColorAnimation { duration: 130 } }
+        Behavior on scale { NumberAnimation { duration: 130; easing.type: Easing.OutBack } }
     }
 
     MouseArea {

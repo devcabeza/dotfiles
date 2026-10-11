@@ -3,7 +3,7 @@ import Quickshell
 import Quickshell.Hyprland
 import "../theme"
 
-Item {
+Rectangle {
     id: root
 
     property string windowTitle: "Escritorio"
@@ -72,43 +72,43 @@ Item {
         }
     }
 
-    implicitWidth: Math.min(titleRow.implicitWidth + 24, 260)
-    implicitHeight: 28
+    implicitWidth: Math.min(titleRow.implicitWidth + 14, 220)
+    implicitHeight: 26
+    radius: 7
+    color: mouseArea.containsMouse ? Colors.surface0 : "transparent"
 
-    Rectangle {
-        anchors.fill: parent
-        radius: 8
-        color: Colors.surface0
-        border.color: Colors.surface1
-        border.width: 1
+    Behavior on color { ColorAnimation { duration: 120 } }
+    Behavior on implicitWidth { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
 
-        Row {
-            id: titleRow
-            anchors.centerIn: parent
-            spacing: 8
-            width: Math.min(parent.width - 16, contentWidth)
+    Row {
+        id: titleRow
+        anchors.centerIn: parent
+        spacing: 6
 
-            property real contentWidth: iconText.implicitWidth + titleText.implicitWidth + 8
-
-            Text {
-                id: iconText
-                text: root.getWindowIcon()
-                font.pixelSize: 13
-                color: root.getIconColor()
-                anchors.verticalCenter: parent.verticalCenter
-                Behavior on color { ColorAnimation { duration: 150 } }
-            }
-
-            Text {
-                id: titleText
-                text: root.windowTitle
-                font.pixelSize: 11
-                font.weight: Font.Medium
-                color: Colors.text
-                elide: Text.ElideRight
-                width: Math.min(implicitWidth, 200)
-                anchors.verticalCenter: parent.verticalCenter
-            }
+        // Icono
+        Text {
+            text: root.getWindowIcon()
+            font.pixelSize: 13
+            color: root.getIconColor()
+            anchors.verticalCenter: parent.verticalCenter
+            Behavior on color { ColorAnimation { duration: 150 } }
         }
+
+        // Título
+        Text {
+            text: root.windowTitle
+            font.pixelSize: 11
+            font.weight: Font.Medium
+            color: Colors.text
+            elide: Text.ElideRight
+            width: Math.min(implicitWidth, 180)
+            anchors.verticalCenter: parent.verticalCenter
+        }
+    }
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        hoverEnabled: true
     }
 }

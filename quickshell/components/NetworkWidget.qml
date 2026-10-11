@@ -36,27 +36,23 @@ Rectangle {
         onTriggered: netProc.running = true
     }
 
-    implicitWidth: contentRow.implicitWidth + 18
-    implicitHeight: 28
-    radius: 8
-    color: mouseArea.containsMouse ? Colors.surface1 : Colors.surface0
-    border.color: mouseArea.containsMouse ? Colors.blue : Colors.surface1
-    border.width: 1
+    implicitWidth: contentRow.implicitWidth + 12
+    implicitHeight: 24
+    radius: 7
+    color: mouseArea.containsMouse ? Colors.surface0 : "transparent"
 
-    Behavior on color { ColorAnimation { duration: 150 } }
-    Behavior on border.color { ColorAnimation { duration: 150 } }
+    Behavior on color { ColorAnimation { duration: 130 } }
 
     Row {
         id: contentRow
         anchors.centerIn: parent
-        spacing: 6
+        spacing: 5
 
         Text {
             text: !root.isConnected ? "󰤭" : (root.isEthernet ? "󰈀" : "󰤨")
             font.pixelSize: 13
             color: root.isConnected ? Colors.blue : Colors.red
             anchors.verticalCenter: parent.verticalCenter
-            Behavior on color { ColorAnimation { duration: 150 } }
         }
 
         Text {

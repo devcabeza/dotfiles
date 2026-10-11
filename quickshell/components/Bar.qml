@@ -8,6 +8,8 @@ PanelWindow {
 
     signal openLauncher()
     signal openPowerMenu()
+    signal openControlCenter()
+    signal openMedia()
 
     anchors {
         top: true
@@ -17,8 +19,8 @@ PanelWindow {
 
     margins {
         top: 6
-        left: 10
-        right: 10
+        left: 12
+        right: 12
     }
 
     implicitHeight: 38
@@ -28,72 +30,155 @@ PanelWindow {
     WlrLayershell.namespace: "quickshell-bar"
     WlrLayershell.layer: WlrLayer.Top
 
-    Rectangle {
-        id: barBackground
+    Item {
         anchors.fill: parent
-        radius: 12
-        color: Colors.barBg
-        border.color: Colors.barBorder
-        border.width: 1
 
-        // Sección Izquierda
-        Row {
-            id: leftSection
+        // ==========================================
+        // ISLA IZQUIERDA: Launcher + Workspaces + Ventana / Música
+        // ==========================================
+        Rectangle {
+            id: leftIsland
             anchors.left: parent.left
-            anchors.leftMargin: 8
             anchors.verticalCenter: parent.verticalCenter
-            spacing: 8
+            height: 34
+            width: leftRow.implicitWidth + 14
+            radius: 11
+            color: Colors.barBg
+            border.color: Colors.barBorder
+            border.width: 1
 
-            LauncherButton {
-                id: launcherBtn
-                onClicked: barWindow.openLauncher()
-            }
+            Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
 
-            Workspaces {
-                anchors.verticalCenter: parent.verticalCenter
-            }
+            Row {
+                id: leftRow
+                anchors.centerIn: parent
+                spacing: 6
 
-            ActiveWindow {
-                anchors.verticalCenter: parent.verticalCenter
+                LauncherButton {
+                    anchors.verticalCenter: parent.verticalCenter
+                    onClicked: barWindow.openLauncher()
+                }
+
+                Workspaces {
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                // Separador sutil
+                Rectangle {
+                    width: 1
+                    height: 14
+                    color: Colors.surface1
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                ActiveWindow {
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                MediaWidget {
+                    anchors.verticalCenter: parent.verticalCenter
+                    onOpenFlyout: barWindow.openMedia()
+                }
             }
         }
 
-        // Sección Central
-        Clock {
-            anchors.centerIn: parent
+        // ==========================================
+        // ISLA CENTRAL: Reloj y Calendario
+        // ==========================================
+        Rectangle {
+            id: centerIsland
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            height: 34
+            width: centerRow.implicitWidth + 16
+            radius: 11
+            color: Colors.barBg
+            border.color: Colors.barBorder
+            border.width: 1
+
+            Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
+
+            Row {
+                id: centerRow
+                anchors.centerIn: parent
+
+                Clock {
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
         }
 
-        // Sección Derecha
-        Row {
-            id: rightSection
+        // ==========================================
+        // ISLA DERECHA: Rendimiento + Sistema + Controles + Apagado
+        // ==========================================
+        Rectangle {
+            id: rightIsland
             anchors.right: parent.right
-            anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
-            spacing: 8
+            height: 34
+            width: rightRow.implicitWidth + 14
+            radius: 11
+            color: Colors.barBg
+            border.color: Colors.barBorder
+            border.width: 1
 
-            BtopButton {
-                anchors.verticalCenter: parent.verticalCenter
-            }
+            Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
 
-            AudioWidget {
-                anchors.verticalCenter: parent.verticalCenter
-            }
+            Row {
+                id: rightRow
+                anchors.centerIn: parent
+                spacing: 6
 
-            BatteryWidget {
-                anchors.verticalCenter: parent.verticalCenter
-            }
+                SysStatsWidget {
+                    anchors.verticalCenter: parent.verticalCenter
+                }
 
-            NetworkWidget {
-                anchors.verticalCenter: parent.verticalCenter
-            }
+                // Separador
+                Rectangle {
+                    width: 1
+                    height: 14
+                    color: Colors.surface1
+                    anchors.verticalCenter: parent.verticalCenter
+                }
 
-            SysTray {
-                anchors.verticalCenter: parent.verticalCenter
-            }
+                AudioWidget {
+                    anchors.verticalCenter: parent.verticalCenter
+                }
 
-            PowerMenu {
-                anchors.verticalCenter: parent.verticalCenter
-                onOpenPowerMenu: barWindow.openPowerMenu()
+                BatteryWidget {
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                NetworkWidget {
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                // Separador
+                Rectangle {
+                    width: 1
+                    height: 14
+                    color: Colors.surface1
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                CaffeineWidget {
+                    targetWindow: barWindow
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                SysTray {
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                ControlCenterButton {
+                    anchors.verticalCenter: parent.verticalCenter
+                    onOpenControlCenter: barWindow.openControlCenter()
+                }
+
+                PowerMenu {
+                    anchors.verticalCenter: parent.verticalCenter
+                    onOpenPowerMenu: barWindow.openPowerMenu()
+                }
             }
         }
     }

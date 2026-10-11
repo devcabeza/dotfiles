@@ -7,8 +7,7 @@ import "overlays"
 ShellRoot {
     id: root
 
-    // Controlador IPC para permitir llamadas desde atajos de teclado de Hyprland
-    // Comando: quickshell ipc call launcher toggle
+    // Controladores IPC para llamadas desde atajos de Hyprland
     IpcHandler {
         target: "launcher"
         function toggle(): void {
@@ -16,8 +15,6 @@ ShellRoot {
         }
     }
 
-    // Controlador IPC para el menú de apagado
-    // Comando: quickshell ipc call power toggle
     IpcHandler {
         target: "power"
         function toggle(): void {
@@ -25,17 +22,41 @@ ShellRoot {
         }
     }
 
-    // Modal del lanzador de aplicaciones
+    IpcHandler {
+        target: "controlcenter"
+        function toggle(): void {
+            controlCenterModal.toggle();
+        }
+    }
+
+    IpcHandler {
+        target: "media"
+        function toggle(): void {
+            mediaModal.toggle();
+        }
+    }
+
+    // Modales y Overlays
     AppLauncher {
         id: launcherModal
     }
 
-    // Modal del menú de apagado/sesión
     PowerMenuModal {
         id: powerModal
     }
 
-    // OSD flotante de volumen
+    ControlCenterModal {
+        id: controlCenterModal
+    }
+
+    MediaFlyout {
+        id: mediaModal
+    }
+
+    PolkitModal {
+        id: polkitModal
+    }
+
     VolumeOSD {
         id: osdModal
     }
@@ -49,6 +70,8 @@ ShellRoot {
             screen: modelData
             onOpenLauncher: launcherModal.toggle()
             onOpenPowerMenu: powerModal.toggle()
+            onOpenControlCenter: controlCenterModal.toggle()
+            onOpenMedia: mediaModal.toggle()
         }
     }
 }

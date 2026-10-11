@@ -5,7 +5,7 @@ import "../theme"
 
 Row {
     id: root
-    spacing: 5
+    spacing: 4
 
     function isOccupied(wsId) {
         if (!Hyprland.workspaces || !Hyprland.workspaces.values) return false;
@@ -17,39 +17,46 @@ Row {
     }
 
     Repeater {
-        model: 5 // Espacios de trabajo 1 a 5
+        model: 5
 
         Rectangle {
             id: wsButton
             property int wsId: index + 1
             property bool isFocused: Hyprland.focusedWorkspace?.id === wsId
             property bool occupied: root.isOccupied(wsId)
+            property bool hovered: mouseArea.containsMouse
 
-            width: isFocused ? 34 : 26
-            height: 26
-            radius: 7
+            width: isFocused ? 28 : (occupied || hovered ? 20 : 8)
+            height: 22
+            radius: 6
 
             color: isFocused
                    ? Colors.mauve
                    : (occupied
-                      ? (mouseArea.containsMouse ? Colors.surface2 : Colors.surface1)
-                      : (mouseArea.containsMouse ? Colors.surface1 : Colors.surface0))
+                      ? (hovered ? Colors.surface2 : Colors.surface0)
+                      : (hovered ? Colors.surface1 : "transparent"))
 
-            border.color: isFocused
-                          ? Colors.mauve
-                          : (mouseArea.containsMouse ? Colors.surface2 : (occupied ? Colors.surface1 : "transparent"))
-            border.width: 1
+            Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
+            Behavior on color { ColorAnimation { duration: 130 } }
 
-            Behavior on width { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
-            Behavior on color { ColorAnimation { duration: 150 } }
-            Behavior on border.color { ColorAnimation { duration: 150 } }
-
+            // Número si está enfocado, ocupado o hovered
             Text {
                 anchors.centerIn: parent
+                visible: wsButton.isFocused || wsButton.occupied || wsButton.hovered
                 text: wsId.toString()
-                font.bold: isFocused || occupied
+                font.bold: wsButton.isFocused || wsButton.occupied
                 font.pixelSize: 11
-                color: isFocused ? Colors.crust : (occupied ? Colors.text : Colors.overlay0)
+                color: wsButton.isFocused ? Colors.crust : (wsButton.occupied ? Colors.text : Colors.overlay0)
+            }
+
+            // Pequeño punto central si está vacío y no hovered
+            Rectangle {
+                anchors.centerIn: parent
+                visible: !wsButton.isFocused && !wsButton.occupied && !wsButton.hovered
+                width: 4
+                height: 4
+                radius: 2
+                color: Colors.surface2
             }
 
             MouseArea {
@@ -58,7 +65,6 @@ Row {
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    // Despacho compatible con Hyprland 0.56 (Lua)
                     Quickshell.execDetached(["hyprctl", "dispatch", "hl.dsp.focus({ workspace = " + wsId + " })"]);
                 }
             }
