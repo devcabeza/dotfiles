@@ -39,7 +39,8 @@ hl.monitor({
 -- Set programs that you use
 local terminal = "kitty"
 local fileManager = "dolphin"
-local menu = "pkill wofi || wofi --show drun"
+local menu = "quickshell ipc call launcher toggle"
+local powerMenu = "quickshell ipc call power toggle"
 
 -------------------
 ---- AUTOSTART ----
@@ -52,7 +53,7 @@ local menu = "pkill wofi || wofi --show drun"
 --
 hl.on("hyprland.start", function()
 	hl.exec_cmd("hyprpaper")
-	hl.exec_cmd("/home/alejandrocabeza/.config/waybar/scripts/waybar-hyprland.py")
+	hl.exec_cmd("quickshell")
 	hl.exec_cmd("dunst")
 	hl.exec_cmd("nm-applet --indicator")
 	hl.exec_cmd("which blueman-applet >/dev/null 2>&1 && blueman-applet")
@@ -272,8 +273,9 @@ local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(
 	mainMod .. " + SHIFT + Q",
-	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
+	hl.dsp.exec_cmd(powerMenu)
 )
+hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd(powerMenu))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(altMod .. " + SPACE", hl.dsp.exec_cmd(menu))
@@ -281,7 +283,7 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + SPACE", hl.dsp.layout("togglesplit")) -- dwindle only
 hl.bind(
 	mainMod .. " + B",
-	hl.dsp.exec_cmd("killall waybar; /home/alejandrocabeza/.config/waybar/scripts/waybar-hyprland.py")
+	hl.dsp.exec_cmd("killall quickshell; quickshell &")
 )
 hl.bind(mainMod .. " + M", hl.dsp.window.fullscreen("maximized", "toggle"))
 

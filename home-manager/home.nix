@@ -258,6 +258,9 @@ in
 
     # Dunst Config
     ".config/dunst/dunstrc".source = ../dunst/dunstrc;
+
+    # Quickshell Config
+    ".config/quickshell".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/quickshell";
   };
 
   # --- Variables de entorno ---
