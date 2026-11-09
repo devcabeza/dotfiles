@@ -228,18 +228,9 @@ in
     ".config/fish/config.fish".source = ../fish/config.fish;
     ".config/fish/functions".source = ../fish/functions;
 
-    # Opencode Config
-    # ".config/opencode/opencode.jsonc".source = ../opencode/opencode.jsonc;
-    # ".config/opencode/agents".source = ../opencode/agents;
-    # ".config/opencode/skills".source = ../opencode/skills;
-    # ".config/opencode/commands".source = ../opencode/commands;
-
     # Tmux Config
     ".config/tmux/tmux.conf".source = ../tmux/tmux.conf;
     ".config/tmux/current-theme.conf".source = ../tmux/current-theme.conf;
-
-    # Kitty
-    ".config/kitty/kitty.conf".source = ../kitty/kitty.conf;
 
     #lazygit
     ".config/lazygit".source = ../lazygit;
@@ -255,11 +246,6 @@ in
     ".config/btop/btop.conf".source = ../btop/btop.conf;
     ".config/btop/themes/catppuccin_mocha.theme".source = ../btop/themes/catppuccin_mocha.theme;
 
-    # Dunst Config
-    ".config/dunst/dunstrc".source = ../dunst/dunstrc;
-
-    # Quickshell Config
-    ".config/quickshell".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/quickshell";
   };
 
   # --- Variables de entorno ---
