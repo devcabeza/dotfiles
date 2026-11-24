@@ -1,0 +1,67 @@
+onboarding = false
+
+[theme]
+name = "one-dark"
+auto_switch = false
+
+[theme.custom]
+panel_bg = "#06080f"
+accent = "#6FA0AF"
+green = "#B7CC85"
+blue = "#6FA0AF"
+red = "#CB7C94"
+yellow = "#DEBA87"
+
+[ui]
+accent = "#6FA0AF"
+status_indicators = "symbols"
+agent_panel_sort = "priority"
+
+[keys]
+prefix = "ctrl+t"
+previous_agent = "prefix+alt+k"
+next_agent = "prefix+alt+j"
+focus_agent = "prefix+ctrl+1..9"
+new_worktree = "prefix+w"
+open_worktree = "prefix+shift+w"
+split_vertical = "prefix+/"
+split_horizontal = "prefix+-"
+
+[[keys.command]]
+key = "prefix+shift+e"
+type = "pane"
+description = "nvim en el proyecto"
+command = 'node ~/.config/herdr/scripts/nvim.mjs'
+
+[[keys.command]]
+key = "prefix+shift+g"
+type = "popup"
+description = "lazygit en el proyecto"
+command = 'node ~/.config/herdr/scripts/lazygit.mjs'
+width = "85%"
+height = "85%"
+
+[[keys.command]]
+key = "prefix+shift+f"
+type = "pane"
+description = "ranger en el proyecto"
+command = 'node ~/.config/herdr/scripts/ranger.mjs'
+
+[[keys.command]]
+key = "prefix+shift+d"
+type = "popup"
+description = "lazydocker en el proyecto"
+command = 'node ~/.config/herdr/scripts/lazydocker.mjs'
+width = "85%"
+height = "80%"
+
+[[keys.command]]
+key = "prefix+shift+s"
+type = "popup"
+description = "lazyssh selector"
+command = 'node ~/.config/herdr/scripts/lazyssh.mjs'
+width = "70%"
+height = "50%"
+
+[worktrees]
+directory = "~/.herdr/worktrees"

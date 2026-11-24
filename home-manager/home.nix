@@ -242,6 +242,9 @@ in
     # Starship
     ".config/starship.toml".source = ../starship.toml;
 
+    # herdr
+    ".config/herdr".source = ../herdr;
+
     # Btop Config & Theme
     ".config/btop/btop.conf".source = ../btop/btop.conf;
     ".config/btop/themes/catppuccin_mocha.theme".source = ../btop/themes/catppuccin_mocha.theme;
