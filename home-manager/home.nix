@@ -246,6 +246,9 @@ in
     ".config/herdr/config.toml".source = ../herdr/config.toml;
     ".config/herdr/scripts".source = ../herdr/scripts;
 
+    # alacritty
+    ".config/alacritty.toml".source = ../alacritty.toml;
+
     # Btop Config & Theme
     ".config/btop/btop.conf".source = ../btop/btop.conf;
     ".config/btop/themes/catppuccin_mocha.theme".source = ../btop/themes/catppuccin_mocha.theme;
