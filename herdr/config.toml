@@ -31,13 +31,13 @@ split_horizontal = "prefix+-"
 key = "prefix+shift+e"
 type = "pane"
 description = "nvim en el proyecto"
-command = 'node ~/.config/herdr/scripts/nvim.mjs'
+command = 'node ~/.dotfiles/herdr/scripts/nvim.mjs'
 
 [[keys.command]]
 key = "prefix+shift+g"
 type = "popup"
 description = "lazygit en el proyecto"
-command = 'node ~/.config/herdr/scripts/lazygit.mjs'
+command = 'node ~/.dotfiles/herdr/scripts/lazygit.mjs'
 width = "85%"
 height = "85%"
 
@@ -45,13 +45,13 @@ height = "85%"
 key = "prefix+shift+f"
 type = "pane"
 description = "ranger en el proyecto"
-command = 'node ~/.config/herdr/scripts/ranger.mjs'
+command = 'node ~/.dotfiles/herdr/scripts/ranger.mjs'
 
 [[keys.command]]
 key = "prefix+shift+d"
 type = "popup"
 description = "lazydocker en el proyecto"
-command = 'node ~/.config/herdr/scripts/lazydocker.mjs'
+command = 'node ~/.dotfiles/herdr/scripts/lazydocker.mjs'
 width = "85%"
 height = "80%"
 
@@ -59,7 +59,7 @@ height = "80%"
 key = "prefix+shift+s"
 type = "popup"
 description = "lazyssh selector"
-command = 'node ~/.config/herdr/scripts/lazyssh.mjs'
+command = 'node ~/.dotfiles/herdr/scripts/lazyssh.mjs'
 width = "70%"
 height = "50%"
 
