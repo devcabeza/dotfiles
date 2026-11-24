@@ -243,7 +243,8 @@ in
     ".config/starship.toml".source = ../starship.toml;
 
     # herdr
-    ".config/herdr".source = ../herdr;
+    ".config/herdr/config.toml".source = ../herdr/config.toml;
+    ".config/herdr/scripts".source = ../herdr/scripts;
 
     # Btop Config & Theme
     ".config/btop/btop.conf".source = ../btop/btop.conf;
